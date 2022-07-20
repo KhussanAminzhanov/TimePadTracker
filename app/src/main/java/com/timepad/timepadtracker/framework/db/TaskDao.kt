@@ -7,13 +7,13 @@ import androidx.room.OnConflictStrategy.REPLACE
 interface TaskDao {
 
     @Insert(onConflict = REPLACE)
-    suspend fun add(task: TaskEntity)
+    fun add(task: TaskEntity)
 
     @Delete
-    suspend fun delete(task: TaskEntity)
+    fun delete(task: TaskEntity)
 
     @Update
-    suspend fun update(task: TaskEntity)
+    fun update(task: TaskEntity)
 
     @Query("SELECT * FROM task_table WHERE id = :taskId")
     fun get(taskId: Int) : TaskEntity
