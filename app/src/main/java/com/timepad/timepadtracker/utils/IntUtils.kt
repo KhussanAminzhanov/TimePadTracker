@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.Utils
+package com.timepad.timepadtracker.utils
 
 import android.content.res.Resources
 

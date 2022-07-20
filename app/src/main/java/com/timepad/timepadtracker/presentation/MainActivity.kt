@@ -10,7 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.timepad.timepadtracker.R
-import com.timepad.timepadtracker.Utils.dp
+import com.timepad.timepadtracker.utils.dp
 import com.timepad.timepadtracker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
