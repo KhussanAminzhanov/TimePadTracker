@@ -3,11 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/add_circle_48px.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/donut_large_48px.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/donut_small_48px.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/pie_chart_48px.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/schedule_48px.xml" value="0.1305" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.37447916666666664" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3885416666666667" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.35300674722097175" />
         <entry key="app/src/main/res/layout/fragment_report.xml" value="0.3885416666666667" />
         <entry key="app/src/main/res/layout/fragment_timer.xml" value="0.3885416666666667" />
-        <entry key="app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.3885416666666667" />
+        <entry key="app/src/main/res/layout/item_tasks_rv.xml" value="0.43445655712182973" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.2953125" />
       </map>
     </option>
   </component>
