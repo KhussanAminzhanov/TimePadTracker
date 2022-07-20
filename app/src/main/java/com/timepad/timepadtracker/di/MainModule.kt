@@ -24,4 +24,5 @@ val mainModule = module {
         )
     }
     viewModel { HomeViewModel(get(), Dispatchers.IO) }
+
 }
