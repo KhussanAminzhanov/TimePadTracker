@@ -8,8 +8,8 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_main"
-        style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
+        android:backgroundTint="@android:color/transparent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         app:itemPaddingBottom="0dp"
         app:itemIconSize="24dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="12dp"
         android:background="@android:color/transparent"
         app:elevation="0dp"
         app:labelVisibilityMode="unlabeled"
