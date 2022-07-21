@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.databinding.FragmentHomeBinding
-import com.timepad.timepadtracker.domain.Task
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val oneItem = Task(tags = listOf("Work", "Personal"))
+    private val viewModel: HomeViewModel by sharedViewModel()
+
+    private lateinit var adapter: TasksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,10 +27,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val adapter = TasksAdapter()
+        adapter = TasksAdapter()
         binding.rvTasks.adapter = adapter
-        adapter.submitList(listOf(oneItem, oneItem))
+
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 
     override fun onDestroyView() {

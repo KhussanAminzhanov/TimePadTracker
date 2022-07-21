@@ -1,5 +1,6 @@
 package com.timepad.timepadtracker.framework
 
+import androidx.lifecycle.Transformations
 import com.timepad.timepadtracker.data.TaskDataSource
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.framework.db.TimePadDatabase
@@ -21,23 +22,25 @@ class RoomTaskDataSource(database: TimePadDatabase) : TaskDataSource {
         taskDao.update(task.toRoomEntity())
     }
 
-    override suspend fun get(taskId: Int): Task {
-        val task = taskDao.get(taskId)
-        return Task(
-            iconId = task.iconId,
-            name = task.name,
-            tags = task.tags,
-            totalTimeInMillis = task.totalTimeInMillis
+    override fun get(taskId: Int) = Transformations.map(taskDao.get(taskId)) {
+        Task(
+            id = it.id,
+            iconId = it.iconId,
+            name = it.name,
+            tags = it.tags,
+            totalTimeInMillis = it.totalTimeInMillis
         )
     }
 
-    override suspend fun getAll(): List<Task> {
-        return taskDao.getAll().map {
+
+    override fun getAll() = Transformations.map(taskDao.getAll()) {
+        it.map { taskEntity ->
             Task(
-                iconId = it.iconId,
-                name = it.name,
-                tags = it.tags,
-                totalTimeInMillis = it.totalTimeInMillis
+                id = taskEntity.id,
+                iconId = taskEntity.iconId,
+                name = taskEntity.name,
+                tags = taskEntity.tags,
+                totalTimeInMillis = taskEntity.totalTimeInMillis
             )
         }
     }

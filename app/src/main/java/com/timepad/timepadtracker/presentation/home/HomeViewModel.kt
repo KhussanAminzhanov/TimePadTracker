@@ -1,6 +1,6 @@
 package com.timepad.timepadtracker.presentation.home
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.timepad.timepadtracker.domain.Task
@@ -13,11 +13,7 @@ class HomeViewModel(
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _tasks: MutableLiveData<List<Task>> = MutableLiveData()
-
-    fun loadTasks() = viewModelScope.launch(ioDispatcher) {
-        _tasks.postValue(interactions.getAllTasks())
-    }
+    val tasks: LiveData<List<Task>> = interactions.getAllTasks()
 
     fun addTask(task: Task) = viewModelScope.launch(ioDispatcher) {
         interactions.addTask(task)

@@ -1,5 +1,6 @@
 package com.timepad.timepadtracker.framework.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 
@@ -16,8 +17,8 @@ interface TaskDao {
     fun update(task: TaskEntity)
 
     @Query("SELECT * FROM task_table WHERE id = :taskId")
-    fun get(taskId: Int) : TaskEntity
+    fun get(taskId: Int): LiveData<TaskEntity>
 
     @Query("SELECT * FROM task_table ORDER BY id")
-    fun getAll() : List<TaskEntity>
+    fun getAll(): LiveData<List<TaskEntity>>
 }
