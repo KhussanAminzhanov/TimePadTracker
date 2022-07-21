@@ -3,19 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="8dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_tasks_completed"
+        style="@style/CardViewReport"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="#FAFAFF"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:layout_constraintDimensionRatio="41:33"
         app:layout_constraintEnd_toStartOf="@+id/cv_time_duration"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,25 +23,19 @@
 
             <ImageView
                 android:id="@+id/iv_task_completed"
+                style="@style/ImageViewReport"
                 android:layout_width="@dimen/iv_icon_size_report"
                 android:layout_height="0dp"
-                android:background="@drawable/shape_rectangle_rounded_8dp"
                 android:backgroundTint="@color/green"
-                android:padding="6dp"
-                android:scaleType="fitCenter"
                 android:src="@drawable/checkmark"
-                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                style="@style/TextViewRegularReport"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/rubik_regular"
                 android:text="@string/tasks_completed"
-                android:textColor="@color/text"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_task_completed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -55,13 +44,11 @@
 
             <TextView
                 android:id="@+id/tv_tasks_completed_count"
+                style="@style/TextViewMediumReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/rubik_medium"
-                android:text="12"
-                android:textColor="@color/text"
-                android:textSize="32sp"
+                android:text="@string/tasks_completed_start"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -69,15 +56,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_time_duration"
+        style="@style/CardViewReport"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="#FAFAFF"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:layout_constraintDimensionRatio="41:33"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cv_tasks_completed"
@@ -89,72 +70,61 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/iv_time_duration"
+                style="@style/ImageViewReport"
                 android:layout_width="@dimen/iv_icon_size_report"
                 android:layout_height="0dp"
-                android:background="@drawable/shape_rectangle_rounded_8dp"
                 android:backgroundTint="#3D4ABA"
-                android:padding="6dp"
-                android:scaleType="fitCenter"
                 android:src="@drawable/stopwatch"
-                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_time_duration"
+                style="@style/TextViewRegularReport"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/rubik_regular"
                 android:text="@string/time_duration"
-                android:textColor="@color/text"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_time_duration"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                app:layout_constraintStart_toEndOf="@+id/iv_time_duration"
+                app:layout_constraintTop_toTopOf="@+id/iv_time_duration" />
 
             <TextView
                 android:id="@+id/tv_hour"
+                style="@style/TextViewMediumReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
                 android:layout_marginBottom="8dp"
                 android:text="1"
-                android:textColor="@color/text"
-                android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tv_hour_mark"
+                style="@style/TextViewLightReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="h"
-                android:textColor="@color/text_light"
-                android:textSize="24sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_hour"
                 app:layout_constraintStart_toEndOf="@+id/tv_hour" />
 
             <TextView
                 android:id="@+id/tv_minute"
+                style="@style/TextViewMediumReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
                 android:layout_marginStart="8dp"
                 android:text="46"
-                android:textColor="@color/text"
-                android:textSize="32sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_hour"
                 app:layout_constraintStart_toEndOf="@+id/tv_hour_mark" />
 
             <TextView
                 android:id="@+id/tv_minute_mark"
+                style="@style/TextViewLightReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="m"
-                android:textColor="@color/text_light"
-                android:textSize="24sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_hour"
                 app:layout_constraintStart_toEndOf="@+id/tv_minute" />
         </androidx.constraintlayout.widget.ConstraintLayout>

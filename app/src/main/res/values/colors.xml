@@ -10,4 +10,5 @@
     <color name="green">#07E092</color>
     <color name="text">#070417</color>
     <color name="text_light">#66070417</color>
+    <color name="gray_light">#FAFAFF</color>
 </resources>

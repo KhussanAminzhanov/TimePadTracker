@@ -5,4 +5,5 @@
     <string name="item_report">Report</string>
     <string name="tasks_completed">Task Completed</string>
     <string name="time_duration">Time\nDuration</string>
+    <string name="tasks_completed_start">12</string>
 </resources>

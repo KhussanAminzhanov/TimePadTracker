@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.timepad.timepadtracker.databinding.ItemTasksRvBinding
+import com.timepad.timepadtracker.databinding.ItemTasksBinding
 import com.timepad.timepadtracker.domain.Task
 
 class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(TasksDiffUtilCallback()) {
 
-    inner class TasksViewHolder(val binding: ItemTasksRvBinding) :
+    inner class TasksViewHolder(val binding: ItemTasksBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Task) {
@@ -25,7 +25,7 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(TasksDiffUt
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TasksViewHolder {
         return TasksViewHolder(
-            ItemTasksRvBinding.inflate(
+            ItemTasksBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
