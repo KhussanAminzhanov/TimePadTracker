@@ -3,4 +3,6 @@
     <string name="item_home">Home</string>
     <string name="item_add_task">Add Task</string>
     <string name="item_report">Report</string>
+    <string name="tasks_completed">Task Completed</string>
+    <string name="time_duration">Time\nDuration</string>
 </resources>
