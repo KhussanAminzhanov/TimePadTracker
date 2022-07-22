@@ -1,6 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_tasks_completed"
+        style="@style/CardViewReport"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="41:33"
+        app:layout_constraintEnd_toStartOf="@+id/cv_time_duration"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_task_completed"
+                style="@style/ImageViewReport"
+                android:layout_width="@dimen/iv_icon_size_report"
+                android:layout_height="0dp"
+                android:backgroundTint="@color/green"
+                android:src="@drawable/checkmark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/TextViewRegularReport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/tasks_completed"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_task_completed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/iv_task_completed"
+                app:layout_constraintTop_toTopOf="@+id/iv_task_completed" />
+
+            <TextView
+                android:id="@+id/tv_tasks_completed_count"
+                style="@style/TextViewMediumReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/tasks_completed_start"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_time_duration"
+        style="@style/CardViewReport"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="41:33"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/cv_tasks_completed"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_time_duration"
+                style="@style/ImageViewReport"
+                android:layout_width="@dimen/iv_icon_size_report"
+                android:layout_height="0dp"
+                android:backgroundTint="#3D4ABA"
+                android:src="@drawable/stopwatch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_time_duration"
+                style="@style/TextViewRegularReport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/time_duration"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_time_duration"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_time_duration"
+                app:layout_constraintTop_toTopOf="@+id/iv_time_duration" />
+
+            <TextView
+                android:id="@+id/tv_hour"
+                style="@style/TextViewMediumReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_hour_mark"
+                style="@style/TextViewLightReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="h"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_hour"
+                app:layout_constraintStart_toEndOf="@+id/tv_hour" />
+
+            <TextView
+                android:id="@+id/tv_minute"
+                style="@style/TextViewMediumReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="46"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_hour"
+                app:layout_constraintStart_toEndOf="@+id/tv_hour_mark" />
+
+            <TextView
+                android:id="@+id/tv_minute_mark"
+                style="@style/TextViewLightReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="m"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_hour"
+                app:layout_constraintStart_toEndOf="@+id/tv_minute" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:orientation="vertical"
+        app:cardBackgroundColor="#E9E9FF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_header_bottom">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/tv_tab_day"
+                style="@style/TextViewTabReport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:text="@string/day"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_tab_week"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_tab_week"
+                style="@style/TextViewTabReport"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/week"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_tab_day"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        style="@style/CardViewReport"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_header_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="cv_tasks_completed, cv_time_duration" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

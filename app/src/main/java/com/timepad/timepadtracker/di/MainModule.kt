@@ -6,6 +6,7 @@ import com.timepad.timepadtracker.framework.RoomTaskDataSource
 import com.timepad.timepadtracker.framework.db.TimePadDatabase
 import com.timepad.timepadtracker.interactors.*
 import com.timepad.timepadtracker.presentation.home.HomeViewModel
+import com.timepad.timepadtracker.presentation.report.ReportViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,10 +20,10 @@ val mainModule = module {
             AddTask(get()),
             DeleteTask(get()),
             GetAllTasks(get()),
-            GetTask(get()),
             UpdateTask(get())
         )
     }
-    viewModel { HomeViewModel(get(), Dispatchers.IO) }
 
+    viewModel { HomeViewModel(get(), Dispatchers.IO) }
+    viewModel { ReportViewModel() }
 }
