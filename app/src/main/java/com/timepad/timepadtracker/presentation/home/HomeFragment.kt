@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentHomeBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -35,6 +35,14 @@ class HomeFragment : Fragment() {
 
         viewModel.tasks.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+        }
+
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        binding.frameLayout.setOnClickListener {
+
         }
     }
 
