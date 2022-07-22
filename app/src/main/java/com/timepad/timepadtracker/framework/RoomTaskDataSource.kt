@@ -22,17 +22,6 @@ class RoomTaskDataSource(database: TimePadDatabase) : TaskDataSource {
         taskDao.update(task.toRoomEntity())
     }
 
-    override fun get(taskId: Int) = Transformations.map(taskDao.get(taskId)) {
-        Task(
-            id = it.id,
-            iconId = it.iconId,
-            name = it.name,
-            tags = it.tags,
-            totalTimeInMillis = it.totalTimeInMillis
-        )
-    }
-
-
     override fun getAll() = Transformations.map(taskDao.getAll()) {
         it.map { taskEntity ->
             Task(

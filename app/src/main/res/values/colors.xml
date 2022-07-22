@@ -11,4 +11,7 @@
     <color name="text">#070417</color>
     <color name="text_light">#66070417</color>
     <color name="gray_light">#FAFAFF</color>
+
+    <color name="text_tertiary">#070417</color>
+    <color name="text_tertiary_night">@android:color/white</color>
 </resources>

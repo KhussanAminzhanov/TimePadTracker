@@ -16,9 +16,6 @@ interface TaskDao {
     @Update
     fun update(task: TaskEntity)
 
-    @Query("SELECT * FROM task_table WHERE id = :taskId")
-    fun get(taskId: Int): LiveData<TaskEntity>
-
     @Query("SELECT * FROM task_table ORDER BY id")
     fun getAll(): LiveData<List<TaskEntity>>
 }
