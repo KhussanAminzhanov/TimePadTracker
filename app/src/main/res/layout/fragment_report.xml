@@ -152,9 +152,10 @@
 
             <TextView
                 android:id="@+id/tv_tab_day"
-                style="@style/TextViewTabSelectedReport"
+                style="@style/TextViewTabReport"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:text="@string/day"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_tab_week"

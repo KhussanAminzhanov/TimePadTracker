@@ -22,11 +22,7 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">8dp</item>
         <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="TextViewTabSelectedReport" parent="TextViewTabReport">
         <item name="android:background">@drawable/shape_rectangle_rounded_8dp</item>
-        <item name="android:backgroundTint">@android:color/white</item>
     </style>
 
     <style name="TextViewRegularReport">
