@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.timepad.timepadtracker.presentation.home.HomeFragment"
-        android:label="Home"
+        android:label="@string/item_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/reportFragment"

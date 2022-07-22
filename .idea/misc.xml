@@ -3,10 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.14628297362110312" />
+        <entry key="app/src/main/res/drawable/play_button.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/schedule_48px.xml" value="0.244" />
+        <entry key="app/src/main/res/drawable/shape_rectangle_rounded_8dp.xml" value="0.244" />
+        <entry key="app/src/main/res/font/rubik_mono_one.xml" value="0.275" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.37447916666666664" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3885416666666667" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4106324415940503" />
         <entry key="app/src/main/res/layout/fragment_report.xml" value="0.3885416666666667" />
         <entry key="app/src/main/res/layout/fragment_timer.xml" value="0.3885416666666667" />
+        <entry key="app/src/main/res/layout/item_tasks.xml" value="0.5956967440518466" />
+        <entry key="app/src/main/res/layout/item_tasks_rv.xml" value="0.2953125" />
         <entry key="app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.3885416666666667" />
       </map>
     </option>
