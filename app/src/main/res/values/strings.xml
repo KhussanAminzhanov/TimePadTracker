@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Time Pad Tracker</string>
-    <string name="item_home">Home</string>
+    <string name="item_home">Task</string>
     <string name="item_add_task">Add Task</string>
     <string name="item_report">Report</string>
     <string name="tasks_completed">Task Completed</string>
