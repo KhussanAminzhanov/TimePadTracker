@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_fragment_main"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.timepad.timepadtracker.presentation.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="Task"
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.timepad.timepadtracker.presentation.report.ReportFragment"
-        android:label="ReportFragment" />
-    <fragment
-        android:id="@+id/timerFragment"
-        android:name="com.timepad.timepadtracker.presentation.timer.TimerFragment"
-        android:label="TimerFragment" />
+        android:label="My Productivity"
+        tools:layout="@layout/fragment_report" />
 </navigation>
