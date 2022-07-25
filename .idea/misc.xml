@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/ellipse.xml" value="0.25" />
+        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/shape_rectangle_outline_red_6dp.xml" value="0.209" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/activity_main.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_home.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_main.xml" value="0.37447916666666664" />
+        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_timer.xml" value="0.33" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/checkmark.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/donut_small_48px.xml" value="0.2665" />

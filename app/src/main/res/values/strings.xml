@@ -8,4 +8,5 @@
     <string name="tasks_completed_start">12</string>
     <string name="day">Day</string>
     <string name="week">Week</string>
+    <string name="back_arrow">back arrow</string>
 </resources>
