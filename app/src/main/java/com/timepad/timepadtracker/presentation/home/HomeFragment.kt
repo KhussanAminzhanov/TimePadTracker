@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerview() {
-        adapter = TasksAdapter()
+        adapter = TasksAdapter(::onClick)
         binding.rvTasks.adapter = adapter
     }
 
@@ -58,6 +58,10 @@ class HomeFragment : Fragment() {
         mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
             binding.tvTimerHome.text = it.formatTimeMillis("%02d:%02d:%02d")
         }
+    }
+
+    private fun onClick(){
+        findTopNavController().navigate(R.id.timerFragment)
     }
 
     override fun onDestroyView() {
