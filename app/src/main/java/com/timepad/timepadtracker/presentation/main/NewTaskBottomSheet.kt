@@ -12,6 +12,7 @@ import com.timepad.timepadtracker.domain.Task
 
 import com.timepad.timepadtracker.presentation.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.time.LocalDate
 
 class NewTaskBottomSheet : BottomSheetDialogFragment() {
 
@@ -57,7 +58,8 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
                     binding.tvTaskCategory.text.toString(),
                     binding.tvTaskCategory.text.toString()
                 ),
-                0
+                0,
+                0, LocalDate.now().toEpochDay()
             )
             viewModel.addTask(newTask)
             dismiss()

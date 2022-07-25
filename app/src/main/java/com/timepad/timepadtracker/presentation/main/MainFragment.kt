@@ -1,5 +1,6 @@
 package com.timepad.timepadtracker.presentation.main
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,11 +62,7 @@ class MainFragment : Fragment() {
         val menuItem = menuView.findItemView(R.id.item_add_task) as BottomNavigationItemView
         menuItem.setIconSize(44.dp)
         menuItem.setOnClickListener {
-            val tags = listOf("Work", "Study")
-            val date = LocalDate.now().toEpochDay()
-            homeViewModel.addTask(
-                Task(0, 0, "Task ${counter++}", tags, 25 * ONE_MINUTE, 0, date)
-            )
+            NewTaskBottomSheet().show(childFragmentManager, null)
         }
     }
 
