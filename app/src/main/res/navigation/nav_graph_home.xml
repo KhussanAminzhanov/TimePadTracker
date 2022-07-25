@@ -9,5 +9,16 @@
         android:id="@+id/homeFragment"
         android:name="com.timepad.timepadtracker.presentation.home.HomeFragment"
         android:label="Task"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+        <action
+            android:id="@+id/action_homeFragment_to_timerFragment2"
+            app:destination="@id/timerFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/timerFragment2"
+        android:name="com.timepad.timepadtracker.presentation.timer.TimerFragment"
+        android:label="TimerFragment"
+        tools:layout="@layout/fragment_timer"/>
 </navigation>

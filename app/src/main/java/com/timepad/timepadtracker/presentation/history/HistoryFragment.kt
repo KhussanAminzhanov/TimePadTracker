@@ -33,7 +33,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun setupRecyclerview() {
-        tasksAdapter = TasksAdapter()
+        tasksAdapter = TasksAdapter(::onClick)
         binding.rvTasksHistory.adapter = tasksAdapter
     }
 
@@ -42,6 +42,8 @@ class HistoryFragment : Fragment() {
             tasksAdapter.submitList(it)
         }
     }
+
+    private fun onClick(){}
 
     override fun onDestroyView() {
         super.onDestroyView()
