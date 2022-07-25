@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibtn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -23,10 +23,10 @@
         android:fontFamily="@font/rubik_medium"
         android:text="Rasion Project"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtn_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageButton" />
+        app:layout_constraintTop_toTopOf="@+id/ibtn_back" />
 
     <TextView
         android:id="@+id/tv_task_category"
@@ -60,23 +60,24 @@
         android:layout_marginStart="12dp"
         android:layout_marginBottom="48dp"
         android:text="UI Design"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/tv_timer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView2" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_timer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/rubik_medium"
-        android:text="00:32:10"
+        android:gravity="center"
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/ibtn_start_pause"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="00:32:10" />
 
     <ImageButton
         android:id="@+id/ibtn_start_pause"
@@ -123,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Stop"
+        android:text="@string/stop"
         android:textColor="#070417"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/ibtn_stop"

@@ -5,6 +5,7 @@ import com.timepad.timepadtracker.framework.Interactions
 import com.timepad.timepadtracker.framework.RoomTaskDataSource
 import com.timepad.timepadtracker.framework.db.TimePadDatabase
 import com.timepad.timepadtracker.interactors.*
+import com.timepad.timepadtracker.presentation.MainViewModel
 import com.timepad.timepadtracker.presentation.home.HomeViewModel
 import com.timepad.timepadtracker.presentation.report.ReportViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,7 @@ val mainModule = module {
         )
     }
 
+    viewModel { MainViewModel() }
     viewModel { HomeViewModel(get(), Dispatchers.IO) }
     viewModel { ReportViewModel() }
 }

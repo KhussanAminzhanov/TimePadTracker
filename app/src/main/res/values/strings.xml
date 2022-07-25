@@ -9,4 +9,5 @@
     <string name="day">Day</string>
     <string name="week">Week</string>
     <string name="back_arrow">back arrow</string>
+    <string name="stop">Stop</string>
 </resources>
