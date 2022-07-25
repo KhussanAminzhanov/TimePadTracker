@@ -92,6 +92,18 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_start_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Pause"
+        android:textColor="#070417"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/ibtn_start_pause"
+        app:layout_constraintStart_toStartOf="@+id/ibtn_start_pause"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_start_pause" />
+
     <ImageButton
         android:id="@+id/ibtn_stop"
         android:layout_width="60dp"
@@ -105,5 +117,17 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ibtn_start_pause"
         app:layout_constraintTop_toTopOf="@+id/ibtn_start_pause" />
+
+    <TextView
+        android:id="@+id/tv_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Stop"
+        android:textColor="#070417"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/ibtn_stop"
+        app:layout_constraintStart_toStartOf="@+id/ibtn_stop"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_stop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
