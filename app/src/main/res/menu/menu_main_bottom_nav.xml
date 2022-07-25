@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/nav_graph_home"
         android:icon="@drawable/schedule_48px"
         android:title="@string/item_home"
         tools:showAsAction="ifRoom" />
@@ -12,7 +12,7 @@
         android:title="@string/item_add_task"
         tools:showAsAction="ifRoom" />
     <item
-        android:id="@+id/reportFragment"
+        android:id="@+id/nav_graph_report"
         android:icon="@drawable/pie_chart_48px"
         android:title="@string/item_report"
         tools:showAsAction="ifRoom" />

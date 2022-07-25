@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentHomeBinding
+import com.timepad.timepadtracker.utils.findTopNavController
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
@@ -42,7 +43,7 @@ class HomeFragment : Fragment() {
 
     private fun setupListeners() {
         binding.frameLayout.setOnClickListener {
-
+            findTopNavController().navigate(R.id.timerFragment)
         }
     }
 

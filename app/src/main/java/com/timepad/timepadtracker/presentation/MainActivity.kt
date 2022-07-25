@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment_container_activity_main) as NavHostFragment
+            .findFragmentById(R.id.nav_host_activity_main) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
     }
