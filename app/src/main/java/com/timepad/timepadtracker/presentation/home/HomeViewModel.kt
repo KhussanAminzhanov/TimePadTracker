@@ -15,6 +15,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
     val tasks: LiveData<List<Task>> = interactions.getByDate(LocalDate.now().toEpochDay())
+    val allTasks: LiveData<List<Task>> = interactions.getAllTasks()
 
     fun addTask(task: Task) = viewModelScope.launch(ioDispatcher) {
         interactions.addTask(task)
