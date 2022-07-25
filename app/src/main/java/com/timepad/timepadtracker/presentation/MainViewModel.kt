@@ -13,7 +13,7 @@ class MainViewModel : ViewModel() {
 
     private lateinit var countDownTimer: CountDownTimer
 
-    private var oneSessionTime: Long = 1 * ONE_MINUTE
+    private var oneSessionTime: Long = 25 * ONE_MINUTE
 
     private val _timeLeftInMillis = MutableLiveData(oneSessionTime)
     val timeLeftInMillis: LiveData<Long> = _timeLeftInMillis

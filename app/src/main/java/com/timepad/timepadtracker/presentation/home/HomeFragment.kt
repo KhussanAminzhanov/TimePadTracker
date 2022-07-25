@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentHomeBinding
+import com.timepad.timepadtracker.presentation.MainViewModel
 import com.timepad.timepadtracker.utils.findTopNavController
+import com.timepad.timepadtracker.utils.formatTimeMillis
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: HomeViewModel by sharedViewModel()
+    private val homeViewModel: HomeViewModel by sharedViewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     private lateinit var adapter: TasksAdapter
 
@@ -30,20 +32,28 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerview()
+        setupListeners()
+        setupObservers()
+    }
 
+    private fun setupRecyclerview() {
         adapter = TasksAdapter()
         binding.rvTasks.adapter = adapter
-
-        viewModel.tasks.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-        }
-
-        setupListeners()
     }
 
     private fun setupListeners() {
         binding.frameLayout.setOnClickListener {
             findTopNavController().navigate(R.id.timerFragment)
+        }
+    }
+
+    private fun setupObservers() {
+        homeViewModel.tasks.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+        mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
+            binding.tvTimerHome.text = it.formatTimeMillis("%02d:%02d:%02d")
         }
     }
 
