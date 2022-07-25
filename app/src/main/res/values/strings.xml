@@ -11,4 +11,6 @@
     <string name="back_arrow">back arrow</string>
     <string name="stop">Stop</string>
     <string name="history">History</string>
+    <string name="task_icon">task icon</string>
+    <string name="start_icon">start icon</string>
 </resources>
