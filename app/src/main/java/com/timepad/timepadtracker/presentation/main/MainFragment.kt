@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -14,9 +15,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentMainBinding
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.MainViewModel.Companion.ONE_MINUTE
 import com.timepad.timepadtracker.presentation.home.HomeViewModel
 import com.timepad.timepadtracker.utils.dp
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.LocalDate
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -61,7 +64,10 @@ class MainFragment : Fragment() {
         menuItem.setIconSize(44.dp)
         menuItem.setOnClickListener {
             val tags = listOf("Work", "Study")
-            homeViewModel.addTask(Task(0, 0, "Task ${counter++}", tags, 0, Date()))
+            val date = LocalDate.now().toEpochDay()
+            homeViewModel.addTask(
+                Task(0, 0, "Task ${counter++}", tags, 25 * ONE_MINUTE, 0, date)
+            )
         }
     }
 

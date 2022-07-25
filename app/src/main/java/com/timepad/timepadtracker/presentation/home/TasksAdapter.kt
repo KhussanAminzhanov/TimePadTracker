@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.timepad.timepadtracker.databinding.ItemTasksBinding
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.utils.formatTimeMillis
 
 class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(TasksDiffUtilCallback()) {
 
@@ -16,7 +17,7 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(TasksDiffUt
         fun bind(item: Task) {
             binding.ivTaskIcon.setImageResource(item.iconId)
             binding.tvTaskTitle.text = item.name
-            binding.tvTimeSpent.text = item.totalTimeInMillis.toString()
+            binding.tvTimeSpent.text = item.oneSessionTime.formatTimeMillis("%02d:%02d:%02d")
             binding.tvFirstCategory.text = "Personal"
             binding.tvSecondCategory.text = "Sport"
         }

@@ -29,6 +29,7 @@ class RoomTaskDataSource(database: TimePadDatabase) : TaskDataSource {
                 iconId = taskEntity.iconId,
                 name = taskEntity.name,
                 tags = taskEntity.tags,
+                oneSessionTime = taskEntity.oneSessionTime,
                 totalTimeInMillis = taskEntity.totalTimeInMillis,
                 date = taskEntity.date
             )
