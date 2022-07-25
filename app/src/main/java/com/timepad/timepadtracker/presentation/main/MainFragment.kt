@@ -17,6 +17,7 @@ import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.home.HomeViewModel
 import com.timepad.timepadtracker.utils.dp
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class MainFragment : Fragment() {
 
@@ -60,7 +61,7 @@ class MainFragment : Fragment() {
         menuItem.setIconSize(44.dp)
         menuItem.setOnClickListener {
             val tags = listOf("Work", "Study")
-            homeViewModel.addTask(Task(0, 0, "Task ${counter++}", tags, 0))
+            homeViewModel.addTask(Task(0, 0, "Task ${counter++}", tags, 0, Date()))
         }
     }
 
