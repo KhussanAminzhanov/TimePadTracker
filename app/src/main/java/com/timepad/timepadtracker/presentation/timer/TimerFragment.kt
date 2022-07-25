@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentTimerBinding
 import com.timepad.timepadtracker.presentation.MainViewModel
+import com.timepad.timepadtracker.utils.formatTimeMillis
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -43,7 +44,7 @@ class TimerFragment : Fragment() {
 
     private fun setupObservers() {
         mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
-            binding.tvTimer.text = formatTime(it)
+            binding.tvTimer.text = it.formatTimeMillis("%02d:%02d:%02d")
         }
         mainViewModel.timerIsRunning.observe(viewLifecycleOwner) {
             when (it) {
@@ -65,17 +66,6 @@ class TimerFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun formatTime(timeInMillis: Long): String {
-        val hours = TimeUnit.MILLISECONDS.toHours(timeInMillis)
-        val minutes =
-            TimeUnit.MILLISECONDS.toMinutes(timeInMillis) - TimeUnit.HOURS.toMinutes(hours)
-        val seconds =
-            TimeUnit.MILLISECONDS.toSeconds(timeInMillis) - TimeUnit.HOURS.toSeconds(hours) - TimeUnit.MINUTES.toSeconds(
-                minutes
-            )
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 
     override fun onDestroyView() {
