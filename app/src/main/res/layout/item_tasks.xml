@@ -59,22 +59,6 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_task_title" />
 
             <TextView
-                android:id="@+id/tv_second_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/shape_rectangle_rounded_8dp"
-                android:backgroundTint="#F5EEFC"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="5dp"
-                android:text="Personal"
-                android:textColor="#9B51E0"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_first_category"
-                app:layout_constraintStart_toEndOf="@+id/tv_first_category"
-                app:layout_constraintTop_toTopOf="@+id/tv_first_category" />
-
-            <TextView
                 android:id="@+id/tv_first_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,11 +76,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/play_button"
                 android:layout_marginEnd="20.5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_second_category"
+                android:background="@drawable/play_button"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_first_category"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_second_category" />
+                app:layout_constraintTop_toTopOf="@+id/tv_first_category" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

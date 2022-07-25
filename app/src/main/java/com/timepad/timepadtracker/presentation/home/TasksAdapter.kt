@@ -17,8 +17,7 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(TasksDiffUt
             binding.ivTaskIcon.setImageResource(item.iconId)
             binding.tvTaskTitle.text = item.name
             binding.tvTimeSpent.text = item.totalTimeInMillis.toString()
-            binding.tvFirstCategory.text = "Personal"
-            binding.tvSecondCategory.text = "Sport"
+            binding.tvFirstCategory.text = item.tags[0]
         }
 
     }

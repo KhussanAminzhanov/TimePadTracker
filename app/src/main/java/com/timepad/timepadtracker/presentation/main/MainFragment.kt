@@ -59,8 +59,9 @@ class MainFragment : Fragment() {
         val menuItem = menuView.findItemView(R.id.item_add_task) as BottomNavigationItemView
         menuItem.setIconSize(44.dp)
         menuItem.setOnClickListener {
-            val tags = listOf("Work", "Study")
-            homeViewModel.addTask(Task(0, 0, "Task ${counter++}", tags, 0))
+//            val tags = listOf("Work", "Study")
+//            homeViewModel.addTask(Task(0, 0, "Task ${counter++}", tags, 0))
+            NewTaskBottomSheet().show(childFragmentManager, null)
         }
     }
 
