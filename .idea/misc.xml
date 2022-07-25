@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/ellipse.xml" value="0.25" />
+        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/shape_oval_borderless.xml" value="0.25" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/shape_rectangle_outline_red_6dp.xml" value="0.209" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/activity_main.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_home.xml" value="0.37447916666666664" />

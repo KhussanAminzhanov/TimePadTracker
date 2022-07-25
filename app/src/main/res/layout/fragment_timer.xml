@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -72,11 +73,37 @@
         android:text="00:32:10"
         android:textSize="48sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ibtn_start_pause"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".35" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/ibtn_start_pause"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="166dp"
+        android:background="@drawable/shape_oval_borderless"
+        android:backgroundTint="#E9E9FF"
+        android:src="@drawable/ic_pause"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ibtn_stop"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibtn_stop"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="96dp"
+        android:background="@drawable/shape_oval_borderless"
+        android:backgroundTint="#E9E9FF"
+        android:src="@drawable/ic_stop"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtn_start_pause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibtn_start_pause"
+        app:layout_constraintTop_toTopOf="@+id/ibtn_start_pause" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
