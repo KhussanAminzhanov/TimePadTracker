@@ -14,9 +14,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentMainBinding
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.MainViewModel.Companion.ONE_MINUTE
 import com.timepad.timepadtracker.presentation.home.HomeViewModel
 import com.timepad.timepadtracker.utils.dp
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.LocalDate
 
 class MainFragment : Fragment() {
 
@@ -59,9 +61,11 @@ class MainFragment : Fragment() {
         val menuItem = menuView.findItemView(R.id.item_add_task) as BottomNavigationItemView
         menuItem.setIconSize(44.dp)
         menuItem.setOnClickListener {
-//            val tags = listOf("Work", "Study")
-//            homeViewModel.addTask(Task(0, 0, "Task ${counter++}", tags, 0))
-            NewTaskBottomSheet().show(childFragmentManager, null)
+            val tags = listOf("Work", "Study")
+            val date = LocalDate.now().toEpochDay()
+            homeViewModel.addTask(
+                Task(0, 0, "Task ${counter++}", tags, 25 * ONE_MINUTE, 0, date)
+            )
         }
     }
 

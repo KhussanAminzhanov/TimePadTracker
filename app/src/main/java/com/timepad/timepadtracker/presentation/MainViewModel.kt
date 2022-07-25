@@ -4,6 +4,7 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.timepad.timepadtracker.domain.Task
 
 class MainViewModel : ViewModel() {
 
@@ -13,7 +14,9 @@ class MainViewModel : ViewModel() {
 
     private lateinit var countDownTimer: CountDownTimer
 
-    private var oneSessionTime: Long = 25 * ONE_MINUTE
+    private val selectedTask: Task? = null
+
+    private var oneSessionTime: Long = selectedTask?.oneSessionTime ?: (25 * ONE_MINUTE)
 
     private val _timeLeftInMillis = MutableLiveData(oneSessionTime)
     val timeLeftInMillis: LiveData<Long> = _timeLeftInMillis

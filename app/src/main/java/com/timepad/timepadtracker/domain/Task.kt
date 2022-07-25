@@ -5,5 +5,7 @@ data class Task(
     val iconId: Int = 0,
     val name: String = "",
     val tags: List<String> = emptyList(),
+    val oneSessionTime: Long = 0,
     val totalTimeInMillis: Long = 0,
+    val date: Long
 )

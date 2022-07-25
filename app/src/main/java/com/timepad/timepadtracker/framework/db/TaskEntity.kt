@@ -11,14 +11,18 @@ data class TaskEntity(
     @ColumnInfo(name = "icon_id") var iconId: Int,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "tags") var tags: List<String>,
-    @ColumnInfo(name = "total_time_in_millis") var totalTimeInMillis: Long
+    @ColumnInfo(name = "one_session_time") val oneSessionTime: Long,
+    @ColumnInfo(name = "total_time_in_millis") var totalTimeInMillis: Long,
+    @ColumnInfo(name = "date") var date: Long
 )
 
-fun Task.toRoomEntity() : TaskEntity {
+fun Task.toRoomEntity(): TaskEntity {
     return TaskEntity(
         iconId = this.iconId,
         name = this.name,
         tags = this.tags,
-        totalTimeInMillis = this.totalTimeInMillis
+        oneSessionTime = this.oneSessionTime,
+        totalTimeInMillis = this.totalTimeInMillis,
+        date = this.date
     )
 }

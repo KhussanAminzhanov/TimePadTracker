@@ -8,13 +8,15 @@ import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.framework.Interactions
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class HomeViewModel(
     private val interactions: Interactions,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    val tasks: LiveData<List<Task>> = interactions.getAllTasks()
+    val tasks: LiveData<List<Task>> = interactions.getByDate(LocalDate.now().toEpochDay())
+    val allTasks: LiveData<List<Task>> = interactions.getAllTasks()
 
     val categoriesOfTasks = listOf("Work", "Personal", "Sport", "Hobby", "Leisure Time")
     val tasksWithIcon =

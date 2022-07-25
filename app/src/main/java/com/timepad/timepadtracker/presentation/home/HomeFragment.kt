@@ -46,6 +46,9 @@ class HomeFragment : Fragment() {
         binding.frameLayout.setOnClickListener {
             findTopNavController().navigate(R.id.timerFragment)
         }
+        binding.tvSeeAll.setOnClickListener {
+            findTopNavController().navigate(R.id.historyFragment)
+        }
     }
 
     private fun setupObservers() {

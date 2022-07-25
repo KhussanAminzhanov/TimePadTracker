@@ -15,4 +15,9 @@
         android:name="com.timepad.timepadtracker.presentation.main.MainFragment"
         android:label="Task"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.timepad.timepadtracker.presentation.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history" />
 </navigation>
