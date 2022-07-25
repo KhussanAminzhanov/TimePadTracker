@@ -8,5 +8,5 @@ class TaskRepository(private val dataSource: TaskDataSource) {
     suspend fun deleteTask(task: Task) = dataSource.delete(task)
     suspend fun updateTask(task: Task) = dataSource.update(task)
     fun getAll() = dataSource.getAll()
-
+    fun getByDate(date: Long) = dataSource.getByDate(date)
 }

@@ -8,4 +8,5 @@ interface TaskDataSource {
     suspend fun delete(task: Task)
     suspend fun update(task: Task)
     fun getAll(): LiveData<List<Task>>
+    fun getByDate(date: Long): LiveData<List<Task>>
 }

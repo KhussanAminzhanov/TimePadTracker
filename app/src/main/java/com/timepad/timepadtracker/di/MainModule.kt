@@ -21,7 +21,8 @@ val mainModule = module {
             AddTask(get()),
             DeleteTask(get()),
             GetAllTasks(get()),
-            UpdateTask(get())
+            UpdateTask(get()),
+            GetByDate(get())
         )
     }
 

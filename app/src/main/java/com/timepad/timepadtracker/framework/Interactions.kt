@@ -6,5 +6,6 @@ data class Interactions(
     val addTask: AddTask,
     val deleteTask: DeleteTask,
     val getAllTasks: GetAllTasks,
-    val updateTask: UpdateTask
+    val updateTask: UpdateTask,
+    val getByDate: GetByDate
 )
