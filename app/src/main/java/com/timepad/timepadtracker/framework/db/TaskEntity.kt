@@ -18,6 +18,7 @@ data class TaskEntity(
 
 fun Task.toRoomEntity(): TaskEntity {
     return TaskEntity(
+        id = this.id,
         iconId = this.iconId,
         name = this.name,
         tags = this.tags,

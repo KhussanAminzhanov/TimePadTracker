@@ -8,12 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentTimerBinding
-import com.timepad.timepadtracker.presentation.MainViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillis
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
-import kotlin.math.min
 
 class TimerFragment : Fragment() {
 

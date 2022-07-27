@@ -1,22 +1,25 @@
-package com.timepad.timepadtracker.presentation.history
+package com.timepad.timepadtracker.presentation.tasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentHistoryBinding
-import com.timepad.timepadtracker.presentation.home.HomeViewModel
-import com.timepad.timepadtracker.presentation.home.TasksAdapter
+import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.adapters.TasksAdapter
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class HistoryFragment : Fragment() {
+class AllTasksFragment : Fragment() {
 
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var tasksAdapter: TasksAdapter
-    private val homeViewModel: HomeViewModel by sharedViewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,12 +41,16 @@ class HistoryFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        homeViewModel.tasks.observe(viewLifecycleOwner) {
+        mainViewModel.tasks.observe(viewLifecycleOwner) {
             tasksAdapter.submitList(it)
         }
     }
 
-    private fun onClick(){}
+    private fun onClick(task: Task) {
+        findNavController().popBackStack()
+        findNavController().navigate(R.id.timerFragment)
+        mainViewModel.setSelectedTask(task)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

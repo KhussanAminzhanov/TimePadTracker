@@ -30,7 +30,7 @@
         android:layout_marginStart="16dp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_first_category"
+        app:layout_constraintBottom_toTopOf="@+id/tv_category"
         app:layout_constraintStart_toEndOf="@+id/iv_task_icon"
         app:layout_constraintTop_toTopOf="@+id/iv_task_icon"
         app:layout_constraintVertical_chainStyle="packed"
@@ -49,7 +49,7 @@
         tools:text="00:42:21" />
 
     <TextView
-        android:id="@+id/tv_first_category"
+        android:id="@+id/tv_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -72,7 +72,7 @@
         android:layout_marginEnd="20.5dp"
         android:background="@drawable/play_button"
         android:contentDescription="@string/start_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_first_category"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_category"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_first_category" />
+        app:layout_constraintTop_toTopOf="@+id/tv_category" />
 </androidx.constraintlayout.widget.ConstraintLayout>
