@@ -9,14 +9,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.BottomSheetAddTaskBinding
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel.Companion.ONE_MINUTE
 
-import com.timepad.timepadtracker.presentation.viewmodels.TasksViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.time.LocalDate
 
 class NewTaskBottomSheet : BottomSheetDialogFragment() {
 
-    private val viewModel: TasksViewModel by sharedViewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
     private var _binding: BottomSheetAddTaskBinding? = null
     private val binding get() = _binding!!
 
@@ -36,7 +37,7 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
             ArrayAdapter(
                 requireContext(),
                 R.layout.dropdown_item,
-                viewModel.categoriesOfTasks
+                mainViewModel.categoriesOfTasks
             )
         )
 
@@ -49,16 +50,18 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
         binding.btnAddTask.setOnClickListener {
             val newTask = Task(
                 0,
-                viewModel.tasksWithIcon.map { it.value }[viewModel.categoriesOfTasks.indexOf(binding.tvTaskCategory.text.toString())],
+                mainViewModel.tasksWithIcon.map { it.value }[mainViewModel.categoriesOfTasks.indexOf(
+                    binding.tvTaskCategory.text.toString()
+                )],
                 binding.tvTaskName.text.toString(),
                 listOf(
                     binding.tvTaskCategory.text.toString(),
                     binding.tvTaskCategory.text.toString()
                 ),
-                0,
+                1 * ONE_MINUTE,
                 0, LocalDate.now().toEpochDay()
             )
-            viewModel.addTask(newTask)
+            mainViewModel.addTask(newTask)
             dismiss()
         }
 

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentTimerBinding
-import com.timepad.timepadtracker.presentation.viewmodels.TimerViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillis
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -17,7 +17,7 @@ class TimerFragment : Fragment() {
     private var _binding: FragmentTimerBinding? = null
     private val binding get() = _binding!!
 
-    private val mainViewModel: TimerViewModel by sharedViewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,17 +45,17 @@ class TimerFragment : Fragment() {
         }
         mainViewModel.timerIsRunning.observe(viewLifecycleOwner) {
             when (it) {
-                TimerViewModel.TimerState.STOPPED -> {
+                MainViewModel.TimerState.STOPPED -> {
                     binding.ibtnStartPause.setImageResource(R.drawable.ic_play)
                     binding.tvStartPause.text = "Start"
                     binding.ibtnStop.visibility = View.GONE
                     binding.tvStop.visibility = View.GONE
                 }
-                TimerViewModel.TimerState.PAUSED -> {
+                MainViewModel.TimerState.PAUSED -> {
                     binding.ibtnStartPause.setImageResource(R.drawable.ic_play)
                     binding.tvStartPause.text = "Start"
                 }
-                TimerViewModel.TimerState.RUNNING -> {
+                MainViewModel.TimerState.RUNNING -> {
                     binding.ibtnStartPause.setImageResource(R.drawable.ic_pause)
                     binding.tvStartPause.text = "Pause"
                     binding.ibtnStop.visibility = View.VISIBLE

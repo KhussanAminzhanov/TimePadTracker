@@ -9,8 +9,7 @@ import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentHomeBinding
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.adapters.TasksAdapter
-import com.timepad.timepadtracker.presentation.viewmodels.TasksViewModel
-import com.timepad.timepadtracker.presentation.viewmodels.TimerViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.findTopNavController
 import com.timepad.timepadtracker.utils.formatTimeMillis
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -19,8 +18,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val tasksViewModel: TasksViewModel by sharedViewModel()
-    private val timerViewModel: TimerViewModel by sharedViewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     private lateinit var adapter: TasksAdapter
 
@@ -55,17 +53,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        tasksViewModel.tasks.observe(viewLifecycleOwner) {
+        mainViewModel.tasks.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-        timerViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
+        mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
             binding.tvTimerHome.text = it.formatTimeMillis("%02d:%02d:%02d")
         }
     }
 
     private fun onTaskItemClick(task: Task) {
         findTopNavController().navigate(R.id.timerFragment)
-        timerViewModel.setSelectedTask(task)
+        mainViewModel.setSelectedTask(task)
     }
 
     override fun onDestroyView() {

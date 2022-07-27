@@ -4,20 +4,40 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.framework.Interactions
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.time.LocalDate
 
-class TimerViewModel : ViewModel() {
+class MainViewModel(
+    private val interactions: Interactions,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : ViewModel() {
 
     enum class TimerState {
         RUNNING, PAUSED, STOPPED
     }
 
+    val tasks: LiveData<List<Task>> = interactions.getByDate(LocalDate.now().toEpochDay())
+    val categoriesOfTasks = listOf("Work", "Personal", "Sport", "Hobby", "Leisure Time", "Other")
+
+    val tasksWithIcon =
+        mapOf(
+            categoriesOfTasks[0] to R.drawable.icon_monitor_circle,
+            categoriesOfTasks[1] to R.drawable.icon_book_circle,
+            categoriesOfTasks[2] to R.drawable.icon_barbell_circle,
+            categoriesOfTasks[3] to R.drawable.icon_book_circle,
+            categoriesOfTasks[4] to R.drawable.icon_code_circle
+        )
+
+    private val selectedTask = MutableLiveData<Task>()
+
     private lateinit var countDownTimer: CountDownTimer
-
-    private val _selectedTask = MutableLiveData<Task>()
-    val selectedTask: LiveData<Task> = _selectedTask
-
-    private var oneSessionTime: Long = _selectedTask.value?.oneSessionTime ?: (25 * ONE_MINUTE)
+    private var oneSessionTime: Long = 25 * ONE_MINUTE
 
     private val _timeLeftInMillis = MutableLiveData(oneSessionTime)
     val timeLeftInMillis: LiveData<Long> = _timeLeftInMillis
@@ -53,6 +73,8 @@ class TimerViewModel : ViewModel() {
             override fun onFinish() {
                 _timerIsRunning.value = TimerState.STOPPED
                 _timeLeftInMillis.value = oneSessionTime
+                selectedTask.value?.addToTotalTime(oneSessionTime)
+                selectedTask.value?.let { updateTask(it) }
             }
         }
         countDownTimer.start()
@@ -64,7 +86,21 @@ class TimerViewModel : ViewModel() {
     }
 
     fun setSelectedTask(task: Task) {
-        _selectedTask.value = task
+        selectedTask.value = task
+        oneSessionTime = task.oneSessionTime
+        _timeLeftInMillis.value = oneSessionTime
+    }
+
+    fun addTask(task: Task) = viewModelScope.launch(ioDispatcher) {
+        interactions.addTask(task)
+    }
+
+    fun deleteTask(task: Task) = viewModelScope.launch(ioDispatcher) {
+        interactions.deleteTask(task)
+    }
+
+    fun updateTask(task: Task) = viewModelScope.launch(ioDispatcher) {
+        interactions.updateTask(task)
     }
 
     companion object {
