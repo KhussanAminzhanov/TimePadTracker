@@ -8,19 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentTimerBinding
-import com.timepad.timepadtracker.presentation.MainViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.TimerViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillis
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
-import kotlin.math.min
 
 class TimerFragment : Fragment() {
 
     private var _binding: FragmentTimerBinding? = null
     private val binding get() = _binding!!
 
-    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val mainViewModel: TimerViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,17 +45,17 @@ class TimerFragment : Fragment() {
         }
         mainViewModel.timerIsRunning.observe(viewLifecycleOwner) {
             when (it) {
-                MainViewModel.TimerState.STOPPED -> {
+                TimerViewModel.TimerState.STOPPED -> {
                     binding.ibtnStartPause.setImageResource(R.drawable.ic_play)
                     binding.tvStartPause.text = "Start"
                     binding.ibtnStop.visibility = View.GONE
                     binding.tvStop.visibility = View.GONE
                 }
-                MainViewModel.TimerState.PAUSED -> {
+                TimerViewModel.TimerState.PAUSED -> {
                     binding.ibtnStartPause.setImageResource(R.drawable.ic_play)
                     binding.tvStartPause.text = "Start"
                 }
-                MainViewModel.TimerState.RUNNING -> {
+                TimerViewModel.TimerState.RUNNING -> {
                     binding.ibtnStartPause.setImageResource(R.drawable.ic_pause)
                     binding.tvStartPause.text = "Pause"
                     binding.ibtnStop.visibility = View.VISIBLE

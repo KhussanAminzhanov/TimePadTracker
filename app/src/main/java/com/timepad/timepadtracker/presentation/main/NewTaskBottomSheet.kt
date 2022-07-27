@@ -10,18 +10,15 @@ import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.BottomSheetAddTaskBinding
 import com.timepad.timepadtracker.domain.Task
 
-import com.timepad.timepadtracker.presentation.home.HomeViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.TasksViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.time.LocalDate
 
 class NewTaskBottomSheet : BottomSheetDialogFragment() {
 
-    private val viewModel: HomeViewModel by sharedViewModel()
+    private val viewModel: TasksViewModel by sharedViewModel()
     private var _binding: BottomSheetAddTaskBinding? = null
     private val binding get() = _binding!!
-
-
-    private var counter = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,

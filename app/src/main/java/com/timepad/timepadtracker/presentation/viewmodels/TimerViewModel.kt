@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation
+package com.timepad.timepadtracker.presentation.viewmodels
 
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.timepad.timepadtracker.domain.Task
 
-class MainViewModel : ViewModel() {
+class TimerViewModel : ViewModel() {
 
     enum class TimerState {
         RUNNING, PAUSED, STOPPED
@@ -14,9 +14,10 @@ class MainViewModel : ViewModel() {
 
     private lateinit var countDownTimer: CountDownTimer
 
-    private val selectedTask: Task? = null
+    private val _selectedTask = MutableLiveData<Task>()
+    val selectedTask: LiveData<Task> = _selectedTask
 
-    private var oneSessionTime: Long = selectedTask?.oneSessionTime ?: (25 * ONE_MINUTE)
+    private var oneSessionTime: Long = _selectedTask.value?.oneSessionTime ?: (25 * ONE_MINUTE)
 
     private val _timeLeftInMillis = MutableLiveData(oneSessionTime)
     val timeLeftInMillis: LiveData<Long> = _timeLeftInMillis
@@ -60,6 +61,10 @@ class MainViewModel : ViewModel() {
     private fun pauseTimer() {
         countDownTimer.cancel()
         _timerIsRunning.value = TimerState.PAUSED
+    }
+
+    fun setSelectedTask(task: Task) {
+        _selectedTask.value = task
     }
 
     companion object {

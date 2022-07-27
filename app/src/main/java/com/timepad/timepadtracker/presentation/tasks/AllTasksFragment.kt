@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.history
+package com.timepad.timepadtracker.presentation.tasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.databinding.FragmentHistoryBinding
-import com.timepad.timepadtracker.presentation.home.HomeViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.TasksViewModel
 import com.timepad.timepadtracker.presentation.home.TasksAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class HistoryFragment : Fragment() {
+class AllTasksFragment : Fragment() {
 
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var tasksAdapter: TasksAdapter
-    private val homeViewModel: HomeViewModel by sharedViewModel()
+    private val homeViewModel: TasksViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

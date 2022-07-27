@@ -1,6 +1,7 @@
-package com.timepad.timepadtracker.presentation.home
+package com.timepad.timepadtracker.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.timepad.timepadtracker.R
@@ -10,17 +11,23 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class HomeViewModel(
+class TasksViewModel(
     private val interactions: Interactions,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     val tasks: LiveData<List<Task>> = interactions.getByDate(LocalDate.now().toEpochDay())
-    val allTasks: LiveData<List<Task>> = interactions.getAllTasks()
 
-    val categoriesOfTasks = listOf("Work", "Personal", "Sport", "Hobby", "Leisure Time")
+    val categoriesOfTasks = listOf("Work", "Personal", "Sport", "Hobby", "Leisure Time", "Other")
+
     val tasksWithIcon =
-        mapOf(categoriesOfTasks[0] to R.drawable.icon_monitor_circle, categoriesOfTasks[1] to R.drawable.icon_book_circle, categoriesOfTasks[2] to R.drawable.icon_barbell_circle, categoriesOfTasks[3] to R.drawable.icon_book_circle, categoriesOfTasks[4] to R.drawable.icon_code_circle)
+        mapOf(
+            categoriesOfTasks[0] to R.drawable.icon_monitor_circle,
+            categoriesOfTasks[1] to R.drawable.icon_book_circle,
+            categoriesOfTasks[2] to R.drawable.icon_barbell_circle,
+            categoriesOfTasks[3] to R.drawable.icon_book_circle,
+            categoriesOfTasks[4] to R.drawable.icon_code_circle
+        )
 
     fun addTask(task: Task) = viewModelScope.launch(ioDispatcher) {
         interactions.addTask(task)

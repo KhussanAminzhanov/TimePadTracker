@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentHomeBinding
-import com.timepad.timepadtracker.presentation.MainViewModel
+import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.adapters.TasksAdapter
+import com.timepad.timepadtracker.presentation.viewmodels.TasksViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.TimerViewModel
 import com.timepad.timepadtracker.utils.findTopNavController
 import com.timepad.timepadtracker.utils.formatTimeMillis
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -16,8 +19,8 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val homeViewModel: HomeViewModel by sharedViewModel()
-    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val tasksViewModel: TasksViewModel by sharedViewModel()
+    private val timerViewModel: TimerViewModel by sharedViewModel()
 
     private lateinit var adapter: TasksAdapter
 
@@ -38,7 +41,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerview() {
-        adapter = TasksAdapter(::onClick)
+        adapter = TasksAdapter(::onTaskItemClick)
         binding.rvTasks.adapter = adapter
     }
 
@@ -52,16 +55,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        homeViewModel.tasks.observe(viewLifecycleOwner) {
+        tasksViewModel.tasks.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-        mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
+        timerViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
             binding.tvTimerHome.text = it.formatTimeMillis("%02d:%02d:%02d")
         }
     }
 
-    private fun onClick(){
+    private fun onTaskItemClick(task: Task) {
         findTopNavController().navigate(R.id.timerFragment)
+        timerViewModel.setSelectedTask(task)
     }
 
     override fun onDestroyView() {

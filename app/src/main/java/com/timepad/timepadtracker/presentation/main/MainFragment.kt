@@ -1,6 +1,5 @@
 package com.timepad.timepadtracker.presentation.main
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentMainBinding
-import com.timepad.timepadtracker.domain.Task
-import com.timepad.timepadtracker.presentation.MainViewModel.Companion.ONE_MINUTE
-import com.timepad.timepadtracker.presentation.home.HomeViewModel
 import com.timepad.timepadtracker.utils.dp
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.time.LocalDate
 
 class MainFragment : Fragment() {
 
@@ -29,9 +23,6 @@ class MainFragment : Fragment() {
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-    private val homeViewModel: HomeViewModel by viewModel()
-    private var counter = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
