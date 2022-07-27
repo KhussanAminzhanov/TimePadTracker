@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.concurrent.TimeUnit
+import kotlin.math.min
 
 class ReportFragment : Fragment() {
 
@@ -38,6 +40,21 @@ class ReportFragment : Fragment() {
     private fun setupObservers() {
         viewModel.selectedTab.observe(viewLifecycleOwner) {
             changeTabAppearance(it)
+        }
+        viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
+            var tasksCompleted: Long = 0
+            var totalDuration: Long = 0
+            tasks.forEach { task ->
+                tasksCompleted += task.totalTimeInMillis / task.oneSessionTime
+                totalDuration += task.totalTimeInMillis
+            }
+
+            val hour = TimeUnit.MILLISECONDS.toHours(totalDuration)
+            val minutes =
+                TimeUnit.MILLISECONDS.toMinutes(totalDuration) - TimeUnit.HOURS.toMinutes(hour)
+            binding.tvHour.text = hour.toString()
+            binding.tvMinute.text = minutes.toString()
+            binding.tvTasksCompletedCount.text = tasksCompleted.toString()
         }
     }
 

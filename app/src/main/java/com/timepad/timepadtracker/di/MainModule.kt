@@ -25,5 +25,5 @@ val mainModule = module {
     }
 
     viewModel { MainViewModel(get()) }
-    viewModel { ReportViewModel() }
+    viewModel { ReportViewModel(get()) }
 }
