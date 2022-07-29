@@ -12,7 +12,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.*
 
 
 class MainViewModel(
@@ -100,7 +99,7 @@ class MainViewModel(
 
     fun setSelectedTask(task: Task) {
         selectedTask.value = task
-        oneSessionTime = task.oneSessionTime
+        oneSessionTime = task.duration
         _timeLeftInMillis.value = oneSessionTime
     }
 

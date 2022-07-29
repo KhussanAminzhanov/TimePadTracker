@@ -49,7 +49,7 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
             val iconId = mainViewModel.tasksWithIcon[category] ?: R.drawable.icon_code_circle
             val newTask = Task(
                 iconId = iconId,
-                createdDate = date,
+                daySinceEpoch = date,
                 name = name,
                 category = category,
             )

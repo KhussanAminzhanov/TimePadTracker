@@ -45,7 +45,7 @@ class ReportFragment : Fragment() {
 
             tasks.forEach { task ->
                 Log.e("ReportFragment", "$task")
-                tasksCompleted += task.totalTimeInMillis / task.oneSessionTime
+                tasksCompleted += task.totalTimeInMillis / task.duration
                 totalDuration += task.totalTimeInMillis
             }
 

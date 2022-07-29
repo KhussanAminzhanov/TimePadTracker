@@ -19,11 +19,11 @@ data class TaskEntity(
 fun Task.toRoomEntity(): TaskEntity {
     return TaskEntity(
         id = this.id,
-        date = this.createdDate,
+        date = this.daySinceEpoch,
         iconId = this.iconId,
         name = this.name,
         category = this.category,
-        oneSessionTime = this.oneSessionTime,
+        oneSessionTime = this.duration,
         totalTimeInMillis = this.totalTimeInMillis,
     )
 }
