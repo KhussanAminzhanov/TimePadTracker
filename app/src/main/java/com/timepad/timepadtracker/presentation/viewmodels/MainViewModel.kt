@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.framework.Interactions
+import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
+import com.timepad.timepadtracker.utils.getCurrentHourOfDay
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -82,14 +85,16 @@ class MainViewModel(
     }
 
     private fun onTimerFinish() {
-//        val task = selectedTask.value ?: return
-//        val cal = Calendar.getInstance().apply { time = Date() }
-//        val hour = cal.get(Calendar.HOUR_OF_DAY)
-//        val list = mutableListOf(hour)
-//        list.addAll(task.completedTaskTimes)
-//        task.totalTimeInMillis += oneSessionTime
-//        task.completedTaskTimes = list
-//        updateTask(task)
+        val selectedTask = selectedTask.value ?: return
+        selectedTask.totalTimeInMillis += oneSessionTime
+        updateTask(selectedTask)
+
+        val taskRecord = TaskRecord(
+            epochDay = getCurrentDaySinceEpoch(),
+            hour = getCurrentHourOfDay(),
+            duration = selectedTask.duration
+        )
+        addTaskRecord(taskRecord)
     }
 
     private fun pauseTimer() {
@@ -115,10 +120,13 @@ class MainViewModel(
         interactions.updateTask(task)
     }
 
+    fun addTaskRecord(taskRecord: TaskRecord) = viewModelScope.launch(ioDispatcher) {
+        interactions.addTaskRecord(taskRecord)
+    }
+
     companion object {
         const val TAG = "MainViewModel"
         const val ONE_MINUTE: Long = 60000
-        const val HALF_MINUTE: Long = 30000
         const val COUNTDOWN_INTERVAL: Long = 1000
     }
 }

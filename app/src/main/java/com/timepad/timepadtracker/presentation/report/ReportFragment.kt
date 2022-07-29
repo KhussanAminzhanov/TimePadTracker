@@ -39,15 +39,13 @@ class ReportFragment : Fragment() {
         viewModel.selectedTab.observe(viewLifecycleOwner) {
             changeTabAppearance(it)
         }
-        viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
-            var tasksCompleted: Long = 0
+
+        viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
+            Log.e(TAG, "${taskRecords}")
+            val tasksCompleted = taskRecords.size
             var totalDuration: Long = 0
 
-            tasks.forEach { task ->
-                Log.e("ReportFragment", "$task")
-                tasksCompleted += task.totalTimeInMillis / task.duration
-                totalDuration += task.totalTimeInMillis
-            }
+            taskRecords.forEach { totalDuration += it.duration }
 
             val hour = TimeUnit.MILLISECONDS.toHours(totalDuration)
             val minutes =
