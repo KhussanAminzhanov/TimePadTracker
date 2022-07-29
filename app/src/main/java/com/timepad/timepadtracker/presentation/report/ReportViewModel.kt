@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import java.time.LocalDate
 
 class ReportViewModel(
-    private val interactions: Interactions,
+    interactions: Interactions,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -22,7 +22,7 @@ class ReportViewModel(
         _selectedTab.value = tab
     }
 
-    fun getBarChar() {
-
+    fun getTodayReport() : List<Int> {
+        return emptyList()
     }
 }

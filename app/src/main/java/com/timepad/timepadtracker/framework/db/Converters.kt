@@ -14,7 +14,8 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromCompletedTaskTimesString(times: String): List<Int> {
+    fun fromTimesString(times: String): List<Int> {
+        if (times.isEmpty()) return emptyList()
         return times.split("|").map { it.toInt() }
     }
 

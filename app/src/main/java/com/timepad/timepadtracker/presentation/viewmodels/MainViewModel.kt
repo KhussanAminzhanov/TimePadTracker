@@ -12,6 +12,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.util.*
+
 
 class MainViewModel(
     private val interactions: Interactions,
@@ -23,7 +25,7 @@ class MainViewModel(
     }
 
     val tasks: LiveData<List<Task>> = interactions.getByDate(LocalDate.now().toEpochDay())
-    val categoriesOfTasks = listOf("Work", "Personal", "Sport", "Hobby", "Leisure Time", "Other")
+    val categoriesOfTasks = listOf("Work", "Personal", "Sport", "Hobby", "Leisure Time")
 
     val tasksWithIcon =
         mapOf(
@@ -37,7 +39,7 @@ class MainViewModel(
     private val selectedTask = MutableLiveData<Task>()
 
     private lateinit var countDownTimer: CountDownTimer
-    private var oneSessionTime: Long = 25 * ONE_MINUTE
+    private var oneSessionTime: Long = 0 * ONE_MINUTE
 
     private val _timeLeftInMillis = MutableLiveData(oneSessionTime)
     val timeLeftInMillis: LiveData<Long> = _timeLeftInMillis
@@ -46,6 +48,7 @@ class MainViewModel(
     val timerIsRunning: LiveData<TimerState> = _timerIsRunning
 
     fun startOrPauseTimer() {
+        if (selectedTask.value == null) return
         if (_timerIsRunning.value != TimerState.RUNNING) {
             startTimer()
         } else {
@@ -73,11 +76,21 @@ class MainViewModel(
             override fun onFinish() {
                 _timerIsRunning.value = TimerState.STOPPED
                 _timeLeftInMillis.value = oneSessionTime
-                selectedTask.value?.addToTotalTime(oneSessionTime)
-                selectedTask.value?.let { updateTask(it) }
+                onTimerFinish()
             }
         }
         countDownTimer.start()
+    }
+
+    private fun onTimerFinish() {
+        val task = selectedTask.value ?: return
+        val cal = Calendar.getInstance().apply { time = Date() }
+        val hour = cal.get(Calendar.HOUR_OF_DAY)
+        val list = mutableListOf(hour)
+        list.addAll(task.completedTaskTimes)
+        task.totalTimeInMillis += oneSessionTime
+        task.completedTaskTimes = list
+        updateTask(task)
     }
 
     private fun pauseTimer() {
@@ -104,7 +117,9 @@ class MainViewModel(
     }
 
     companion object {
+        const val TAG = "MainViewModel"
         const val ONE_MINUTE: Long = 60000
+        const val HALF_MINUTE: Long = 30000
         const val COUNTDOWN_INTERVAL: Long = 1000
     }
 }

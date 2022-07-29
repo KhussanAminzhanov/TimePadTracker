@@ -7,14 +7,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(
-    entities = [TaskEntity::class, DayEntity::class],
+    entities = [TaskEntity::class],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class TimePadDatabase : RoomDatabase() {
     abstract val taskDao: TaskDao
-    abstract val dayDao: DayDao
 
     companion object {
         @Volatile

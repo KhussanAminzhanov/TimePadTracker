@@ -7,9 +7,6 @@ data class Task(
     val tags: List<String> = emptyList(),
     var oneSessionTime: Long = 0,
     var totalTimeInMillis: Long = 0,
-    val date: Long
-) {
-    fun addToTotalTime(time: Long) {
-        totalTimeInMillis += time
-    }
-}
+    val date: Long,
+    var completedTaskTimes: List<Int>
+)

@@ -7,10 +7,5 @@ data class Interactions(
     val deleteTask: DeleteTask,
     val getAllTasks: GetAllTasks,
     val updateTask: UpdateTask,
-    val getByDate: GetByDate,
-    val addDay: AddDay,
-    val deleteDay: DeleteDay,
-    val updateDay: UpdateDay,
-    val getAllDays: GetAllDays,
-    val getDay: GetDay
+    val getByDate: GetByDate
 )

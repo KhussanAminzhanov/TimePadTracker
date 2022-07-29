@@ -13,7 +13,8 @@ data class TaskEntity(
     @ColumnInfo(name = "tags") var tags: List<String>,
     @ColumnInfo(name = "one_session_time") val oneSessionTime: Long,
     @ColumnInfo(name = "total_time_in_millis") var totalTimeInMillis: Long,
-    @ColumnInfo(name = "date") var date: Long
+    @ColumnInfo(name = "date") var date: Long,
+    @ColumnInfo(name = "completed_task_times") var completedTaskTimes: List<Int>
 )
 
 fun Task.toRoomEntity(): TaskEntity {
@@ -24,6 +25,7 @@ fun Task.toRoomEntity(): TaskEntity {
         tags = this.tags,
         oneSessionTime = this.oneSessionTime,
         totalTimeInMillis = this.totalTimeInMillis,
-        date = this.date
+        date = this.date,
+        completedTaskTimes = this.completedTaskTimes
     )
 }

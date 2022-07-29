@@ -10,6 +10,7 @@ import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.BottomSheetAddTaskBinding
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel.Companion.HALF_MINUTE
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel.Companion.ONE_MINUTE
 
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -58,8 +59,9 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
                     binding.tvTaskCategory.text.toString(),
                     binding.tvTaskCategory.text.toString()
                 ),
-                1 * ONE_MINUTE,
-                0, LocalDate.now().toEpochDay()
+                1000,
+                0, LocalDate.now().toEpochDay(),
+                emptyList()
             )
             mainViewModel.addTask(newTask)
             dismiss()
