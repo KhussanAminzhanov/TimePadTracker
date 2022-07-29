@@ -20,6 +20,6 @@ interface TaskDao {
     @Query("SELECT * FROM task_table ORDER BY id")
     fun getAll(): LiveData<List<TaskEntity>>
 
-    @Query("SELECT * FROM task_table WHERE date = :date")
+    @Query("SELECT * FROM task_table WHERE created_date = :date")
     fun getByDate(date: Long): LiveData<List<TaskEntity>>
 }

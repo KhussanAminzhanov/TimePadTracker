@@ -83,14 +83,14 @@ class MainViewModel(
     }
 
     private fun onTimerFinish() {
-        val task = selectedTask.value ?: return
-        val cal = Calendar.getInstance().apply { time = Date() }
-        val hour = cal.get(Calendar.HOUR_OF_DAY)
-        val list = mutableListOf(hour)
-        list.addAll(task.completedTaskTimes)
-        task.totalTimeInMillis += oneSessionTime
-        task.completedTaskTimes = list
-        updateTask(task)
+//        val task = selectedTask.value ?: return
+//        val cal = Calendar.getInstance().apply { time = Date() }
+//        val hour = cal.get(Calendar.HOUR_OF_DAY)
+//        val list = mutableListOf(hour)
+//        list.addAll(task.completedTaskTimes)
+//        task.totalTimeInMillis += oneSessionTime
+//        task.completedTaskTimes = list
+//        updateTask(task)
     }
 
     private fun pauseTimer() {

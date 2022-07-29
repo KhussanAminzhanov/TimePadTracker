@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="72dp"
-        android:text="Name of Task"
+        android:text="@string/name_of_task"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -28,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tv_task_name"
+            android:id="@+id/edt_task_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:text="12345" />
@@ -40,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
-        android:text="Category"
+        android:text="@string/category"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -55,12 +54,13 @@
         app:layout_constraintTop_toTopOf="@+id/textView5">
 
         <AutoCompleteTextView
-            android:inputType="none"
             android:id="@+id/tv_task_category"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            tools:text="ADADSDA" />
+            android:inputType="none"
+            tools:ignore="LabelFor"
+            tools:text="Work" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

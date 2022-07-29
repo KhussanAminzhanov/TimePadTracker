@@ -35,12 +35,12 @@ class RoomTaskDataSource(database: TimePadDatabase) : TaskDataSource {
         return list.map { taskEntity ->
             Task(
                 id = taskEntity.id,
-                iconId = taskEntity.iconId,
                 name = taskEntity.name,
-                tags = taskEntity.tags,
+                iconId = taskEntity.iconId,
+                createdDate = taskEntity.date,
+                category = taskEntity.category,
                 oneSessionTime = taskEntity.oneSessionTime,
-                totalTimeInMillis = taskEntity.totalTimeInMillis,
-                date = taskEntity.date
+                totalTimeInMillis = taskEntity.totalTimeInMillis
             )
         }
     }
