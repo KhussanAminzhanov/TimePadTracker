@@ -3,16 +3,13 @@ package com.timepad.timepadtracker.presentation.report
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
-import kotlin.math.min
 
 class ReportFragment : Fragment() {
 
@@ -44,6 +41,7 @@ class ReportFragment : Fragment() {
         viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
             var tasksCompleted: Long = 0
             var totalDuration: Long = 0
+
             tasks.forEach { task ->
                 tasksCompleted += task.totalTimeInMillis / task.oneSessionTime
                 totalDuration += task.totalTimeInMillis
@@ -52,6 +50,7 @@ class ReportFragment : Fragment() {
             val hour = TimeUnit.MILLISECONDS.toHours(totalDuration)
             val minutes =
                 TimeUnit.MILLISECONDS.toMinutes(totalDuration) - TimeUnit.HOURS.toMinutes(hour)
+
             binding.tvHour.text = hour.toString()
             binding.tvMinute.text = minutes.toString()
             binding.tvTasksCompletedCount.text = tasksCompleted.toString()

@@ -21,4 +21,8 @@ class ReportViewModel(
     fun setTab(tab: Int) {
         _selectedTab.value = tab
     }
+
+    fun getBarChar() {
+
+    }
 }
