@@ -3,16 +3,12 @@ package com.timepad.timepadtracker.utils
 import java.time.LocalDate
 import java.util.*
 
-fun getCurrentDayOfYear(): Int {
-    val cal = Calendar.getInstance().apply { time = Date() }
-    return cal.get(Calendar.DAY_OF_YEAR)
-}
+private val cal = Calendar.getInstance().apply { time = Date() }
 
-fun getCurrentHourOfDay(): Int {
-    val cal = Calendar.getInstance().apply { time = Date() }
-    return cal.get(Calendar.HOUR_OF_DAY)
-}
+fun getCurrentDayOfYear(): Int = cal.get(Calendar.DAY_OF_YEAR)
 
-fun getCurrentDaySinceEpoch(): Long {
-    return LocalDate.now().toEpochDay()
-}
+fun getCurrentHourOfDay(): Int = cal.get(Calendar.HOUR_OF_DAY)
+
+fun getCurrentDayOfWeek(): Int = cal.get(Calendar.DAY_OF_WEEK)
+
+fun getCurrentDaySinceEpoch(): Long = LocalDate.now().toEpochDay()
