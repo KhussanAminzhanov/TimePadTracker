@@ -108,6 +108,9 @@ class MainViewModel(
         _timeLeftInMillis.value = oneSessionTime
     }
 
+    fun getSelectedTaskCategory(): String = selectedTask.value?.category ?: "None"
+    fun getSelectedTaskTitle(): String = selectedTask.value?.name ?: "Undefined"
+
     fun addTask(task: Task) = viewModelScope.launch(ioDispatcher) {
         interactions.addTask(task)
     }

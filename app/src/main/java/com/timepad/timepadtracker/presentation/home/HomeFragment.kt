@@ -33,9 +33,14 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupLayout()
         setupRecyclerview()
         setupListeners()
         setupObservers()
+    }
+
+    private fun setupLayout() {
+        binding.tvTaskTitle.text = mainViewModel.getSelectedTaskTitle()
     }
 
     private fun setupRecyclerview() {

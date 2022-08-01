@@ -29,8 +29,14 @@ class TimerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupLayout()
         setupListeners()
         setupObservers()
+    }
+
+    private fun setupLayout() {
+        binding.tvTaskTitle.text = mainViewModel.getSelectedTaskTitle()
+        binding.tvTaskCategory.text = mainViewModel.getSelectedTaskCategory()
     }
 
     private fun setupListeners() {

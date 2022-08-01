@@ -14,6 +14,7 @@ import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.getColorFromAttr
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.time.LocalDate
+import java.util.concurrent.TimeUnit
 
 class NewTaskBottomSheet : BottomSheetDialogFragment() {
 
@@ -54,6 +55,7 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
                 daySinceEpoch = date,
                 name = name,
                 category = category,
+                duration = getDuration()
             )
             mainViewModel.addTask(newTask)
             dismiss()
@@ -73,6 +75,13 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupLayout() {
         binding.btnAddTask.setTextColor(requireContext().getColorFromAttr(android.R.attr.textColorTertiaryInverse))
+    }
+
+    private fun getDuration(): Long {
+        if (binding.edtTaskMinute.text.isNullOrBlank() && binding.edtTaskSeconds.text.isNullOrBlank()) return 0
+        val minutes = binding.edtTaskMinute.text.toString().toLongOrNull() ?: 0
+        val seconds = binding.edtTaskSeconds.text.toString().toLongOrNull() ?: 0
+        return TimeUnit.MINUTES.toMillis(minutes) + TimeUnit.SECONDS.toMillis(seconds)
     }
 
     private fun checkInputData(): Boolean {

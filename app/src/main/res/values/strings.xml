@@ -22,4 +22,7 @@
     <string name="name">Name</string>
     <string name="today">Today</string>
     <string name="see_all">See All</string>
+    <string name="seconds">Seconds</string>
+    <string name="minute">Minute</string>
+    <string name="minutes">Minutes</string>
 </resources>
