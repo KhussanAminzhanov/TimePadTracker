@@ -34,7 +34,7 @@
         android:paddingVertical="12dp"
         app:elevation="0dp"
         app:itemIconSize="24dp"
-        app:itemIconTint="@color/text"
+        app:itemIconTint="@drawable/selector_bottom_nav_menu_item_color"
         app:itemPaddingBottom="0dp"
         app:itemRippleColor="@android:color/transparent"
         app:labelVisibilityMode="unlabeled"
