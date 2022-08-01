@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/nav_graph_home"
-        android:icon="@drawable/ic_time_outline"
+        android:icon="@drawable/selector_bottom_nav_menu_item_task_icon"
         android:title="@string/item_home"
         tools:showAsAction="ifRoom" />
     <item
@@ -13,7 +13,7 @@
         tools:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_graph_report"
-        android:icon="@drawable/ic_pie_chart_outline"
+        android:icon="@drawable/selector_bottom_nav_menu_item_report_icon"
         android:title="@string/item_report"
         tools:showAsAction="ifRoom" />
 </menu>

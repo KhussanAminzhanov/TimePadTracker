@@ -3,26 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/ellipse.xml" value="0.25" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/icon_barbell_circle.xml" value="0.25" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/shape_oval_borderless.xml" value="0.25" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/shape_rectangle_outline_red_6dp.xml" value="0.209" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/shape_rectangle_rounded_12dp.xml" value="0.25" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/activity_main.xml" value="0.37447916666666664" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/bottom_sheet_add_task.xml" value="0.37447916666666664" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/dropdown_item.xml" value="0.37447916666666664" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_history.xml" value="0.3734375" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_home.xml" value="0.37447916666666664" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_main.xml" value="0.37447916666666664" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_report.xml" value="0.37447916666666664" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_timer.xml" value="0.25" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/item_task.xml" value="0.37447916666666664" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/item_tasks.xml" value="1.079047619047619" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/menu/menu_main_bottom_nav.xml" value="0.37447916666666664" />
         <entry key="app/src/main/res/drawable/checkmark.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/donut_small_48px.xml" value="0.2665" />
+        <entry key="app/src/main/res/drawable/item_clock_icon_selector.xml" value="0.142" />
         <entry key="app/src/main/res/drawable/pie_chart_48px.xml" value="0.2665" />
         <entry key="app/src/main/res/drawable/play_button.xml" value="0.2665" />
+        <entry key="app/src/main/res/drawable/selector_bottom_nav_menu_item_report_icon.xml" value="0.142" />
         <entry key="app/src/main/res/drawable/shape_card_view_rounded_16dp.xml" value="0.2665" />
         <entry key="app/src/main/res/drawable/shape_oval_borderless.xml" value="0.2665" />
         <entry key="app/src/main/res/drawable/shape_rectangle_rounded_10dp.xml" value="0.2665" />
@@ -34,7 +20,7 @@
         <entry key="app/src/main/res/font/rubik_mono_one.xml" value="0.4192708333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="1.0" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_main.xml" value="0.3885416666666667" />
+        <entry key="app/src/main/res/layout/fragment_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_report.xml" value="0.38958333333333334" />
         <entry key="app/src/main/res/layout/fragment_timer.xml" value="0.3885416666666667" />
         <entry key="app/src/main/res/layout/item_tasks.xml" value="0.5" />
