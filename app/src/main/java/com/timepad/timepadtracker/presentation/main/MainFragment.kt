@@ -14,6 +14,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentMainBinding
 import com.timepad.timepadtracker.utils.dp
+import com.timepad.timepadtracker.utils.getScreenWidth
+import com.timepad.timepadtracker.utils.px
+import kotlin.math.roundToInt
 
 class MainFragment : Fragment() {
 

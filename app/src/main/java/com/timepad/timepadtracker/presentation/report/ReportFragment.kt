@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
 import com.timepad.timepadtracker.utils.getCurrentDayOfWeek
 import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch

@@ -8,7 +8,7 @@
         tools:showAsAction="ifRoom" />
     <item
         android:id="@+id/item_add_task"
-        android:icon="@drawable/add_circle_48px"
+        android:icon="@drawable/add_circle_rounded_48px"
         android:title="@string/item_add_task"
         tools:showAsAction="ifRoom" />
     <item
