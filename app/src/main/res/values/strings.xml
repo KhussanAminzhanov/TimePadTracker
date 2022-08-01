@@ -16,4 +16,8 @@
     <string name="all_tasks">All Tasks</string>
     <string name="category">Category</string>
     <string name="name_of_task">Name of Task</string>
+    <string name="task">Task</string>
+    <string name="new_task">New task</string>
+    <string name="add_task">add task</string>
+    <string name="name">Name</string>
 </resources>

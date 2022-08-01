@@ -1,5 +1,6 @@
 package com.timepad.timepadtracker.presentation.main
 
+import android.app.ProgressDialog.show
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -25,6 +26,8 @@ class MainFragment : Fragment() {
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private val newTaskBottomSheet: NewTaskBottomSheet = NewTaskBottomSheet()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +59,7 @@ class MainFragment : Fragment() {
         menuItem.setIconTintList(ColorStateList.valueOf(Color.BLACK))
         menuItem.setIconSize(44.dp)
         menuItem.setOnClickListener {
-            NewTaskBottomSheet().show(childFragmentManager, null)
+            newTaskBottomSheet.show(childFragmentManager, null)
         }
     }
 

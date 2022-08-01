@@ -13,6 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:textColorTertiary">@color/text_tertiary</item>
+        <item name="android:textColorTertiaryInverse">@color/text_tertiary_night</item>
         <item name="fontFamily">@font/rubik_regular</item>
     </style>
 </resources>

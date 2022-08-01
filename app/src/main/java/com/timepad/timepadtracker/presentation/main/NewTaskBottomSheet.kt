@@ -1,5 +1,6 @@
 package com.timepad.timepadtracker.presentation.main
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,16 @@ import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.BottomSheetAddTaskBinding
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
+import com.timepad.timepadtracker.utils.getColorFromAttr
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.time.LocalDate
 
 class NewTaskBottomSheet : BottomSheetDialogFragment() {
 
-    private val mainViewModel: MainViewModel by sharedViewModel()
     private var _binding: BottomSheetAddTaskBinding? = null
     private val binding get() = _binding!!
+
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +33,7 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupLayout()
 
         binding.tvTaskCategory.setAdapter(
             ArrayAdapter(
@@ -38,8 +42,6 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
                 mainViewModel.categoriesOfTasks
             )
         )
-
-        binding.btnCancel.setOnClickListener { dismiss() }
 
         binding.btnAddTask.setOnClickListener {
             if (!checkInputData()) return@setOnClickListener
@@ -58,9 +60,19 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        binding.edtTaskName.setText("")
+        binding.tvTaskCategory.setText("")
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupLayout() {
+        binding.btnAddTask.setTextColor(requireContext().getColorFromAttr(android.R.attr.textColorTertiaryInverse))
     }
 
     private fun checkInputData(): Boolean {
