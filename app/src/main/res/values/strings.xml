@@ -20,4 +20,6 @@
     <string name="new_task">New task</string>
     <string name="add_task">add task</string>
     <string name="name">Name</string>
+    <string name="today">Today</string>
+    <string name="see_all">See All</string>
 </resources>

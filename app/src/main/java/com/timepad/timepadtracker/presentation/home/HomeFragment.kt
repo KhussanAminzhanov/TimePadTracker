@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.frameLayout.setOnClickListener {
+        binding.cvTimer.setOnClickListener {
             findTopNavController().navigate(R.id.timerFragment)
         }
         binding.tvSeeAll.setOnClickListener {
