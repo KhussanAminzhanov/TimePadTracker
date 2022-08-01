@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
+import com.timepad.timepadtracker.utils.getCurrentDayOfWeek
 import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
@@ -54,13 +55,22 @@ class ReportFragment : Fragment() {
             binding.tvHour.text = hour.toString()
             binding.tvMinute.text = minutes.toString()
             binding.tvTasksCompletedCount.text = tasksCompleted.toString()
+
+            viewModel.getTodayReport()
+        }
+
+        viewModel.allTaskRecords.observe(viewLifecycleOwner) { allTaskRecords ->
+            viewModel.getWeekReport()
         }
 
         viewModel.todayReport.observe(viewLifecycleOwner) {
-            Log.e(TAG, "Today's report: $it")
+            Log.e(TAG, "Today's report: ${it.toList()}")
         }
+
         viewModel.weekReport.observe(viewLifecycleOwner) {
-            Log.e(TAG, "Week's report: $it")
+            Log.e(TAG, "Current day since epoch: ${getCurrentDaySinceEpoch()}")
+            Log.e(TAG, "Current day of week: ${getCurrentDayOfWeek() - 1}")
+            Log.e(TAG, "Week's report: ${it.toList()}")
         }
     }
 

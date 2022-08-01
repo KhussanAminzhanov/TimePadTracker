@@ -1,6 +1,5 @@
 package com.timepad.timepadtracker.framework
 
-import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.interactors.*
 
 data class Interactions(

@@ -32,8 +32,8 @@ class RoomTaskRecordDataSource(database: TimePadDatabase) : TaskRecordDataSource
         }
     }
 
-    override fun getByDate(daySinceEpoch: Long): LiveData<List<TaskRecord>> {
-        return taskRecordDao.getByDay(daySinceEpoch).map {
+    override fun getByDate(date: Long): LiveData<List<TaskRecord>> {
+        return taskRecordDao.getByDay(date).map {
             convertToDomainModel(it)
         }
     }
