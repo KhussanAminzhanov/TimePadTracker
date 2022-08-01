@@ -7,9 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.R.attr.textFillColor
 import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
+import com.timepad.timepadtracker.utils.getColorFromAttr
 import com.timepad.timepadtracker.utils.getCurrentDayOfWeek
 import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -80,8 +82,10 @@ class ReportFragment : Fragment() {
         tabs.forEach {
             if (it.id == tabId) {
                 it.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+                it.setTextColor(requireContext().getColorFromAttr(android.R.attr.textColorTertiary))
             } else {
                 it.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+                it.setTextColor(R.color.text_light)
             }
         }
     }
