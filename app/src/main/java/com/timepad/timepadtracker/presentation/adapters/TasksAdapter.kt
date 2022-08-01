@@ -20,7 +20,7 @@ class TasksAdapter(
             binding.ivTaskIcon.setImageResource(task.iconId)
             binding.tvTaskTitle.text = task.name
             binding.tvTimeSpent.text = task.totalTimeInMillis.formatTimeMillis("%02d:%02d:%02d")
-            binding.tvCategory.text = task.tags[0]
+            binding.tvCategory.text = task.category
             binding.btnOpenTimer.setOnClickListener { onClick(task) }
         }
     }

@@ -7,11 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.framework.Interactions
+import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
+import com.timepad.timepadtracker.utils.getCurrentHourOfDay
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+
 
 class MainViewModel(
     private val interactions: Interactions,
@@ -23,7 +27,7 @@ class MainViewModel(
     }
 
     val tasks: LiveData<List<Task>> = interactions.getByDate(LocalDate.now().toEpochDay())
-    val categoriesOfTasks = listOf("Work", "Personal", "Sport", "Hobby", "Leisure Time", "Other")
+    val categoriesOfTasks = listOf("Work", "Personal", "Sport", "Hobby", "Leisure Time")
 
     val tasksWithIcon =
         mapOf(
@@ -37,7 +41,7 @@ class MainViewModel(
     private val selectedTask = MutableLiveData<Task>()
 
     private lateinit var countDownTimer: CountDownTimer
-    private var oneSessionTime: Long = 25 * ONE_MINUTE
+    private var oneSessionTime: Long = 0 * ONE_MINUTE
 
     private val _timeLeftInMillis = MutableLiveData(oneSessionTime)
     val timeLeftInMillis: LiveData<Long> = _timeLeftInMillis
@@ -46,6 +50,7 @@ class MainViewModel(
     val timerIsRunning: LiveData<TimerState> = _timerIsRunning
 
     fun startOrPauseTimer() {
+        if (selectedTask.value == null) return
         if (_timerIsRunning.value != TimerState.RUNNING) {
             startTimer()
         } else {
@@ -73,11 +78,23 @@ class MainViewModel(
             override fun onFinish() {
                 _timerIsRunning.value = TimerState.STOPPED
                 _timeLeftInMillis.value = oneSessionTime
-                selectedTask.value?.addToTotalTime(oneSessionTime)
-                selectedTask.value?.let { updateTask(it) }
+                onTimerFinish()
             }
         }
         countDownTimer.start()
+    }
+
+    private fun onTimerFinish() {
+        val selectedTask = selectedTask.value ?: return
+        selectedTask.totalTimeInMillis += oneSessionTime
+        updateTask(selectedTask)
+
+        val taskRecord = TaskRecord(
+            epochDay = getCurrentDaySinceEpoch(),
+            hour = getCurrentHourOfDay(),
+            duration = selectedTask.duration
+        )
+        addTaskRecord(taskRecord)
     }
 
     private fun pauseTimer() {
@@ -87,7 +104,7 @@ class MainViewModel(
 
     fun setSelectedTask(task: Task) {
         selectedTask.value = task
-        oneSessionTime = task.oneSessionTime
+        oneSessionTime = task.duration
         _timeLeftInMillis.value = oneSessionTime
     }
 
@@ -103,7 +120,12 @@ class MainViewModel(
         interactions.updateTask(task)
     }
 
+    fun addTaskRecord(taskRecord: TaskRecord) = viewModelScope.launch(ioDispatcher) {
+        interactions.addTaskRecord(taskRecord)
+    }
+
     companion object {
+        const val TAG = "MainViewModel"
         const val ONE_MINUTE: Long = 60000
         const val COUNTDOWN_INTERVAL: Long = 1000
     }

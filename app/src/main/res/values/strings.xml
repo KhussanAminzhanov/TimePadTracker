@@ -14,4 +14,6 @@
     <string name="task_icon">task icon</string>
     <string name="start_icon">start icon</string>
     <string name="all_tasks">All Tasks</string>
+    <string name="category">Category</string>
+    <string name="name_of_task">Name of Task</string>
 </resources>
