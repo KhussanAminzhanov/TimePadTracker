@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentHomeBinding
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.adapters.TasksAdapter
+import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.findTopNavController
 import com.timepad.timepadtracker.utils.formatTimeMillis
@@ -20,7 +22,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by sharedViewModel()
 
-    private lateinit var adapter: TasksAdapter
+//    private lateinit var adapter: TasksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,19 +36,29 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
-        setupRecyclerview()
+//        setupRecyclerview()
         setupListeners()
         setupObservers()
     }
 
     private fun setupLayout() {
         binding.tvTaskTitle.text = mainViewModel.getSelectedTaskTitle()
+        binding.composeView.apply {
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+            setContent {
+                TimePadTheme {
+                    TodayTasks(mainViewModel = mainViewModel)
+                }
+            }
+        }
     }
 
-    private fun setupRecyclerview() {
-        adapter = TasksAdapter(::onTaskItemClick)
-        binding.rvTasks.adapter = adapter
-    }
+//    private fun setupRecyclerview() {
+//        adapter = TasksAdapter(::onTaskItemClick)
+//        binding.rvTasks.adapter = adapter
+//    }
 
     private fun setupListeners() {
         binding.cvTimer.setOnClickListener {
@@ -59,7 +71,7 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
         mainViewModel.tasks.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+//            adapter.submitList(it)
         }
         mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
             binding.tvTimerHome.text = it.formatTimeMillis("%02d:%02d:%02d")

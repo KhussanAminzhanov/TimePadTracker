@@ -29,7 +29,10 @@ fun TaskItem(
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
+        backgroundColor = Color(0xFFFAFAFF),
+        elevation = 0.dp,
         modifier = Modifier
+            .fillMaxWidth()
             .height(84.dp)
     ) {
         ConstraintLayout(
