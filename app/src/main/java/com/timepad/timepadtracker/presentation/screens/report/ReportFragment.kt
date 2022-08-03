@@ -68,9 +68,9 @@ class ReportFragment : Fragment() {
             val minutes =
                 TimeUnit.MILLISECONDS.toMinutes(totalDuration) - TimeUnit.HOURS.toMinutes(hour)
 
-            binding.tvHour.text = hour.toString()
-            binding.tvMinute.text = minutes.toString()
-            binding.tvTasksCompletedCount.text = tasksCompleted.toString()
+//            binding.tvHour.text = hour.toString()
+//            binding.tvMinute.text = minutes.toString()
+//            binding.tvTasksCompletedCount.text = tasksCompleted.toString()
 
             reportViewModel.getTodayReport()
         }
