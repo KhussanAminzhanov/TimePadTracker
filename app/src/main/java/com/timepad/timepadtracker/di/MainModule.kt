@@ -7,7 +7,7 @@ import com.timepad.timepadtracker.framework.RoomTaskDataSource
 import com.timepad.timepadtracker.framework.RoomTaskRecordDataSource
 import com.timepad.timepadtracker.framework.db.TimePadDatabase
 import com.timepad.timepadtracker.interactors.*
-import com.timepad.timepadtracker.presentation.report.ReportViewModel
+import com.timepad.timepadtracker.presentation.screens.report.ReportViewModel
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel

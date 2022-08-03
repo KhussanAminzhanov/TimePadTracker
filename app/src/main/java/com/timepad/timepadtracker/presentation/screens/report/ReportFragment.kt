@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.report
+package com.timepad.timepadtracker.presentation.screens.report
 
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.R.attr.textFillColor
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
@@ -85,7 +85,7 @@ class ReportFragment : Fragment() {
                 it.setTextColor(requireContext().getColorFromAttr(android.R.attr.textColorTertiary))
             } else {
                 it.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
-                it.setTextColor(R.color.text_light)
+                it.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_light))
             }
         }
     }

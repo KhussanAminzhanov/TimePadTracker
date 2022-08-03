@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.timepad.timepadtracker.presentation.report.ReportFragment"
+        android:name="com.timepad.timepadtracker.presentation.screens.report.ReportFragment"
         android:label="My Productivity"
         tools:layout="@layout/fragment_report" />
 </navigation>

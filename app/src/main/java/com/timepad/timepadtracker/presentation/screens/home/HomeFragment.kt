@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.home
+package com.timepad.timepadtracker.presentation.screens.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

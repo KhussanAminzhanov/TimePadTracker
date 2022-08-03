@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.report
+package com.timepad.timepadtracker.presentation.screens.report
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

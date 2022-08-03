@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.timepad.timepadtracker.presentation.timer.TimerFragment"
+        android:name="com.timepad.timepadtracker.presentation.screens.timer.TimerFragment"
         android:label="Timer"
         tools:layout="@layout/fragment_timer" />
     <fragment
@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.timepad.timepadtracker.presentation.tasks.AllTasksFragment"
+        android:name="com.timepad.timepadtracker.presentation.screens.tasks.AllTasksFragment"
         android:label="History"
         tools:layout="@layout/fragment_history" />
 </navigation>

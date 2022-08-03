@@ -1,5 +1,6 @@
 package com.timepad.timepadtracker.presentation.main
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -52,11 +53,12 @@ class MainFragment : Fragment() {
         binding.toolbarMain.setupWithNavController(navController, appBarConfiguration)
     }
 
+    @SuppressLint("RestrictedApi")
     private fun setupBottomNav() {
         val menuView = binding.bottomNavMain.menuView as BottomNavigationMenuView
         val menuItem = menuView.findItemView(R.id.item_add_task) as BottomNavigationItemView
         menuItem.setIconTintList(ColorStateList.valueOf(Color.BLACK))
-        menuItem.setIconSize(52.dp)
+        menuItem.setIconSize((52.dp))
         menuItem.setOnClickListener {
             newTaskBottomSheet.show(childFragmentManager, null)
         }

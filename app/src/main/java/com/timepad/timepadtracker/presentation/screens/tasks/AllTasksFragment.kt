@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.tasks
+package com.timepad.timepadtracker.presentation.screens.tasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
