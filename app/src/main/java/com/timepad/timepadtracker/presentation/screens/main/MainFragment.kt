@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
@@ -25,7 +24,6 @@ class MainFragment : Fragment() {
 
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val newTaskBottomSheet: NewTaskBottomSheet = NewTaskBottomSheet()
 
@@ -47,10 +45,7 @@ class MainFragment : Fragment() {
         navHostFragment =
             childFragmentManager.findFragmentById(R.id.nav_host_fragment_main) as NavHostFragment
         navController = navHostFragment.navController
-        appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
-
         binding.bottomNavMain.setupWithNavController(navController)
-        binding.toolbarMain.setupWithNavController(navController, appBarConfiguration)
     }
 
     @SuppressLint("RestrictedApi")

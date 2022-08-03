@@ -40,6 +40,7 @@ class HomeFragment : Fragment() {
                     HomeScreen(
                         mainViewModel = mainViewModel,
                         onTaskItemClick = ::onTaskItemClick,
+                        onSeeAllClick = ::onSeeAllClick,
                         onRightArrowClick = ::onRightArrowClick
                     )
                 }
@@ -51,10 +52,15 @@ class HomeFragment : Fragment() {
         findTopNavController().navigate(R.id.timerFragment)
     }
 
+    private fun onSeeAllClick() {
+        findTopNavController().navigate(R.id.historyFragment)
+    }
+
     private fun onTaskItemClick(task: Task) {
         findTopNavController().navigate(R.id.timerFragment)
         mainViewModel.setSelectedTask(task)
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

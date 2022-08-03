@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -33,6 +34,7 @@ import java.time.LocalDate
 fun HomeScreen(
     mainViewModel: MainViewModel,
     onTaskItemClick: (Task) -> Unit,
+    onSeeAllClick: () -> Unit,
     onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -43,14 +45,21 @@ fun HomeScreen(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
+        HomeHeader(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 32.dp)
+        )
         TimerCard(
             timeLeft = timeLeft ?: 0,
             taskTitle = taskTitle,
             onRightArrowClick = onRightArrowClick,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
+                .padding(top = 24.dp)
         )
         TodayTasksHeader(
+            onSeeAllClick = onSeeAllClick,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp)
@@ -67,6 +76,29 @@ fun HomeScreen(
 }
 
 @Composable
+fun HomeHeader(
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = stringResource(id = R.string.task),
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Icon(
+            tint = Color(0xFF828282),
+            painter = painterResource(id = R.drawable.ic_menu),
+            contentDescription = null,
+            modifier = Modifier.align(Alignment.CenterVertically)
+        )
+    }
+}
+
+@Composable
 fun TimerCard(
     timeLeft: Long,
     taskTitle: String,
@@ -74,7 +106,7 @@ fun TimerCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.medium,
         elevation = 0.dp,
         backgroundColor = Color(0xFFFAFAFF),
         modifier = modifier
@@ -133,6 +165,7 @@ fun TimerCard(
 
 @Composable
 fun TodayTasksHeader(
+    onSeeAllClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -151,6 +184,7 @@ fun TodayTasksHeader(
             fontSize = 16.sp,
             modifier = Modifier
                 .alignByBaseline()
+                .clickable { onSeeAllClick() }
         )
     }
 }
@@ -192,6 +226,12 @@ private fun TodayTasksContent(
 
 @Composable
 @Preview(widthDp = 320)
+fun HomeHeaderPreview() {
+    TimePadTheme { HomeHeader() }
+}
+
+@Composable
+@Preview(widthDp = 320)
 fun CurrentTimerPreview() {
     TimePadTheme {
         TimerCard(
@@ -205,7 +245,7 @@ fun CurrentTimerPreview() {
 @Composable
 @Preview(widthDp = 320)
 fun TodayTasksHeaderPreview() {
-    TimePadTheme { TodayTasksHeader() }
+    TimePadTheme { TodayTasksHeader(onSeeAllClick = {}) }
 }
 
 @Composable
