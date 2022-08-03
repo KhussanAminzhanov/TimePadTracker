@@ -7,10 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
+import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.utils.getColorFromAttr
 import com.timepad.timepadtracker.utils.getCurrentDayOfWeek
 import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
@@ -24,7 +26,7 @@ class ReportFragment : Fragment() {
     private var _binding: FragmentReportBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ReportViewModel by viewModel()
+    private val reportViewModel: ReportViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,14 +40,25 @@ class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupObservers()
         setupListeners()
+
+        binding.composeView.apply {
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+            setContent {
+                TimePadTheme {
+                    ReportScreen(reportViewModel = reportViewModel)
+                }
+            }
+        }
     }
 
     private fun setupObservers() {
-        viewModel.selectedTab.observe(viewLifecycleOwner) {
+        reportViewModel.selectedTab.observe(viewLifecycleOwner) {
             changeTabAppearance(it)
         }
 
-        viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
+        reportViewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
             val tasksCompleted = taskRecords.size
             var totalDuration: Long = 0
 
@@ -59,18 +72,18 @@ class ReportFragment : Fragment() {
             binding.tvMinute.text = minutes.toString()
             binding.tvTasksCompletedCount.text = tasksCompleted.toString()
 
-            viewModel.getTodayReport()
+            reportViewModel.getTodayReport()
         }
 
-        viewModel.allTaskRecords.observe(viewLifecycleOwner) { allTaskRecords ->
-            viewModel.getWeekReport()
+        reportViewModel.allTaskRecords.observe(viewLifecycleOwner) { allTaskRecords ->
+            reportViewModel.getWeekReport()
         }
 
-        viewModel.todayReport.observe(viewLifecycleOwner) {
+        reportViewModel.todayReport.observe(viewLifecycleOwner) {
             Log.e(TAG, "Today's report: ${it.toList()}")
         }
 
-        viewModel.weekReport.observe(viewLifecycleOwner) {
+        reportViewModel.weekReport.observe(viewLifecycleOwner) {
             Log.e(TAG, "Current day since epoch: ${getCurrentDaySinceEpoch()}")
             Log.e(TAG, "Current day of week: ${getCurrentDayOfWeek() - 1}")
             Log.e(TAG, "Week's report: ${it.toList()}")
@@ -91,8 +104,8 @@ class ReportFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.tvTabDay.setOnClickListener { viewModel.setTab(it.id) }
-        binding.tvTabWeek.setOnClickListener { viewModel.setTab(it.id) }
+        binding.tvTabDay.setOnClickListener { reportViewModel.setTab(it.id) }
+        binding.tvTabWeek.setOnClickListener { reportViewModel.setTab(it.id) }
     }
 
     override fun onDestroyView() {

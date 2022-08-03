@@ -9,7 +9,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -149,7 +148,7 @@ fun TimerCard(
             )
 
             Icon(
-                painter = painterResource(id = R.drawable.ic_right_arrow),
+                painter = painterResource(id = R.drawable.ic_arrow_right),
                 contentDescription = null,
                 modifier = Modifier
                     .clickable { onRightArrowClick() }

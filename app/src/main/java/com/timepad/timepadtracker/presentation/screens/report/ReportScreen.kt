@@ -1,0 +1,78 @@
+package com.timepad.timepadtracker.presentation.screens.report
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import com.timepad.timepadtracker.R
+import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+
+@Composable
+fun ReportScreen(
+    reportViewModel: ReportViewModel
+) {
+    Column {
+        ReportHeader(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 24.dp)
+        )
+    }
+}
+
+@Composable
+fun ReportHeader(
+    modifier: Modifier = Modifier
+) {
+    ConstraintLayout(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        val (arrowBack, title) = createRefs()
+        Icon(
+            painter = painterResource(id = R.drawable.ic_arrow_back),
+            contentDescription = null,
+            modifier = Modifier
+                .size(24.dp)
+                .clickable { }
+                .constrainAs(arrowBack) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                }
+        )
+        Text(
+            text = stringResource(id = R.string.report),
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily(Font(R.font.rubik_medium)),
+            modifier = Modifier
+                .constrainAs(title) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+        )
+    }
+}
+
+@Composable
+@Preview(widthDp = 320)
+fun ReportHeaderPreview() {
+    TimePadTheme { ReportHeader() }
+}

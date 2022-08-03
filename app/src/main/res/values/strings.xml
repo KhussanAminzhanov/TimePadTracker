@@ -25,4 +25,5 @@
     <string name="seconds">Seconds</string>
     <string name="minute">Minute</string>
     <string name="minutes">Minutes</string>
+    <string name="report">My Productivity</string>
 </resources>
