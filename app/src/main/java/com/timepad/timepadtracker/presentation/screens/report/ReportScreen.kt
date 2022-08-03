@@ -11,6 +11,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,12 +28,17 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.timepad.timepadtracker.R
+import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import java.util.concurrent.TimeUnit
+import kotlin.math.min
 
 @Composable
 fun ReportScreen(
     reportViewModel: ReportViewModel
 ) {
+    val taskRecords by reportViewModel.taskRecords.observeAsState()
+
     Column {
         ReportHeader(
             modifier = Modifier
@@ -39,6 +46,7 @@ fun ReportScreen(
                 .padding(top = 24.dp)
         )
         Reports(
+            taskRecords = taskRecords ?: emptyList(),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 42.dp)
@@ -84,8 +92,19 @@ fun ReportHeader(
 
 @Composable
 fun Reports(
+    taskRecords: List<TaskRecord>,
     modifier: Modifier = Modifier
 ) {
+
+    val tasksCompleted = taskRecords.size
+    var totalDuration: Long = 0
+
+    taskRecords.forEach { totalDuration += it.duration }
+
+    val hour = TimeUnit.MILLISECONDS.toHours(totalDuration)
+    val minutes = TimeUnit.MILLISECONDS.toMinutes(totalDuration) - TimeUnit.HOURS.toMinutes(hour)
+
+
     ConstraintLayout(modifier = modifier.fillMaxWidth()) {
         val (taskCompleted, timeDuration) = createRefs()
         ReportSection(
@@ -101,7 +120,10 @@ fun Reports(
                     width = Dimension.fillToConstraints
                 }
         ) { modifier ->
-            TaskCompletedContent(modifier)
+            TaskCompletedContent(
+                taskCompleted = tasksCompleted.toString(),
+                modifier = modifier
+            )
         }
         ReportSection(
             textRes = R.string.time_duration,
@@ -116,7 +138,11 @@ fun Reports(
                     width = Dimension.fillToConstraints
                 }
         ) { modifier ->
-            TimeDurationContent(modifier)
+            TimeDurationContent(
+                hour = hour.toString(),
+                minute = minutes.toString(),
+                modifier = modifier
+            )
         }
     }
 }
@@ -173,11 +199,12 @@ fun ReportSection(
 
 @Composable
 fun TaskCompletedContent(
+    taskCompleted: String,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
         Text(
-            text = "12",
+            text = taskCompleted,
             fontSize = 32.sp,
             fontFamily = FontFamily(Font(R.font.rubik_medium)),
         )
@@ -186,6 +213,8 @@ fun TaskCompletedContent(
 
 @Composable
 fun TimeDurationContent(
+    hour: String,
+    minute: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -193,7 +222,7 @@ fun TimeDurationContent(
         verticalAlignment = Alignment.Bottom
     ) {
         Text(
-            text = "1",
+            text = hour,
             fontSize = 32.sp,
             fontFamily = FontFamily(Font(R.font.rubik_medium)),
             modifier = Modifier.alignByBaseline()
@@ -206,7 +235,7 @@ fun TimeDurationContent(
             modifier = Modifier.alignByBaseline()
         )
         Text(
-            text = "46",
+            text = minute,
             fontSize = 32.sp,
             fontFamily = FontFamily(Font(R.font.rubik_medium)),
             modifier = Modifier
@@ -232,7 +261,7 @@ fun ReportHeaderPreview() {
 @Composable
 @Preview
 fun ReportsPreview() {
-    TimePadTheme { Reports() }
+    TimePadTheme { Reports(taskRecords = emptyList()) }
 }
 
 @Composable
@@ -244,7 +273,7 @@ fun ReportSectionPreview() {
             backgroundColorRes = R.color.green,
             iconRes = R.drawable.checkmark
         ) { modifier ->
-            TaskCompletedContent(modifier = modifier)
+            TaskCompletedContent(modifier = modifier, taskCompleted = "12")
         }
     }
 }
@@ -252,11 +281,11 @@ fun ReportSectionPreview() {
 @Composable
 @Preview
 fun TaskCompletedContentPreview() {
-    TimePadTheme { TaskCompletedContent() }
+    TimePadTheme { TaskCompletedContent(taskCompleted = "12") }
 }
 
 @Composable
 @Preview
 fun TimeDurationContentPreview() {
-    TimePadTheme { TimeDurationContent() }
+    TimePadTheme { TimeDurationContent(hour = "1", minute = "46") }
 }
