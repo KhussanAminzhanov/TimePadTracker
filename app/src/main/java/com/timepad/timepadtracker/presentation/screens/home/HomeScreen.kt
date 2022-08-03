@@ -1,35 +1,55 @@
 package com.timepad.timepadtracker.presentation.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.screens.main.TaskItem
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
+import com.timepad.timepadtracker.utils.formatTimeMillis
 import java.time.LocalDate
 
 @Composable
 fun HomeScreen(
     mainViewModel: MainViewModel,
+    onTaskItemClick: (Task) -> Unit,
+    onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val timeLeft by mainViewModel.timeLeftInMillis.observeAsState()
+    val taskTitle = mainViewModel.getSelectedTaskTitle()
+
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
+        TimerCard(
+            timeLeft = timeLeft ?: 0,
+            taskTitle = taskTitle,
+            onRightArrowClick = onRightArrowClick,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+        )
         TodayTasksHeader(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -37,10 +57,77 @@ fun HomeScreen(
                 .fillMaxWidth()
         )
         TodayTasks(
-            mainViewModel = mainViewModel, modifier = Modifier
+            onTaskItemClick = onTaskItemClick,
+            mainViewModel = mainViewModel,
+            modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp)
         )
+    }
+}
+
+@Composable
+fun TimerCard(
+    timeLeft: Long,
+    taskTitle: String,
+    onRightArrowClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        shape = MaterialTheme.shapes.large,
+        elevation = 0.dp,
+        backgroundColor = Color(0xFFFAFAFF),
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        ConstraintLayout {
+            val (timerDuration, timerName, timerNameIcon, rightArrow) = createRefs()
+
+            Text(
+                text = timeLeft.formatTimeMillis(),
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .constrainAs(timerDuration) {
+                        top.linkTo(parent.top, 12.dp)
+                        start.linkTo(parent.start, 16.dp)
+                    }
+            )
+
+            Icon(
+                painter = painterResource(id = R.drawable.ellipse),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(12.dp)
+                    .constrainAs(timerNameIcon) {
+                        top.linkTo(timerDuration.bottom, 26.dp)
+                        start.linkTo(parent.start, 16.dp)
+                        bottom.linkTo(parent.bottom, 28.dp)
+                    }
+            )
+
+            Text(
+                text = taskTitle,
+                fontSize = 16.sp,
+                modifier = Modifier
+                    .constrainAs(timerName) {
+                        centerVerticallyTo(timerNameIcon)
+                        start.linkTo(timerNameIcon.end, 12.dp)
+                    }
+            )
+
+            Icon(
+                painter = painterResource(id = R.drawable.ic_right_arrow),
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable { onRightArrowClick() }
+                    .constrainAs(rightArrow) {
+                        top.linkTo(timerDuration.top)
+                        bottom.linkTo(timerDuration.bottom)
+                        end.linkTo(parent.end, 24.dp)
+                    }
+            )
+        }
     }
 }
 
@@ -69,11 +156,16 @@ fun TodayTasksHeader(
 }
 
 @Composable
-fun TodayTasks(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
+fun TodayTasks(
+    onTaskItemClick: (Task) -> Unit,
+    mainViewModel: MainViewModel,
+    modifier: Modifier = Modifier
+) {
     val tasks by mainViewModel.tasks.observeAsState()
     tasks?.let {
         TodayTasksContent(
             tasks = it,
+            onTaskItemClick = onTaskItemClick,
             modifier = modifier
         )
     }
@@ -82,6 +174,7 @@ fun TodayTasks(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
 @Composable
 private fun TodayTasksContent(
     tasks: List<Task>,
+    onTaskItemClick: (Task) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -89,21 +182,36 @@ private fun TodayTasksContent(
         modifier = modifier
     ) {
         items(tasks) { task ->
-            TaskItem(task = task)
+            TaskItem(
+                task = task,
+                onTaskItemClick = onTaskItemClick
+            )
         }
     }
 }
 
 @Composable
-@Preview
+@Preview(widthDp = 320)
+fun CurrentTimerPreview() {
+    TimePadTheme {
+        TimerCard(
+            timeLeft = 10000,
+            taskTitle = "Working out",
+            onRightArrowClick = {}
+        )
+    }
+}
+
+@Composable
+@Preview(widthDp = 320)
 fun TodayTasksHeaderPreview() {
     TimePadTheme { TodayTasksHeader() }
 }
 
 @Composable
-@Preview
+@Preview(widthDp = 320)
 fun TodayTaskContentPreview() {
-    TimePadTheme { TodayTasksContent(tasks = tasksData) }
+    TimePadTheme { TodayTasksContent(tasks = tasksData, {}) }
 }
 
 private val tasksData = listOf(
@@ -128,4 +236,12 @@ private val tasksData = listOf(
         name = "Working out",
         iconId = R.drawable.icon_barbell_circle
     )
+)
+
+private val taskData = Task(
+    id = 0,
+    daySinceEpoch = LocalDate.now().toEpochDay(),
+    category = "Personal",
+    name = "Study",
+    iconId = R.drawable.icon_book_circle
 )

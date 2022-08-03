@@ -25,7 +25,8 @@ import java.time.LocalDate
 
 @Composable
 fun TaskItem(
-    task: Task
+    task: Task,
+    onTaskItemClick: (Task) -> Unit
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
@@ -91,14 +92,13 @@ fun TaskItem(
                         end.linkTo(parent.end)
                     })
 
-
             Icon(
                 painter = painterResource(id = R.drawable.ic_play),
                 contentDescription = null,
                 tint = Color(0xFF4F4F4F),
                 modifier = Modifier
                     .size(20.dp)
-                    .clickable { }
+                    .clickable { onTaskItemClick(task) }
                     .constrainAs(btnPlay) {
                         bottom.linkTo(parent.bottom)
                         end.linkTo(parent.end)
@@ -120,6 +120,6 @@ fun TaskItemPreview() {
         name = "Work"
     )
     TimePadTheme {
-        TaskItem(task = task)
+        TaskItem(task = task, {})
     }
 }

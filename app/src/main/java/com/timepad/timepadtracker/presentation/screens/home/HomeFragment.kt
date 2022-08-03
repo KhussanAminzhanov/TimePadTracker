@@ -12,7 +12,6 @@ import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.findTopNavController
-import com.timepad.timepadtracker.utils.formatTimeMillis
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
@@ -32,38 +31,24 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupLayout()
-        setupListeners()
-        setupObservers()
-    }
-
-    private fun setupLayout() {
-        binding.tvTaskTitle.text = mainViewModel.getSelectedTaskTitle()
         binding.composeView.apply {
             setViewCompositionStrategy(
                 ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
             )
             setContent {
                 TimePadTheme {
-                    HomeScreen(mainViewModel = mainViewModel)
+                    HomeScreen(
+                        mainViewModel = mainViewModel,
+                        onTaskItemClick = ::onTaskItemClick,
+                        onRightArrowClick = ::onRightArrowClick
+                    )
                 }
             }
         }
     }
 
-    private fun setupListeners() {
-        binding.cvTimer.setOnClickListener {
-            findTopNavController().navigate(R.id.timerFragment)
-        }
-    }
-
-    private fun setupObservers() {
-        mainViewModel.tasks.observe(viewLifecycleOwner) {
-
-        }
-        mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
-            binding.tvTimerHome.text = it.formatTimeMillis("%02d:%02d:%02d")
-        }
+    private fun onRightArrowClick() {
+        findTopNavController().navigate(R.id.timerFragment)
     }
 
     private fun onTaskItemClick(task: Task) {
