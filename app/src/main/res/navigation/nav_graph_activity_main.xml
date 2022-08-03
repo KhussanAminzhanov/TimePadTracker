@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_timer" />
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.timepad.timepadtracker.presentation.main.MainFragment"
+        android:name="com.timepad.timepadtracker.presentation.screens.main.MainFragment"
         android:label="Task"
         tools:layout="@layout/fragment_main" />
     <fragment

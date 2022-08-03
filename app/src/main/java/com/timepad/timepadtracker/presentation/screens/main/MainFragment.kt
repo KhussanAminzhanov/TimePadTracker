@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.main
+package com.timepad.timepadtracker.presentation.screens.main
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList

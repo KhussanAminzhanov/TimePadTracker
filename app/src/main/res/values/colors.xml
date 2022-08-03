@@ -15,4 +15,5 @@
     <color name="text_tertiary">#070417</color>
     <color name="text_tertiary_night">@android:color/white</color>
     <color name="red">#FD5B71</color>
+    <color name="red_light">#FFEFF1</color>
 </resources>

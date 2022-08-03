@@ -2,7 +2,7 @@ package com.timepad.timepadtracker.utils
 
 import java.util.concurrent.TimeUnit
 
-fun Long.formatTimeMillis(str: String): String {
+fun Long.formatTimeMillis(str: String = "%02d:%02d:%02d"): String {
     val hours = TimeUnit.MILLISECONDS.toHours(this)
     val minutes =
         TimeUnit.MILLISECONDS.toMinutes(this) - TimeUnit.HOURS.toMinutes(hours)

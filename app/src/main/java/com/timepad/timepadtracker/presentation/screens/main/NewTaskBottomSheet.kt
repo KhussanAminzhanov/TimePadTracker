@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.main
+package com.timepad.timepadtracker.presentation.screens.main
 
 import android.content.DialogInterface
 import android.os.Bundle
