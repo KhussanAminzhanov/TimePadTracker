@@ -13,8 +13,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReportFragment : Fragment() {
 
-    private val TAG = javaClass.simpleName
-
     private var _binding: FragmentReportBinding? = null
     private val binding get() = _binding!!
 

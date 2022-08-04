@@ -33,12 +33,12 @@ import java.time.LocalDate
 
 @Composable
 fun HomeScreen(
+    mainViewModel: MainViewModel,
     onTaskItemClick: (Task) -> Unit,
     onSeeAllClick: () -> Unit,
     onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val mainViewModel: MainViewModel = getViewModel()
     val timeLeft by mainViewModel.timeLeftInMillis.observeAsState()
     val taskTitle = mainViewModel.getSelectedTaskTitle()
 

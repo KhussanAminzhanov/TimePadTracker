@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.timepad.timepadtracker.R
 
 
-sealed class MainScreens(
+sealed class Screens(
     val route: String,
     @StringRes val label: Int,
     @DrawableRes val unselectedIcon: Int,
@@ -21,14 +21,14 @@ sealed class MainScreens(
         const val route_report = "report"
     }
 
-    object Home : MainScreens(
+    object Home : Screens(
         route = route_home,
         label = R.string.home_label,
         unselectedIcon = R.drawable.ic_time_outline,
         selectedIcon = R.drawable.ic_time_filled
     )
 
-    object Report : MainScreens(
+    object Report : Screens(
         route = route_report,
         label = R.string.report_label,
         unselectedIcon = R.drawable.ic_pie_chart_outline,

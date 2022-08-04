@@ -7,11 +7,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.ripple.LocalRippleTheme
-import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,16 +21,33 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.timepad.timepadtracker.R
+import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.screens.home.HomeScreen
 import com.timepad.timepadtracker.presentation.screens.report.ReportScreen
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    mainViewModel: MainViewModel,
+    onAddItemClick: () -> Unit,
+    onTaskItemClick: (Task) -> Unit,
+    onSeeAllClick: () -> Unit,
+    onRightArrowClick: () -> Unit
+) {
     val navController = rememberNavController()
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = {
+            BottomBar(
+                navController = navController,
+                onAddItemClick = onAddItemClick
+            )
+        }
     ) { paddingValues ->
         BottomNavGraph(
+            mainViewModel = mainViewModel,
+            onTaskItemClick = onTaskItemClick,
+            onSeeAllClick = onSeeAllClick,
+            onRightArrowClick = onRightArrowClick,
             navController = navController,
             modifier = Modifier.padding(paddingValues)
         )
@@ -44,21 +57,26 @@ fun MainScreen() {
 @Composable
 private fun BottomNavGraph(
     navController: NavHostController,
+    mainViewModel: MainViewModel,
+    onTaskItemClick: (Task) -> Unit,
+    onSeeAllClick: () -> Unit,
+    onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
-        startDestination = MainScreens.route_home,
+        startDestination = Screens.route_home,
         navController = navController,
         modifier = modifier
     ) {
-        composable(route = MainScreens.Home.route) {
+        composable(route = Screens.Home.route) {
             HomeScreen(
-                onTaskItemClick = {},
-                onSeeAllClick = {},
-                onRightArrowClick = {}
+                mainViewModel = mainViewModel,
+                onTaskItemClick = onTaskItemClick,
+                onSeeAllClick = onSeeAllClick,
+                onRightArrowClick = onRightArrowClick
             )
         }
-        composable(route = MainScreens.Report.route) {
+        composable(route = Screens.Report.route) {
             ReportScreen(
                 onBackArrowClick = { navController.popBackStack() }
             )
@@ -68,6 +86,7 @@ private fun BottomNavGraph(
 
 @Composable
 fun BottomBar(
+    onAddItemClick: () -> Unit,
     navController: NavHostController,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -79,13 +98,13 @@ fun BottomBar(
             .padding(vertical = 18.dp)
     ) {
         AddItem(
-            screen = MainScreens.Home,
+            screen = Screens.Home,
             currentDestination = currentDestination,
             navController = navController
         )
         BottomNavigationItem(
             selected = false,
-            onClick = { /*TODO*/ },
+            onClick = { onAddItemClick() },
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.add_circle_rounded_48px),
@@ -96,7 +115,7 @@ fun BottomBar(
             }
         )
         AddItem(
-            screen = MainScreens.Report,
+            screen = Screens.Report,
             currentDestination = currentDestination,
             navController = navController
         )
@@ -105,7 +124,7 @@ fun BottomBar(
 
 @Composable
 fun RowScope.AddItem(
-    screen: MainScreens,
+    screen: Screens,
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {

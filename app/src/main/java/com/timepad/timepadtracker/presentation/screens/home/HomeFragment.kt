@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
             setContent {
                 TimePadTheme {
                     HomeScreen(
+                        mainViewModel = mainViewModel,
                         onTaskItemClick = ::onTaskItemClick,
                         onSeeAllClick = ::onSeeAllClick,
                         onRightArrowClick = ::onRightArrowClick
