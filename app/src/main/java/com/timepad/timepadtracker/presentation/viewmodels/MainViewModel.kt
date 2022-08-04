@@ -1,6 +1,7 @@
 package com.timepad.timepadtracker.presentation.viewmodels
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import kotlin.math.roundToInt
 
 
 class MainViewModel(
@@ -110,6 +112,13 @@ class MainViewModel(
 
     fun getSelectedTaskCategory(): String = selectedTask.value?.category ?: "None"
     fun getSelectedTaskTitle(): String = selectedTask.value?.name ?: "Undefined"
+
+    fun getTimeLeftPercentage(): Int {
+        val timeLeft = timeLeftInMillis.value
+        if (oneSessionTime == 0L) return 100
+        if (timeLeft == null) return 100
+        return (timeLeft.toDouble() * 100 / oneSessionTime).roundToInt()
+    }
 
     fun addTask(task: Task) = viewModelScope.launch(ioDispatcher) {
         interactions.addTask(task)

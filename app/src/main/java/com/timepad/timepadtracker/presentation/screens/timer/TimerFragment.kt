@@ -48,6 +48,7 @@ class TimerFragment : Fragment() {
     private fun setupObservers() {
         mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
             binding.tvTimer.text = it.formatTimeMillis("%02d:%02d:%02d")
+            binding.progressBarTimer.progress = mainViewModel.getTimeLeftPercentage()
         }
         mainViewModel.timerIsRunning.observe(viewLifecycleOwner) {
             when (it) {

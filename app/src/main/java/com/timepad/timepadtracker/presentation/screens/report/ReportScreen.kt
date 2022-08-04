@@ -27,11 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.patrykandpatryk.vico.compose.chart.Chart
+import com.patrykandpatryk.vico.compose.chart.line.lineChart
+import com.patrykandpatryk.vico.core.entry.entryModelOf
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import java.util.concurrent.TimeUnit
-import kotlin.math.min
 
 @Composable
 fun ReportScreen(
@@ -55,7 +57,7 @@ fun ReportScreen(
 }
 
 @Composable
-fun ReportHeader(
+private fun ReportHeader(
     modifier: Modifier = Modifier
 ) {
     ConstraintLayout(
@@ -91,7 +93,7 @@ fun ReportHeader(
 }
 
 @Composable
-fun Reports(
+private fun Reports(
     taskRecords: List<TaskRecord>,
     modifier: Modifier = Modifier
 ) {
@@ -148,7 +150,7 @@ fun Reports(
 }
 
 @Composable
-fun ReportSection(
+private fun ReportSection(
     @StringRes textRes: Int,
     @ColorRes backgroundColorRes: Int,
     @DrawableRes iconRes: Int,
@@ -198,7 +200,7 @@ fun ReportSection(
 }
 
 @Composable
-fun TaskCompletedContent(
+private fun TaskCompletedContent(
     taskCompleted: String,
     modifier: Modifier = Modifier
 ) {
@@ -212,7 +214,7 @@ fun TaskCompletedContent(
 }
 
 @Composable
-fun TimeDurationContent(
+private fun TimeDurationContent(
     hour: String,
     minute: String,
     modifier: Modifier = Modifier
@@ -254,19 +256,19 @@ fun TimeDurationContent(
 
 @Composable
 @Preview(widthDp = 320)
-fun ReportHeaderPreview() {
+private fun ReportHeaderPreview() {
     TimePadTheme { ReportHeader() }
 }
 
 @Composable
 @Preview
-fun ReportsPreview() {
+private fun ReportsPreview() {
     TimePadTheme { Reports(taskRecords = emptyList()) }
 }
 
 @Composable
 @Preview
-fun ReportSectionPreview() {
+private fun ReportSectionPreview() {
     TimePadTheme {
         ReportSection(
             textRes = R.string.tasks_completed,
@@ -280,12 +282,26 @@ fun ReportSectionPreview() {
 
 @Composable
 @Preview
-fun TaskCompletedContentPreview() {
+private fun TaskCompletedContentPreview() {
     TimePadTheme { TaskCompletedContent(taskCompleted = "12") }
 }
 
 @Composable
 @Preview
-fun TimeDurationContentPreview() {
+private fun TimeDurationContentPreview() {
     TimePadTheme { TimeDurationContent(hour = "1", minute = "46") }
+}
+
+@Composable
+@Preview(widthDp = 343, heightDp = 312)
+fun ChartPreview() {
+    val entryModel = entryModelOf(5f, 15f, 10f, 20f, 10f)
+
+    TimePadTheme {
+        Chart(
+            chart = lineChart(),
+            model = entryModel,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
 }
