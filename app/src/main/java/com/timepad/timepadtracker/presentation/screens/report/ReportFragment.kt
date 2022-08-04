@@ -34,7 +34,6 @@ class ReportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupObservers()
-//        setupListeners()
 
         binding.composeView.apply {
             setViewCompositionStrategy(
@@ -52,10 +51,6 @@ class ReportFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        reportViewModel.selectedTab.observe(viewLifecycleOwner) {
-//            changeTabAppearance(it)
-        }
-
         reportViewModel.taskRecords.observe(viewLifecycleOwner) {
             reportViewModel.getTodayReport()
         }
@@ -63,39 +58,11 @@ class ReportFragment : Fragment() {
         reportViewModel.allTaskRecords.observe(viewLifecycleOwner) {
             reportViewModel.getWeekReport()
         }
-
-        reportViewModel.todayReport.observe(viewLifecycleOwner) {
-            Log.e(TAG, "Today's report: ${it.toList()}")
-        }
-
-        reportViewModel.weekReport.observe(viewLifecycleOwner) {
-            Log.e(TAG, "Current day since epoch: ${getCurrentDaySinceEpoch()}")
-            Log.e(TAG, "Current day of week: ${getCurrentDayOfWeek() - 1}")
-            Log.e(TAG, "Week's report: ${it.toList()}")
-        }
     }
 
     private fun onBackArrowClick() {
         findNavController().popBackStack()
     }
-
-//    private fun changeTabAppearance(tab: String) {
-//        val tabs = listOf(binding.tvTabDay, binding.tvTabWeek)
-//        tabs.forEach {
-//            if (it.text == tab) {
-//                it.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-//                it.setTextColor(requireContext().getColorFromAttr(android.R.attr.textColorTertiary))
-//            } else {
-//                it.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
-//                it.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_light))
-//            }
-//        }
-//    }
-
-//    private fun setupListeners() {
-//        binding.tvTabDay.setOnClickListener { reportViewModel.setTab((it as TextView).text.toString()) }
-//        binding.tvTabWeek.setOnClickListener { reportViewModel.setTab((it as TextView).text.toString()) }
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

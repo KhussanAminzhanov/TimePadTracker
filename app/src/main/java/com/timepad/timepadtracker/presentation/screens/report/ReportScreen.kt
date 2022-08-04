@@ -33,7 +33,6 @@ import androidx.constraintlayout.compose.Dimension
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
-import kotlinx.coroutines.selects.select
 import java.util.concurrent.TimeUnit
 
 @Composable
@@ -48,13 +47,13 @@ fun ReportScreen(
         ReportHeader(
             onBackArrowClick = onBackArrowClick,
             modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 16.dp)
                 .padding(top = 24.dp)
         )
         Reports(
             taskRecords = taskRecords ?: emptyList(),
             modifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 16.dp)
                 .padding(top = 42.dp)
         )
         Tabs(
@@ -65,6 +64,12 @@ fun ReportScreen(
                 .padding(horizontal = 48.dp)
                 .padding(top = 40.dp)
                 .height(44.dp)
+        )
+        ReportChart(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(top = 24.dp, bottom = 16.dp)
         )
     }
 }
@@ -355,6 +360,20 @@ private fun Tab(
 }
 
 @Composable
+private fun ReportChart(
+    modifier: Modifier = Modifier
+) {
+    Card(
+        shape = MaterialTheme.shapes.large,
+        elevation = 0.dp,
+        backgroundColor = colorResource(id = R.color.gray_light),
+        modifier = modifier.fillMaxSize()
+    ) {
+
+    }
+}
+
+@Composable
 @Preview(widthDp = 320)
 private fun ReportHeaderPreview() {
     TimePadTheme {
@@ -437,6 +456,17 @@ private fun TabPreview() {
             textRes = R.string.day,
             selectedTab = stringResource(id = R.string.day),
             onClick = {}
+        )
+    }
+}
+
+@Composable
+@Preview(widthDp = 343, heightDp = 312)
+private fun ReportChartPreview() {
+    TimePadTheme {
+        ReportChart(
+            modifier = Modifier
+                .padding(8.dp)
         )
     }
 }
