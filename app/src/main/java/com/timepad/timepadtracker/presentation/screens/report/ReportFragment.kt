@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import com.timepad.timepadtracker.utils.findTopNavController
 import com.timepad.timepadtracker.utils.getColorFromAttr
 import com.timepad.timepadtracker.utils.getCurrentDayOfWeek
 import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
@@ -47,7 +49,10 @@ class ReportFragment : Fragment() {
             )
             setContent {
                 TimePadTheme {
-                    ReportScreen(reportViewModel = reportViewModel)
+                    ReportScreen(
+                        reportViewModel = reportViewModel,
+                        onBackArrowClick = ::onBackArrowClick
+                    )
                 }
             }
         }
@@ -58,24 +63,11 @@ class ReportFragment : Fragment() {
             changeTabAppearance(it)
         }
 
-        reportViewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
-            val tasksCompleted = taskRecords.size
-            var totalDuration: Long = 0
-
-            taskRecords.forEach { totalDuration += it.duration }
-
-            val hour = TimeUnit.MILLISECONDS.toHours(totalDuration)
-            val minutes =
-                TimeUnit.MILLISECONDS.toMinutes(totalDuration) - TimeUnit.HOURS.toMinutes(hour)
-
-//            binding.tvHour.text = hour.toString()
-//            binding.tvMinute.text = minutes.toString()
-//            binding.tvTasksCompletedCount.text = tasksCompleted.toString()
-
+        reportViewModel.taskRecords.observe(viewLifecycleOwner) {
             reportViewModel.getTodayReport()
         }
 
-        reportViewModel.allTaskRecords.observe(viewLifecycleOwner) { allTaskRecords ->
+        reportViewModel.allTaskRecords.observe(viewLifecycleOwner) {
             reportViewModel.getWeekReport()
         }
 
@@ -88,6 +80,10 @@ class ReportFragment : Fragment() {
             Log.e(TAG, "Current day of week: ${getCurrentDayOfWeek() - 1}")
             Log.e(TAG, "Week's report: ${it.toList()}")
         }
+    }
+
+    private fun onBackArrowClick() {
+        findNavController().popBackStack()
     }
 
     private fun changeTabAppearance(tabId: Int) {

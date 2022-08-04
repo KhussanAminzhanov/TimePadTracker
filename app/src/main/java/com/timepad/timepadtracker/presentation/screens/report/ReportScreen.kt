@@ -37,20 +37,22 @@ import java.util.concurrent.TimeUnit
 
 @Composable
 fun ReportScreen(
-    reportViewModel: ReportViewModel
+    reportViewModel: ReportViewModel,
+    onBackArrowClick: () -> Unit
 ) {
     val taskRecords by reportViewModel.taskRecords.observeAsState()
 
     Column {
         ReportHeader(
+            onBackArrowClick = onBackArrowClick,
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 8.dp)
                 .padding(top = 24.dp)
         )
         Reports(
             taskRecords = taskRecords ?: emptyList(),
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 8.dp)
                 .padding(top = 42.dp)
         )
     }
@@ -58,6 +60,7 @@ fun ReportScreen(
 
 @Composable
 private fun ReportHeader(
+    onBackArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     ConstraintLayout(
@@ -70,7 +73,7 @@ private fun ReportHeader(
             contentDescription = null,
             modifier = Modifier
                 .size(24.dp)
-                .clickable { }
+                .clickable { onBackArrowClick() }
                 .constrainAs(arrowBack) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
@@ -257,7 +260,7 @@ private fun TimeDurationContent(
 @Composable
 @Preview(widthDp = 320)
 private fun ReportHeaderPreview() {
-    TimePadTheme { ReportHeader() }
+    TimePadTheme { ReportHeader({}) }
 }
 
 @Composable
