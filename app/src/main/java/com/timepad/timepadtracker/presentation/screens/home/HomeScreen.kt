@@ -226,7 +226,7 @@ private fun TodayTasksContent(
 @Composable
 @Preview(widthDp = 320)
 fun HomeHeaderPreview() {
-    TimePadTheme { HomeHeader() }
+    TimePadTheme { HomeHeader(modifier = Modifier.padding(8.dp)) }
 }
 
 @Composable
@@ -236,7 +236,9 @@ fun CurrentTimerPreview() {
         TimerCard(
             timeLeft = 10000,
             taskTitle = "Working out",
-            onRightArrowClick = {}
+            onRightArrowClick = {},
+            modifier = Modifier
+                .padding(8.dp)
         )
     }
 }
@@ -244,13 +246,24 @@ fun CurrentTimerPreview() {
 @Composable
 @Preview(widthDp = 320)
 fun TodayTasksHeaderPreview() {
-    TimePadTheme { TodayTasksHeader(onSeeAllClick = {}) }
+    TimePadTheme {
+        TodayTasksHeader(
+            onSeeAllClick = {},
+            modifier = Modifier.padding(8.dp)
+        )
+    }
 }
 
 @Composable
 @Preview(widthDp = 320)
 fun TodayTaskContentPreview() {
-    TimePadTheme { TodayTasksContent(tasks = tasksData, {}) }
+    TimePadTheme {
+        TodayTasksContent(
+            tasks = tasksData,
+            onTaskItemClick = {},
+            modifier = Modifier.padding(8.dp)
+        )
+    }
 }
 
 private val tasksData = listOf(
@@ -275,12 +288,4 @@ private val tasksData = listOf(
         name = "Working out",
         iconId = R.drawable.icon_barbell_circle
     )
-)
-
-private val taskData = Task(
-    id = 0,
-    daySinceEpoch = LocalDate.now().toEpochDay(),
-    category = "Personal",
-    name = "Study",
-    iconId = R.drawable.icon_book_circle
 )

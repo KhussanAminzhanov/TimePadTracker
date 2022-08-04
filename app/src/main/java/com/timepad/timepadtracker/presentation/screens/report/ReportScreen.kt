@@ -22,14 +22,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.patrykandpatryk.vico.compose.chart.Chart
-import com.patrykandpatryk.vico.compose.chart.line.lineChart
-import com.patrykandpatryk.vico.core.entry.entryModelOf
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
@@ -258,15 +256,86 @@ private fun TimeDurationContent(
 }
 
 @Composable
+private fun Tabs(
+    modifier: Modifier = Modifier
+) {
+    Card(
+        shape = MaterialTheme.shapes.small,
+        elevation = 0.dp,
+        backgroundColor = Color(0xFFE9E9FF),
+        modifier = modifier
+    ) {
+        ConstraintLayout(
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxSize()
+        ) {
+            val (dayText, weekText) = createRefs()
+            Tab(
+                text = R.string.day,
+                modifier = Modifier
+                    .constrainAs(dayText) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(weekText.start, 2.dp)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.fillToConstraints
+                    }
+            )
+            Tab(
+                text = R.string.week,
+                modifier = Modifier
+                    .constrainAs(weekText) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(dayText.end, 2.dp)
+                        end.linkTo(parent.end)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.fillToConstraints
+                    }
+            )
+        }
+    }
+}
+
+@Composable
+private fun Tab(
+    @StringRes text: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = stringResource(id = text),
+        fontSize = 16.sp,
+        textAlign = TextAlign.Center,
+        modifier = modifier
+            .clip(shape = MaterialTheme.shapes.small)
+            .background(Color.White)
+            .padding(vertical = 8.dp)
+            .wrapContentHeight(Alignment.CenterVertically)
+    )
+}
+
+@Composable
 @Preview(widthDp = 320)
 private fun ReportHeaderPreview() {
-    TimePadTheme { ReportHeader({}) }
+    TimePadTheme {
+        ReportHeader(
+            onBackArrowClick = {},
+            modifier = Modifier.padding(8.dp)
+        )
+    }
 }
 
 @Composable
 @Preview
 private fun ReportsPreview() {
-    TimePadTheme { Reports(taskRecords = emptyList()) }
+    TimePadTheme {
+        Reports(
+            taskRecords = emptyList(),
+            modifier = Modifier.padding(8.dp)
+        )
+    }
 }
 
 @Composable
@@ -276,7 +345,8 @@ private fun ReportSectionPreview() {
         ReportSection(
             textRes = R.string.tasks_completed,
             backgroundColorRes = R.color.green,
-            iconRes = R.drawable.checkmark
+            iconRes = R.drawable.checkmark,
+            modifier = Modifier.padding(8.dp)
         ) { modifier ->
             TaskCompletedContent(modifier = modifier, taskCompleted = "12")
         }
@@ -286,25 +356,43 @@ private fun ReportSectionPreview() {
 @Composable
 @Preview
 private fun TaskCompletedContentPreview() {
-    TimePadTheme { TaskCompletedContent(taskCompleted = "12") }
+    TimePadTheme {
+        TaskCompletedContent(
+            taskCompleted = "12",
+            modifier = Modifier.padding(8.dp)
+        )
+    }
 }
 
 @Composable
 @Preview
 private fun TimeDurationContentPreview() {
-    TimePadTheme { TimeDurationContent(hour = "1", minute = "46") }
+    TimePadTheme {
+        TimeDurationContent(
+            hour = "1",
+            minute = "46",
+            modifier = Modifier.padding(8.dp)
+        )
+    }
 }
 
 @Composable
-@Preview(widthDp = 343, heightDp = 312)
-fun ChartPreview() {
-    val entryModel = entryModelOf(5f, 15f, 10f, 20f, 10f)
-
+@Preview(widthDp = 320)
+private fun TabsPreview() {
     TimePadTheme {
-        Chart(
-            chart = lineChart(),
-            model = entryModel,
-            modifier = Modifier.fillMaxSize()
+        Tabs(
+            modifier = Modifier
+                .padding(8.dp)
+                .height(44.dp)
+                .fillMaxWidth()
         )
+    }
+}
+
+@Composable
+@Preview(widthDp = 132)
+private fun TabPreview() {
+    TimePadTheme {
+        Tab(text = R.string.day)
     }
 }
