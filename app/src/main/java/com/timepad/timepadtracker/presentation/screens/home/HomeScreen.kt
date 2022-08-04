@@ -21,12 +21,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.screens.main.TaskItem
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillis
+import org.koin.androidx.compose.getViewModel
 import java.time.LocalDate
 
 @Composable
@@ -37,7 +39,6 @@ fun HomeScreen(
     onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val timeLeft by mainViewModel.timeLeftInMillis.observeAsState()
     val taskTitle = mainViewModel.getSelectedTaskTitle()
 

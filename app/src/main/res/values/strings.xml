@@ -26,4 +26,6 @@
     <string name="minute">Minute</string>
     <string name="minutes">Minutes</string>
     <string name="report">My Productivity</string>
+    <string name="home_label">Home</string>
+    <string name="report_label">Report</string>
 </resources>
