@@ -257,6 +257,7 @@ private fun TimeDurationContent(
 
 @Composable
 private fun Tabs(
+    selectedTab: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -272,7 +273,8 @@ private fun Tabs(
         ) {
             val (dayText, weekText) = createRefs()
             Tab(
-                text = R.string.day,
+                selectedTab = selectedTab,
+                textRes = R.string.day,
                 modifier = Modifier
                     .constrainAs(dayText) {
                         top.linkTo(parent.top)
@@ -284,7 +286,8 @@ private fun Tabs(
                     }
             )
             Tab(
-                text = R.string.week,
+                selectedTab = selectedTab,
+                textRes = R.string.week,
                 modifier = Modifier
                     .constrainAs(weekText) {
                         top.linkTo(parent.top)
@@ -301,16 +304,27 @@ private fun Tabs(
 
 @Composable
 private fun Tab(
-    @StringRes text: Int,
+    selectedTab: String,
+    @StringRes textRes: Int,
     modifier: Modifier = Modifier
 ) {
+    val text = stringResource(id = textRes)
+    var backgroundColor = Color.White
+    var textColor = Color.Black
+
+    if (selectedTab != text) {
+        backgroundColor = Color.Transparent
+        textColor = colorResource(id = R.color.gray_light)
+    }
+
     Text(
-        text = stringResource(id = text),
+        text = text,
+        color = textColor,
         fontSize = 16.sp,
         textAlign = TextAlign.Center,
         modifier = modifier
             .clip(shape = MaterialTheme.shapes.small)
-            .background(Color.White)
+            .background(backgroundColor)
             .padding(vertical = 8.dp)
             .wrapContentHeight(Alignment.CenterVertically)
     )
@@ -381,6 +395,7 @@ private fun TimeDurationContentPreview() {
 private fun TabsPreview() {
     TimePadTheme {
         Tabs(
+            selectedTab = stringResource(id = R.string.day),
             modifier = Modifier
                 .padding(8.dp)
                 .height(44.dp)
@@ -393,6 +408,9 @@ private fun TabsPreview() {
 @Preview(widthDp = 132)
 private fun TabPreview() {
     TimePadTheme {
-        Tab(text = R.string.day)
+        Tab(
+            textRes = R.string.day,
+            selectedTab = stringResource(id = R.string.day)
+        )
     }
 }

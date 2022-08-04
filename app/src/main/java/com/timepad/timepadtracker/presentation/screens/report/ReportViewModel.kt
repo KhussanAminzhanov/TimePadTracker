@@ -14,8 +14,8 @@ class ReportViewModel(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
-    private val _selectedTab = MutableLiveData<Int>()
-    val selectedTab: LiveData<Int> = _selectedTab
+    private val _selectedTab = MutableLiveData<String>()
+    val selectedTab: LiveData<String> = _selectedTab
 
     val taskRecords = interactions.getTaskRecordsByDay(getCurrentDaySinceEpoch())
     val allTaskRecords = interactions.getAllTaskRecords()
@@ -26,7 +26,7 @@ class ReportViewModel(
     private val _weekReport = MutableLiveData<LongArray>()
     val weekReport: LiveData<LongArray> = _weekReport
 
-    fun setTab(tab: Int) {
+    fun setTab(tab: String) {
         _selectedTab.value = tab
     }
 

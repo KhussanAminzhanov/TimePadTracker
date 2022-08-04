@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -86,10 +87,10 @@ class ReportFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-    private fun changeTabAppearance(tabId: Int) {
+    private fun changeTabAppearance(tab: String) {
         val tabs = listOf(binding.tvTabDay, binding.tvTabWeek)
         tabs.forEach {
-            if (it.id == tabId) {
+            if (it.text == tab) {
                 it.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
                 it.setTextColor(requireContext().getColorFromAttr(android.R.attr.textColorTertiary))
             } else {
@@ -100,8 +101,8 @@ class ReportFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.tvTabDay.setOnClickListener { reportViewModel.setTab(it.id) }
-        binding.tvTabWeek.setOnClickListener { reportViewModel.setTab(it.id) }
+        binding.tvTabDay.setOnClickListener { reportViewModel.setTab((it as TextView).text.toString()) }
+        binding.tvTabWeek.setOnClickListener { reportViewModel.setTab((it as TextView).text.toString()) }
     }
 
     override fun onDestroyView() {
