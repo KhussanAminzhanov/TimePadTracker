@@ -39,7 +39,6 @@ class ReportFragment : Fragment() {
             setContent {
                 TimePadTheme {
                     ReportScreen(
-                        reportViewModel = reportViewModel,
                         onBackArrowClick = ::onBackArrowClick
                     )
                 }

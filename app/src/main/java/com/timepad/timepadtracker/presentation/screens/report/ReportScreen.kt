@@ -30,16 +30,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import org.koin.androidx.compose.getViewModel
 import java.util.concurrent.TimeUnit
 
 @Composable
 fun ReportScreen(
-    reportViewModel: ReportViewModel,
     onBackArrowClick: () -> Unit
 ) {
+    val reportViewModel: ReportViewModel = getViewModel()
     val taskRecords by reportViewModel.taskRecords.observeAsState()
     val selectedTab by reportViewModel.selectedTab.observeAsState()
 
