@@ -1,26 +1,18 @@
 package com.timepad.timepadtracker.presentation.screens.report
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
-import com.timepad.timepadtracker.utils.findTopNavController
-import com.timepad.timepadtracker.utils.getColorFromAttr
 import com.timepad.timepadtracker.utils.getCurrentDayOfWeek
 import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
 
 class ReportFragment : Fragment() {
 
@@ -42,7 +34,7 @@ class ReportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupObservers()
-        setupListeners()
+//        setupListeners()
 
         binding.composeView.apply {
             setViewCompositionStrategy(
@@ -61,7 +53,7 @@ class ReportFragment : Fragment() {
 
     private fun setupObservers() {
         reportViewModel.selectedTab.observe(viewLifecycleOwner) {
-            changeTabAppearance(it)
+//            changeTabAppearance(it)
         }
 
         reportViewModel.taskRecords.observe(viewLifecycleOwner) {
@@ -87,23 +79,23 @@ class ReportFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-    private fun changeTabAppearance(tab: String) {
-        val tabs = listOf(binding.tvTabDay, binding.tvTabWeek)
-        tabs.forEach {
-            if (it.text == tab) {
-                it.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-                it.setTextColor(requireContext().getColorFromAttr(android.R.attr.textColorTertiary))
-            } else {
-                it.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
-                it.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_light))
-            }
-        }
-    }
+//    private fun changeTabAppearance(tab: String) {
+//        val tabs = listOf(binding.tvTabDay, binding.tvTabWeek)
+//        tabs.forEach {
+//            if (it.text == tab) {
+//                it.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+//                it.setTextColor(requireContext().getColorFromAttr(android.R.attr.textColorTertiary))
+//            } else {
+//                it.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+//                it.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_light))
+//            }
+//        }
+//    }
 
-    private fun setupListeners() {
-        binding.tvTabDay.setOnClickListener { reportViewModel.setTab((it as TextView).text.toString()) }
-        binding.tvTabWeek.setOnClickListener { reportViewModel.setTab((it as TextView).text.toString()) }
-    }
+//    private fun setupListeners() {
+//        binding.tvTabDay.setOnClickListener { reportViewModel.setTab((it as TextView).text.toString()) }
+//        binding.tvTabWeek.setOnClickListener { reportViewModel.setTab((it as TextView).text.toString()) }
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

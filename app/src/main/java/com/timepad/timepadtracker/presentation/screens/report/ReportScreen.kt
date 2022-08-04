@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -13,6 +14,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +33,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import kotlinx.coroutines.selects.select
 import java.util.concurrent.TimeUnit
 
 @Composable
@@ -39,6 +42,7 @@ fun ReportScreen(
     onBackArrowClick: () -> Unit
 ) {
     val taskRecords by reportViewModel.taskRecords.observeAsState()
+    val selectedTab by reportViewModel.selectedTab.observeAsState()
 
     Column {
         ReportHeader(
@@ -52,6 +56,15 @@ fun ReportScreen(
             modifier = Modifier
                 .padding(horizontal = 8.dp)
                 .padding(top = 42.dp)
+        )
+        Tabs(
+            selectedTab = selectedTab ?: stringResource(id = R.string.day),
+            onClick = { reportViewModel.setTab(it) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 48.dp)
+                .padding(top = 40.dp)
+                .height(44.dp)
         )
     }
 }
@@ -258,6 +271,7 @@ private fun TimeDurationContent(
 @Composable
 private fun Tabs(
     selectedTab: String,
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -275,6 +289,7 @@ private fun Tabs(
             Tab(
                 selectedTab = selectedTab,
                 textRes = R.string.day,
+                onClick = onClick,
                 modifier = Modifier
                     .constrainAs(dayText) {
                         top.linkTo(parent.top)
@@ -288,6 +303,7 @@ private fun Tabs(
             Tab(
                 selectedTab = selectedTab,
                 textRes = R.string.week,
+                onClick = onClick,
                 modifier = Modifier
                     .constrainAs(weekText) {
                         top.linkTo(parent.top)
@@ -304,17 +320,20 @@ private fun Tabs(
 
 @Composable
 private fun Tab(
-    selectedTab: String,
     @StringRes textRes: Int,
+    selectedTab: String,
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+
     val text = stringResource(id = textRes)
     var backgroundColor = Color.White
     var textColor = Color.Black
 
     if (selectedTab != text) {
         backgroundColor = Color.Transparent
-        textColor = colorResource(id = R.color.gray_light)
+        textColor = colorResource(id = R.color.text_light)
     }
 
     Text(
@@ -325,8 +344,13 @@ private fun Tab(
         modifier = modifier
             .clip(shape = MaterialTheme.shapes.small)
             .background(backgroundColor)
-            .padding(vertical = 8.dp)
             .wrapContentHeight(Alignment.CenterVertically)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) {
+                onClick(text)
+            }
     )
 }
 
@@ -396,6 +420,7 @@ private fun TabsPreview() {
     TimePadTheme {
         Tabs(
             selectedTab = stringResource(id = R.string.day),
+            onClick = {},
             modifier = Modifier
                 .padding(8.dp)
                 .height(44.dp)
@@ -410,7 +435,8 @@ private fun TabPreview() {
     TimePadTheme {
         Tab(
             textRes = R.string.day,
-            selectedTab = stringResource(id = R.string.day)
+            selectedTab = stringResource(id = R.string.day),
+            onClick = {}
         )
     }
 }
