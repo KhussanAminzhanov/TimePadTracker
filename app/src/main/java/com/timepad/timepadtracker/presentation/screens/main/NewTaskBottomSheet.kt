@@ -67,6 +67,8 @@ class NewTaskBottomSheet : BottomSheetDialogFragment() {
         super.onDismiss(dialog)
         binding.edtTaskName.setText("")
         binding.tvTaskCategory.setText("")
+        binding.edtTaskMinute.setText("")
+        binding.edtTaskSeconds.setText("")
     }
 
     override fun onDestroyView() {

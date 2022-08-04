@@ -46,13 +46,9 @@ class ReportViewModel(
         val dayOfWeek = getCurrentDayOfWeek() - 1
         repeat(list.size) { index ->
             val day = epoch - (dayOfWeek - index - 1)
-            val totalDuration = allRecords.filter { it.epochDay == day }.map { it.duration }.sum()
+            val totalDuration = allRecords.filter { it.epochDay == day }.sumOf { it.duration }
             list[index] = totalDuration
         }
         _weekReport.value = list
-    }
-
-    companion object {
-        private const val TAG = "ReportViewModel"
     }
 }

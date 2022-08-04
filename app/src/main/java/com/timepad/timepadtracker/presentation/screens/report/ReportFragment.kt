@@ -1,7 +1,6 @@
 package com.timepad.timepadtracker.presentation.screens.report
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.timepad.timepadtracker.databinding.FragmentReportBinding
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
-import com.timepad.timepadtracker.utils.getCurrentDayOfWeek
-import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReportFragment : Fragment() {

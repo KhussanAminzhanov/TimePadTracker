@@ -396,7 +396,7 @@ private fun ReportsPreview() {
 }
 
 @Composable
-@Preview
+@Preview(widthDp = 172)
 private fun ReportSectionPreview() {
     TimePadTheme {
         ReportSection(
@@ -405,7 +405,10 @@ private fun ReportSectionPreview() {
             iconRes = R.drawable.checkmark,
             modifier = Modifier.padding(8.dp)
         ) { modifier ->
-            TaskCompletedContent(modifier = modifier, taskCompleted = "12")
+            TaskCompletedContent(
+                modifier = modifier,
+                taskCompleted = "12"
+            )
         }
     }
 }
