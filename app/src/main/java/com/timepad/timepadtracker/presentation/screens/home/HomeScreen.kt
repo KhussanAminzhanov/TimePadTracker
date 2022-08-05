@@ -20,14 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.screens.main.TaskItem
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
-import com.timepad.timepadtracker.utils.formatTimeMillis
-import org.koin.androidx.compose.getViewModel
+import com.timepad.timepadtracker.utils.formatTimeMillisHMS
 import java.time.LocalDate
 
 @Composable
@@ -115,7 +113,7 @@ fun TimerCard(
             val (timerDuration, timerName, timerNameIcon, rightArrow) = createRefs()
 
             Text(
-                text = timeLeft.formatTimeMillis(),
+                text = timeLeft.formatTimeMillisHMS(),
                 fontSize = 32.sp,
                 fontFamily = FontFamily(Font(R.font.rubik_medium)),
                 modifier = Modifier

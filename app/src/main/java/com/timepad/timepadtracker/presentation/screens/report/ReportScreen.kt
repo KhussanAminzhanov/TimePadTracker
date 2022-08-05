@@ -375,7 +375,11 @@ private fun ReportChart(
         shape = MaterialTheme.shapes.large,
         modifier = modifier.fillMaxSize()
     ) {
-
+        LineChart(
+            data = points,
+            graphColor = Purple,
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
 

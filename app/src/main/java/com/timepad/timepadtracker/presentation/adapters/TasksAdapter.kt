@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.timepad.timepadtracker.databinding.ItemTaskBinding
 import com.timepad.timepadtracker.domain.Task
-import com.timepad.timepadtracker.utils.formatTimeMillis
+import com.timepad.timepadtracker.utils.formatTimeMillisHMS
 
 class TasksAdapter(
     private val onClick: (Task) -> Unit
@@ -19,7 +19,7 @@ class TasksAdapter(
         fun bind(task: Task) {
             binding.ivTaskIcon.setImageResource(task.iconId)
             binding.tvTaskTitle.text = task.name
-            binding.tvTimeSpent.text = task.totalTimeInMillis.formatTimeMillis("%02d:%02d:%02d")
+            binding.tvTimeSpent.text = task.totalTimeInMillis.formatTimeMillisHMS("%02d:%02d:%02d")
             binding.tvCategory.text = task.category
             binding.btnOpenTimer.setOnClickListener { onClick(task) }
         }

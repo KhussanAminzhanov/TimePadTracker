@@ -8,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,7 +19,7 @@ import com.timepad.timepadtracker.presentation.theme.Gray
 import com.timepad.timepadtracker.presentation.theme.Purple
 import com.timepad.timepadtracker.presentation.theme.PurpleLight
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
-import com.timepad.timepadtracker.utils.formatTimeMillis
+import com.timepad.timepadtracker.utils.formatTimeMillisHMS
 import java.time.LocalDate
 
 @Composable
@@ -81,7 +80,7 @@ fun TaskItem(
             )
 
             Text(
-                text = task.duration.formatTimeMillis(),
+                text = task.duration.formatTimeMillisHMS(),
                 fontSize = 12.sp,
                 color = Gray,
                 modifier = Modifier
