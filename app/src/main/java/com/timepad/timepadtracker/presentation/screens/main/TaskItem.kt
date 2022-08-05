@@ -27,11 +27,12 @@ import java.time.LocalDate
 @Composable
 fun TaskItem(
     task: Task,
-    onTaskItemClick: (Task) -> Unit
+    onTaskItemClick: (Task) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(84.dp)
     ) {
@@ -120,6 +121,10 @@ fun TaskItemPreview() {
         name = "Work"
     )
     TimePadTheme {
-        TaskItem(task = task, {})
+        TaskItem(
+            task = task,
+            onTaskItemClick = {},
+            modifier = Modifier.padding(8.dp)
+        )
     }
 }
