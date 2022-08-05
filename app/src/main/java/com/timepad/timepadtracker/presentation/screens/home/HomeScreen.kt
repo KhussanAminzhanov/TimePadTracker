@@ -4,10 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -86,6 +85,7 @@ fun HomeHeader(
     ) {
         Text(
             text = stringResource(id = R.string.task),
+//            color = MaterialTheme.colors.secondary,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
@@ -105,10 +105,9 @@ fun TimerCard(
     onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(
+    Surface(
         shape = MaterialTheme.shapes.medium,
         elevation = 0.dp,
-        backgroundColor = Color(0xFFFAFAFF),
         modifier = modifier
             .fillMaxWidth()
     ) {
@@ -118,7 +117,7 @@ fun TimerCard(
             Text(
                 text = timeLeft.formatTimeMillis(),
                 fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily(Font(R.font.rubik_medium)),
                 modifier = Modifier
                     .constrainAs(timerDuration) {
                         top.linkTo(parent.top, 12.dp)

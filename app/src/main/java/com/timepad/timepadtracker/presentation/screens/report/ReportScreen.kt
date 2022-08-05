@@ -6,11 +6,9 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -30,10 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.TaskRecord
-import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import com.timepad.timepadtracker.presentation.theme.*
 import org.koin.androidx.compose.getViewModel
 import java.util.concurrent.TimeUnit
 
@@ -178,9 +175,8 @@ private fun ReportSection(
     modifier: Modifier = Modifier,
     content: @Composable (modifier: Modifier) -> Unit
 ) {
-    Card(
-        elevation = 0.dp,
-        backgroundColor = colorResource(id = R.color.gray_light),
+    Surface(
+        shape = MaterialTheme.shapes.large,
         modifier = modifier
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
@@ -240,6 +236,8 @@ private fun TimeDurationContent(
     minute: String,
     modifier: Modifier = Modifier
 ) {
+    val hourMinuteTextColor = if (isSystemInDarkTheme()) White40 else Black40
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.Bottom
@@ -254,7 +252,7 @@ private fun TimeDurationContent(
             text = "h",
             fontSize = 24.sp,
             fontFamily = FontFamily(Font(R.font.rubik_regular)),
-            color = Color(0x66070417),
+            color = hourMinuteTextColor,
             modifier = Modifier.alignByBaseline()
         )
         Text(
@@ -269,7 +267,7 @@ private fun TimeDurationContent(
             text = "m",
             fontSize = 24.sp,
             fontFamily = FontFamily(Font(R.font.rubik_regular)),
-            color = Color(0x66070417),
+            color = hourMinuteTextColor,
             modifier = Modifier.alignByBaseline()
         )
     }
@@ -281,10 +279,11 @@ private fun Tabs(
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(
+    val backgroundColor = if (isSystemInDarkTheme()) DarkBlue else Lavender
+
+    Surface(
+        color = backgroundColor,
         shape = MaterialTheme.shapes.small,
-        elevation = 0.dp,
-        backgroundColor = Color(0xFFE9E9FF),
         modifier = modifier
     ) {
         ConstraintLayout(
@@ -333,14 +332,21 @@ private fun Tab(
     modifier: Modifier = Modifier
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-
     val text = stringResource(id = textRes)
-    var backgroundColor = Color.White
-    var textColor = Color.Black
+    var backgroundColor = Color.Transparent
+    var backgroundColorSelected = White
+    var textColor = Black40
+    var textColorSelected = Black
 
-    if (selectedTab != text) {
-        backgroundColor = Color.Transparent
-        textColor = colorResource(id = R.color.text_light)
+    if (isSystemInDarkTheme()) {
+        backgroundColorSelected = Gray
+        textColorSelected = White
+        textColor = White40
+    }
+
+    if (selectedTab == text) {
+        backgroundColor = backgroundColorSelected
+        textColor = textColorSelected
     }
 
     Text(
@@ -365,10 +371,8 @@ private fun Tab(
 private fun ReportChart(
     modifier: Modifier = Modifier
 ) {
-    Card(
+    Surface(
         shape = MaterialTheme.shapes.large,
-        elevation = 0.dp,
-        backgroundColor = colorResource(id = R.color.gray_light),
         modifier = modifier.fillMaxSize()
     ) {
 

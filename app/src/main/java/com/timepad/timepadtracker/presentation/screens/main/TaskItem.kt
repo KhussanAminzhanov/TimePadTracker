@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.theme.PurpleLight
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.utils.formatTimeMillis
 import java.time.LocalDate
@@ -30,7 +31,7 @@ fun TaskItem(
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
-        backgroundColor = Color(0xFFFAFAFF),
+        backgroundColor = MaterialTheme.colors.surface,
         elevation = 0.dp,
         modifier = Modifier
             .fillMaxWidth()
@@ -58,6 +59,7 @@ fun TaskItem(
             Text(
                 text = task.name,
                 fontSize = 14.sp,
+                color = MaterialTheme.colors.secondary,
                 modifier = Modifier
                     .padding(start = 16.dp)
                     .constrainAs(taskName) {
@@ -73,7 +75,7 @@ fun TaskItem(
                 modifier = Modifier
                     .padding(start = 16.dp, top = 13.dp)
                     .clip(shape = MaterialTheme.shapes.small)
-                    .background(Color(0xFFF5EEFC))
+                    .background(PurpleLight)
                     .padding(horizontal = 8.dp, vertical = 5.dp)
                     .constrainAs(taskCategory) {
                         bottom.linkTo(parent.bottom)
