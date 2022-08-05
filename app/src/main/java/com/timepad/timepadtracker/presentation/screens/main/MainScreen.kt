@@ -3,10 +3,7 @@ package com.timepad.timepadtracker.presentation.screens.main
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -15,6 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -93,7 +91,7 @@ fun BottomBar(
     val currentDestination = navBackStackEntry?.destination
     BottomNavigation(
         elevation = 0.dp,
-        backgroundColor = Color.White,
+        backgroundColor = Color.Transparent,
         modifier = Modifier
             .padding(vertical = 18.dp)
     ) {
@@ -109,7 +107,7 @@ fun BottomBar(
                 Icon(
                     painter = painterResource(id = R.drawable.add_circle_rounded_48px),
                     contentDescription = null,
-                    tint = Color.Black,
+                    tint = MaterialTheme.colors.secondary,
                     modifier = Modifier.size(58.dp)
                 )
             }
@@ -130,7 +128,7 @@ fun RowScope.AddItem(
 ) {
     val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
     val icon = if (selected) screen.selectedIcon else screen.unselectedIcon
-    val tint = if (selected) Color.Black else Color(0xFF828282)
+    val tint = if (selected) MaterialTheme.colors.secondary else Color(0xFF828282)
     BottomNavigationItem(
         icon = {
             Icon(
@@ -141,7 +139,10 @@ fun RowScope.AddItem(
             )
         },
         onClick = {
-            navController.navigate(screen.route)
+            navController.navigate(screen.route) {
+                popUpTo(navController.graph.findStartDestination().id)
+                launchSingleTop = true
+            }
         },
         selected = selected,
         alwaysShowLabel = false

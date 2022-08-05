@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentTimerBinding
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
-import com.timepad.timepadtracker.utils.formatTimeMillis
+import com.timepad.timepadtracker.utils.formatTimeMillisHMS
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TimerFragment : Fragment() {
@@ -47,7 +47,7 @@ class TimerFragment : Fragment() {
 
     private fun setupObservers() {
         mainViewModel.timeLeftInMillis.observe(viewLifecycleOwner) {
-            binding.tvTimer.text = it.formatTimeMillis("%02d:%02d:%02d")
+            binding.tvTimer.text = it.formatTimeMillisHMS("%02d:%02d:%02d")
             binding.progressBarTimer.progress = mainViewModel.getTimeLeftPercentage()
         }
         mainViewModel.timerIsRunning.observe(viewLifecycleOwner) {
