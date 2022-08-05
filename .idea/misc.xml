@@ -3,10 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/drawable/selector_bottom_nav_menu_item_report_icon.xml" value="0.1565" />
+        <entry key="../../../../layout/compose-model-1659603246389.xml" value="0.4900398406374502" />
+        <entry key="../../../../layout/compose-model-1659603329612.xml" value="0.4813847158719791" />
+        <entry key="../../../../layout/compose-model-1659603329617.xml" value="0.5316129032258065" />
+        <entry key="../../../../layout/compose-model-1659603819499.xml" value="0.3483952702702703" />
+        <entry key="../../../../layout/compose-model-1659603848662.xml" value="0.6988335100742312" />
+        <entry key="../../../../layout/compose-model-1659607398933.xml" value="0.45274725274725275" />
+        <entry key="../../../../layout/compose-model-1659607998021.xml" value="0.4491017964071856" />
+        <entry key="../../../../layout/compose-model-1659608844921.xml" value="0.48271821909783247" />
+        <entry key="../../../../layout/compose-model-1659608877657.xml" value="0.45925925925925926" />
+        <entry key="../../../../layout/compose-model-1659611380099.xml" value="0.45164835164835165" />
+        <entry key="../../../../layout/compose-model-1659684292733.xml" value="0.3448598130841122" />
+        <entry key="../../../../layout/compose-model-1659684482230.xml" value="0.344392523364486" />
+        <entry key="../../../../layout/compose-model-1659684573979.xml" value="0.31165540540540543" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_home.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_main.xml" value="0.37447916666666664" />
-        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_report.xml" value="0.37447916666666664" />
+        <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_report.xml" value="0.67" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_timer.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/item_task.xml" value="0.3672114402451481" />
         <entry key="app/src/main/res/drawable/add.xml" value="0.1" />
@@ -31,6 +43,7 @@
         <entry key="app/src/main/res/font/rubik_mono_one.xml" value="0.4192708333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="1.0" />
         <entry key="app/src/main/res/layout/bottom_sheet_add_task.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.4015625" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.45623069001029865" />
         <entry key="app/src/main/res/layout/fragment_report.xml" value="0.33" />
