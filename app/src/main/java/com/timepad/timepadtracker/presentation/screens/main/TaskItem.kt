@@ -4,10 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.theme.Gray
+import com.timepad.timepadtracker.presentation.theme.Purple
 import com.timepad.timepadtracker.presentation.theme.PurpleLight
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.utils.formatTimeMillis
@@ -29,10 +28,8 @@ fun TaskItem(
     task: Task,
     onTaskItemClick: (Task) -> Unit
 ) {
-    Card(
+    Surface(
         shape = MaterialTheme.shapes.medium,
-        backgroundColor = MaterialTheme.colors.surface,
-        elevation = 0.dp,
         modifier = Modifier
             .fillMaxWidth()
             .height(84.dp)
@@ -59,7 +56,6 @@ fun TaskItem(
             Text(
                 text = task.name,
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.secondary,
                 modifier = Modifier
                     .padding(start = 16.dp)
                     .constrainAs(taskName) {
@@ -70,7 +66,7 @@ fun TaskItem(
 
             Text(
                 text = task.category,
-                color = Color(0xFF9B51E0),
+                color = Purple,
                 fontSize = 12.sp,
                 modifier = Modifier
                     .padding(start = 16.dp, top = 13.dp)
@@ -87,7 +83,7 @@ fun TaskItem(
             Text(
                 text = task.duration.formatTimeMillis(),
                 fontSize = 12.sp,
-                color = Color(0xFF4F4F4F),
+                color = Gray,
                 modifier = Modifier
                     .constrainAs(taskDuration) {
                         top.linkTo(parent.top)
@@ -97,7 +93,7 @@ fun TaskItem(
             Icon(
                 painter = painterResource(id = R.drawable.ic_play),
                 contentDescription = null,
-                tint = Color(0xFF4F4F4F),
+                tint = Gray,
                 modifier = Modifier
                     .size(20.dp)
                     .clickable { onTaskItemClick(task) }
