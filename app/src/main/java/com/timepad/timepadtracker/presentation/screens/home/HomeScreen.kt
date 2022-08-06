@@ -1,11 +1,15 @@
 package com.timepad.timepadtracker.presentation.screens.home
 
-import androidx.compose.foundation.background
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -27,6 +31,7 @@ import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.screens.main.TaskItem
 import com.timepad.timepadtracker.presentation.theme.Black40
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import com.timepad.timepadtracker.presentation.theme.White40
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillisHMS
 import java.lang.Integer.min
@@ -69,7 +74,7 @@ fun HomeScreen(
         )
 
         if (tasks.isNullOrEmpty()) {
-            EmptyTasks()
+            EmptyTasks(R.string.home_hint)
         } else {
             tasks?.let {
                 TodayTasks(
@@ -212,16 +217,18 @@ fun TodayTasks(
 
 @Composable
 fun EmptyTasks(
+    @StringRes textRes: Int,
     modifier: Modifier = Modifier
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxSize()
     ) {
+        val textColor = if (isSystemInDarkTheme()) White40 else Black40
         Text(
-            text = "",
+            text = stringResource(textRes),
             textAlign = TextAlign.Center,
-            color = Black40
+            color = textColor,
         )
     }
 }
@@ -230,7 +237,7 @@ fun EmptyTasks(
 @Preview
 fun EmptyTaskPreview() {
     TimePadTheme {
-        EmptyTasks()
+        EmptyTasks(R.string.home_hint)
     }
 }
 

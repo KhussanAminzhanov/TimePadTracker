@@ -8,7 +8,6 @@ import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.databinding.FragmentMainBinding
 import com.timepad.timepadtracker.domain.Task
