@@ -43,7 +43,8 @@ fun ReportScreen(
     val selectedTab by reportViewModel.selectedTab.observeAsState()
 
     Column {
-        ReportHeader(
+        Header(
+            titleTextRes = R.string.report,
             onBackArrowClick = onBackArrowClick,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -74,7 +75,8 @@ fun ReportScreen(
 }
 
 @Composable
-private fun ReportHeader(
+fun Header(
+    @StringRes titleTextRes: Int,
     onBackArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -96,7 +98,7 @@ private fun ReportHeader(
                 }
         )
         Text(
-            text = stringResource(id = R.string.report),
+            text = stringResource(id = titleTextRes),
             fontSize = 24.sp,
             fontFamily = FontFamily(Font(R.font.rubik_medium)),
             modifier = Modifier
@@ -375,7 +377,20 @@ private fun ReportChart(
         shape = MaterialTheme.shapes.large,
         modifier = modifier.fillMaxSize()
     ) {
-        Chart(modifier = Modifier.fillMaxSize())
+        var textColor = Black40
+        var lineColor = Color(0x1A000000)
+
+        if (isSystemInDarkTheme()) {
+            textColor = White40
+            lineColor = Color(0xDFFFFFFF)
+        }
+
+        Chart(
+            modifier = Modifier.fillMaxSize(),
+            textColor = textColor,
+            lineColor = lineColor,
+            data = data
+        )
     }
 }
 
@@ -383,7 +398,8 @@ private fun ReportChart(
 @Preview(widthDp = 320)
 private fun ReportHeaderPreview() {
     TimePadTheme {
-        ReportHeader(
+        Header(
+            titleTextRes = R.string.report,
             onBackArrowClick = {},
             modifier = Modifier.padding(8.dp)
         )

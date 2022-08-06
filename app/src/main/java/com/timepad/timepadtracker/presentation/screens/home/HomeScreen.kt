@@ -1,10 +1,15 @@
 package com.timepad.timepadtracker.presentation.screens.home
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,9 +29,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.screens.main.TaskItem
+import com.timepad.timepadtracker.presentation.theme.Black40
 import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import com.timepad.timepadtracker.presentation.theme.White40
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillisHMS
+import java.lang.Integer.min
 import java.time.LocalDate
 
 @Composable
@@ -37,6 +46,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val timeLeft by mainViewModel.timeLeftInMillis.observeAsState()
+    val tasks by mainViewModel.tasks.observeAsState()
     val taskTitle = mainViewModel.getSelectedTaskTitle()
 
     Column(
@@ -62,13 +72,20 @@ fun HomeScreen(
                 .padding(top = 16.dp)
                 .fillMaxWidth()
         )
-        TodayTasks(
-            onTaskItemClick = onTaskItemClick,
-            mainViewModel = mainViewModel,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp)
-        )
+
+        if (tasks.isNullOrEmpty()) {
+            PlaceholderText(R.string.home_hint)
+        } else {
+            tasks?.let {
+                TodayTasks(
+                    onTaskItemClick = onTaskItemClick,
+                    tasks = it.subList(0, min(4, it.size)),
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp)
+                )
+            }
+        }
     }
 }
 
@@ -83,7 +100,6 @@ fun HomeHeader(
     ) {
         Text(
             text = stringResource(id = R.string.task),
-//            color = MaterialTheme.colors.secondary,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
@@ -189,16 +205,39 @@ fun TodayTasksHeader(
 @Composable
 fun TodayTasks(
     onTaskItemClick: (Task) -> Unit,
-    mainViewModel: MainViewModel,
+    tasks: List<Task>,
     modifier: Modifier = Modifier
 ) {
-    val tasks by mainViewModel.tasks.observeAsState()
-    tasks?.let {
-        TodayTasksContent(
-            tasks = it,
-            onTaskItemClick = onTaskItemClick,
-            modifier = modifier
+    TodayTasksContent(
+        tasks = tasks,
+        onTaskItemClick = onTaskItemClick,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun PlaceholderText(
+    @StringRes textRes: Int,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier.fillMaxSize()
+    ) {
+        val textColor = if (isSystemInDarkTheme()) White40 else Black40
+        Text(
+            text = stringResource(textRes),
+            textAlign = TextAlign.Center,
+            color = textColor,
         )
+    }
+}
+
+@Composable
+@Preview
+fun EmptyTaskPreview() {
+    TimePadTheme {
+        PlaceholderText(R.string.home_hint)
     }
 }
 
