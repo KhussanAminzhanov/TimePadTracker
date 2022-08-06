@@ -68,7 +68,7 @@ fun LineChart(
             val startPaddingStartAxis = 16.dp.toPx()
             val topPaddingAxis = 24.dp.toPx()
             val bottomPaddingAxis = 60.dp.toPx()
-            val timeStep = (size.height - topPaddingAxis - bottomPaddingAxis) / 8
+            val timeStep = (size.height - topPaddingAxis - bottomPaddingAxis) / 9
             (0..8).forEach { i ->
                 drawContext.canvas.nativeCanvas.apply {
                     val startY = (size.height - topPaddingAxis - bottomPaddingAxis) - i * timeStep
@@ -88,7 +88,7 @@ fun LineChart(
                             startY
                         ),
                         color = Color.Black,
-                        strokeWidth = 16f
+                        strokeWidth = 4f
                     )
                 }
             }
@@ -106,8 +106,7 @@ fun LineChart(
             data.forEachIndexed { index, currentData ->
                 if (data.size >= index + 1) {
                     val x0 = currentX
-                    val y0 =
-                        topPaddingChart + (maxValue - currentData) * ((size.height - bottomPaddingChart - topPaddingChart) / maxValue)
+                    val y0 = topPaddingChart + (maxValue - currentData) * ((size.height - bottomPaddingChart - topPaddingChart) / maxValue)
                     points.add(PointF(x0, y0))
                     currentX += distance
                 }
@@ -134,12 +133,6 @@ fun LineChart(
                     points[i].y
                 )
             }
-
-//            drawRect(
-//                brush = Brush.linearGradient(colors = listOf(Color.Red, Color.Red)),
-//                topLeft = Offset(points.first().x, points.last().y),
-//                size = Size(points.last().x - points.first().x, points.first().y - points.last().y)
-//            )
 
             drawPath(
                 path = path,
