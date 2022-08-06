@@ -87,6 +87,7 @@ fun Chart(
                         }
                     )
                 }
+
                 //DOTTED LINE
                 drawLine(
                     color = lineColor,

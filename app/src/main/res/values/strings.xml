@@ -28,4 +28,5 @@
     <string name="report">My Productivity</string>
     <string name="home_label">Home</string>
     <string name="report_label">Report</string>
+    <string name="home_hint">Try adding some tasks to see them here.</string>
 </resources>
