@@ -9,18 +9,12 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.inset
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.timepad.timepadtracker.presentation.theme.Green
-import com.timepad.timepadtracker.presentation.theme.Purple
-import com.timepad.timepadtracker.presentation.theme.PurpleLight
-import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import com.timepad.timepadtracker.presentation.theme.*
 
 @Composable
 fun CanvasSandbox(
@@ -92,73 +86,131 @@ fun Chart(
 ) {
     Canvas(modifier = modifier.fillMaxSize()) {
 
-        val fontSize = 14.sp.toPx()
+        val fontSizeVerticalLabel = 14.sp.toPx()
+        val fontSizeHorizontalLabel = 16.sp.toPx()
+        val numberOfVerticalLines = 8
+        val numberOfHorizontalLines = 6
+        var verticalLineSpacing: Float
+        var horizontalLineSpacing: Float
 
-        //Horizontal Axis
+        val showLines = false
+        val showBox = false
+
+        //HORIZONTAL AXIS
         inset(
             left = 75.dp.toPx(),
             top = 24.dp.toPx(),
             right = 16.dp.toPx(),
             bottom = 24.dp.toPx()
         ) {
-            val numberOfLines = 5
-            val spaceBetweenLines = size.width / numberOfLines
+            horizontalLineSpacing = size.width / numberOfHorizontalLines
             var position: Float
-            for (i in 0 until numberOfLines) {
-                position = spaceBetweenLines * i
-                drawLine(
-                    color = Green,
-                    start = Offset(x = position, y = 0F),
-                    end = Offset(x = position, y = size.height)
-                )
+            for (i in 0 until numberOfHorizontalLines) {
+                position = horizontalLineSpacing * i
+
+//                HELP LINES
+                if (showLines) {
+                    drawLine(
+                        color = Green,
+                        start = Offset(x = position, y = 0F),
+                        end = Offset(x = position, y = size.height)
+                    )
+                }
+
+                //HORIZONTAL LABELS
                 drawContext.canvas.nativeCanvas.apply {
                     drawText(
                         "8am",
-                        position + spaceBetweenLines / 2,
+                        position + horizontalLineSpacing / 2,
                         size.height,
                         Paint().apply {
-                            textSize = fontSize
+                            textSize = fontSizeHorizontalLabel
                             color = Green.toArgb()
                             textAlign = Paint.Align.CENTER
                         }
                     )
                 }
             }
-//            drawRect(color = Green, alpha = 0.4f)
+
+            //HELPING BOX
+            if (showBox) {
+                drawRect(color = Green, alpha = 0.4f)
+            }
         }
 
 
-        // Vertical Axis
+        //VERTICAL AXIS
         inset(
             left = 16.dp.toPx(),
             top = 24.dp.toPx(),
             right = 16.dp.toPx(),
             bottom = 60.dp.toPx()
         ) {
-            val numberOfLines = 6
-            val spaceBetweenLines = (size.height) / numberOfLines
+            verticalLineSpacing = size.height / numberOfVerticalLines
             var position: Float
-            for (i in 0 until numberOfLines) {
-                position = spaceBetweenLines * i
-                drawLine(
-                    color = Purple,
-                    start = Offset(x = 0F, y = position),
-                    end = Offset(x = size.width, y = position)
-                )
+            for (i in 0 until numberOfVerticalLines) {
+                position = verticalLineSpacing * i
+
+//                HELPING LINES
+                if (showLines) {
+                    drawLine(
+                        color = Purple,
+                        start = Offset(x = 0F, y = position),
+                        end = Offset(x = size.width, y = position),
+                        strokeWidth = 1.dp.toPx()
+                    )
+                }
+
+                //VERTICAL LABELS
                 drawContext.canvas.nativeCanvas.apply {
                     drawText(
-                        "2h30m",
+                        "4h00m",
                         0f,
-                        position + fontSize,
+                        position + fontSizeVerticalLabel,
                         Paint().apply {
-                            textSize = fontSize
+                            textSize = fontSizeVerticalLabel
                             color = Purple.toArgb()
                             textAlign = Paint.Align.LEFT
                         }
                     )
                 }
+                //DOTTED LINE
+                drawLine(
+                    color = Black,
+                    alpha = 0.1f,
+                    start = Offset(
+                        x = 75.dp.toPx() - 16.dp.toPx(),
+                        y = position + fontSizeVerticalLabel / 2
+                    ),
+                    end = Offset(x = size.width, y = position + fontSizeVerticalLabel / 2),
+                    strokeWidth = 1.dp.toPx(),
+                    pathEffect = PathEffect.dashPathEffect(FloatArray(4) { 16F })
+                )
             }
-//            drawRect(color = Purple, alpha = 0.4f)
+
+            //HELPING BOX
+            if (showBox) {
+                drawRect(color = Purple, alpha = 0.4f)
+            }
+        }
+
+        val bottomPadding = 60.dp.toPx()
+        val leftPadding = 75.dp.toPx()
+        val rightPadding = 16.dp.toPx()
+        val topPadding = 24.dp.toPx()
+        val height = size.height - bottomPadding - topPadding
+        val spacing = height / numberOfVerticalLines
+        inset(
+            left = 75.dp.toPx(),
+            top = 24.dp.toPx() + fontSizeVerticalLabel / 2,
+            right = 16.dp.toPx(),
+            bottom = 60.dp.toPx() + spacing - fontSizeVerticalLabel / 2
+        ) {
+
+            //HELPING BOX
+            if (showBox) {
+                drawRect(color = Black, alpha = 0.1f)
+            }
         }
     }
 }
