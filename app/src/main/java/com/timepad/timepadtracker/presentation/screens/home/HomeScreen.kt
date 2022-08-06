@@ -74,7 +74,7 @@ fun HomeScreen(
         )
 
         if (tasks.isNullOrEmpty()) {
-            EmptyTasks(R.string.home_hint)
+            PlaceholderText(R.string.home_hint)
         } else {
             tasks?.let {
                 TodayTasks(
@@ -216,7 +216,7 @@ fun TodayTasks(
 }
 
 @Composable
-fun EmptyTasks(
+fun PlaceholderText(
     @StringRes textRes: Int,
     modifier: Modifier = Modifier
 ) {
@@ -237,7 +237,7 @@ fun EmptyTasks(
 @Preview
 fun EmptyTaskPreview() {
     TimePadTheme {
-        EmptyTasks(R.string.home_hint)
+        PlaceholderText(R.string.home_hint)
     }
 }
 
