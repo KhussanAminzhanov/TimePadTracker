@@ -375,7 +375,20 @@ private fun ReportChart(
         shape = MaterialTheme.shapes.large,
         modifier = modifier.fillMaxSize()
     ) {
-        Chart(modifier = Modifier.fillMaxSize())
+        var textColor = Black40
+        var lineColor = Color(0x1A000000)
+
+        if (isSystemInDarkTheme()) {
+            textColor = White40
+            lineColor = Color(0xDFFFFFFF)
+        }
+
+        Chart(
+            modifier = Modifier.fillMaxSize(),
+            textColor = textColor,
+            lineColor = lineColor,
+            data = data
+        )
     }
 }
 

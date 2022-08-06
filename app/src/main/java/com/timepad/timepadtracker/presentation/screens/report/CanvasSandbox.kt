@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
@@ -15,20 +16,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.timepad.timepadtracker.presentation.theme.*
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel.Companion.ONE_MINUTE
+import com.timepad.timepadtracker.utils.formatTimeMillisHM
 
 @Composable
 fun Chart(
+    textColor: Color,
+    lineColor: Color,
+    data: List<Long>,
     modifier: Modifier = Modifier
 ) {
-    Canvas(modifier = modifier.fillMaxSize()) {
 
+    val textPaint = remember {
+        Paint().apply {
+            color = textColor.toArgb()
+        }
+    }
+
+    Canvas(modifier = modifier.fillMaxSize()) {
         val fontSizeVerticalLabel = 14.sp.toPx()
         val fontSizeHorizontalLabel = 16.sp.toPx()
         val chartStartPadding = fontSizeVerticalLabel * 5 + 5.dp.toPx()
         val horizontalPadding = 16.dp.toPx()
         val verticalPadding = 24.dp.toPx()
-        val numberOfVerticalLines = 8
-        val numberOfHorizontalLines = 6
+        val numberOfHorizontalLines = data.size
+        val numberOfVerticalLines = 6
         var verticalLineSpacing: Float
         var horizontalLineSpacing: Float
 
@@ -36,15 +48,22 @@ fun Chart(
         val showHelpBox = false
         val showHelpChartBox = false
 
+
         //VERTICAL AXIS
         inset(
             horizontal = horizontalPadding,
             vertical = verticalPadding
         ) {
             verticalLineSpacing = size.height / numberOfVerticalLines
+
             var position: Float
+            var verticalLabelText: String
+            val maxHour = 4 * 60 * 60 * 1000L
+            val stepLong = 48 * 60 * 1000L
+
             for (i in 0 until numberOfVerticalLines) {
                 position = verticalLineSpacing * i
+                verticalLabelText = (maxHour - stepLong * i).formatTimeMillisHM()
 
                 //HELPING LINES
                 if (showHelpLines) {
@@ -59,20 +78,18 @@ fun Chart(
                 //VERTICAL LABELS
                 drawContext.canvas.nativeCanvas.apply {
                     drawText(
-                        "4h00m",
+                        verticalLabelText,
                         0f,
                         position + fontSizeVerticalLabel,
-                        Paint().apply {
+                        textPaint.apply {
                             textSize = fontSizeVerticalLabel
-                            color = Purple.toArgb()
                             textAlign = Paint.Align.LEFT
                         }
                     )
                 }
                 //DOTTED LINE
                 drawLine(
-                    color = Black,
-                    alpha = 0.1f,
+                    color = lineColor,
                     start = Offset(
                         x = chartStartPadding - horizontalPadding,
                         y = position + fontSizeVerticalLabel / 2
@@ -98,8 +115,12 @@ fun Chart(
         ) {
             horizontalLineSpacing = size.width / numberOfHorizontalLines
             var position: Float
+            var horizontalLabelText: String
+
             for (i in 0 until numberOfHorizontalLines) {
+                val hour = 4 * (i + 1)
                 position = horizontalLineSpacing * i
+                horizontalLabelText = if (hour > 12) "${hour - 12}pm" else "${hour}am"
 
                 //HELP LINES
                 if (showHelpLines) {
@@ -113,12 +134,11 @@ fun Chart(
                 //HORIZONTAL LABELS
                 drawContext.canvas.nativeCanvas.apply {
                     drawText(
-                        "8am",
+                        horizontalLabelText,
                         position + horizontalLineSpacing / 2,
                         size.height,
-                        Paint().apply {
+                        textPaint.apply {
                             textSize = fontSizeHorizontalLabel
-                            color = Green.toArgb()
                             textAlign = Paint.Align.CENTER
                         }
                     )
@@ -132,7 +152,6 @@ fun Chart(
         }
 
         val height = size.height - verticalPadding * 2
-        val width = size.width - horizontalPadding * 2
         val verticalSpacing = height / numberOfVerticalLines
         inset(
             left = chartStartPadding,
@@ -157,7 +176,14 @@ fun CanvasSandboxPreview() {
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.padding(8.dp)
         ) {
-            Chart()
+            Chart(
+                textColor = Black40,
+                lineColor = Color(0x1A000000),
+                data = data
+            )
         }
     }
 }
+
+const val TEN_MINUTE = 10 * ONE_MINUTE
+val data = listOf(0, 10, 43, 60, 32, 5).map { it * TEN_MINUTE }
