@@ -88,13 +88,69 @@ fun Chart(
 
         val fontSizeVerticalLabel = 14.sp.toPx()
         val fontSizeHorizontalLabel = 16.sp.toPx()
+        val chartStartPadding = fontSizeVerticalLabel * 5 + 5.dp.toPx()
+        val horizontalPadding = 16.dp.toPx()
+        val verticalPadding = 24.dp.toPx()
         val numberOfVerticalLines = 8
         val numberOfHorizontalLines = 6
         var verticalLineSpacing: Float
         var horizontalLineSpacing: Float
 
-        val showLines = false
+        val showLines = true
         val showBox = false
+
+        //VERTICAL AXIS
+        inset(
+            horizontal = horizontalPadding,
+            vertical = verticalPadding
+        ) {
+            verticalLineSpacing = size.height / numberOfVerticalLines
+            var position: Float
+            for (i in 0 until numberOfVerticalLines) {
+                position = verticalLineSpacing * i
+
+                //HELPING LINES
+                if (showLines) {
+                    drawLine(
+                        color = Purple,
+                        start = Offset(x = 0F, y = position),
+                        end = Offset(x = size.width, y = position),
+                        strokeWidth = 1.dp.toPx()
+                    )
+                }
+
+                //VERTICAL LABELS
+                drawContext.canvas.nativeCanvas.apply {
+                    drawText(
+                        "4h00m",
+                        0f,
+                        position + fontSizeVerticalLabel,
+                        Paint().apply {
+                            textSize = fontSizeVerticalLabel
+                            color = Purple.toArgb()
+                            textAlign = Paint.Align.LEFT
+                        }
+                    )
+                }
+                //DOTTED LINE
+                drawLine(
+                    color = Black,
+                    alpha = 0.1f,
+                    start = Offset(
+                        x = chartStartPadding - horizontalPadding,
+                        y = position + fontSizeVerticalLabel / 2
+                    ),
+                    end = Offset(x = size.width, y = position + fontSizeVerticalLabel / 2),
+                    strokeWidth = 1.dp.toPx(),
+                    pathEffect = PathEffect.dashPathEffect(FloatArray(4) { 16F })
+                )
+            }
+
+            //HELPING BOX
+            if (showBox) {
+                drawRect(color = Purple, alpha = 0.4f)
+            }
+        }
 
         //HORIZONTAL AXIS
         inset(
@@ -108,7 +164,7 @@ fun Chart(
             for (i in 0 until numberOfHorizontalLines) {
                 position = horizontalLineSpacing * i
 
-//                HELP LINES
+                //HELP LINES
                 if (showLines) {
                     drawLine(
                         color = Green,
@@ -138,77 +194,18 @@ fun Chart(
             }
         }
 
-
-        //VERTICAL AXIS
+        val height = size.height - verticalPadding * 2
+        val width = size.width - horizontalPadding * 2
+        val verticalSpacing = height / numberOfVerticalLines
         inset(
-            left = 16.dp.toPx(),
-            top = 24.dp.toPx(),
-            right = 16.dp.toPx(),
-            bottom = 60.dp.toPx()
-        ) {
-            verticalLineSpacing = size.height / numberOfVerticalLines
-            var position: Float
-            for (i in 0 until numberOfVerticalLines) {
-                position = verticalLineSpacing * i
-
-//                HELPING LINES
-                if (showLines) {
-                    drawLine(
-                        color = Purple,
-                        start = Offset(x = 0F, y = position),
-                        end = Offset(x = size.width, y = position),
-                        strokeWidth = 1.dp.toPx()
-                    )
-                }
-
-                //VERTICAL LABELS
-                drawContext.canvas.nativeCanvas.apply {
-                    drawText(
-                        "4h00m",
-                        0f,
-                        position + fontSizeVerticalLabel,
-                        Paint().apply {
-                            textSize = fontSizeVerticalLabel
-                            color = Purple.toArgb()
-                            textAlign = Paint.Align.LEFT
-                        }
-                    )
-                }
-                //DOTTED LINE
-                drawLine(
-                    color = Black,
-                    alpha = 0.1f,
-                    start = Offset(
-                        x = 75.dp.toPx() - 16.dp.toPx(),
-                        y = position + fontSizeVerticalLabel / 2
-                    ),
-                    end = Offset(x = size.width, y = position + fontSizeVerticalLabel / 2),
-                    strokeWidth = 1.dp.toPx(),
-                    pathEffect = PathEffect.dashPathEffect(FloatArray(4) { 16F })
-                )
-            }
-
-            //HELPING BOX
-            if (showBox) {
-                drawRect(color = Purple, alpha = 0.4f)
-            }
-        }
-
-        val bottomPadding = 60.dp.toPx()
-        val leftPadding = 75.dp.toPx()
-        val rightPadding = 16.dp.toPx()
-        val topPadding = 24.dp.toPx()
-        val height = size.height - bottomPadding - topPadding
-        val spacing = height / numberOfVerticalLines
-        inset(
-            left = 75.dp.toPx(),
-            top = 24.dp.toPx() + fontSizeVerticalLabel / 2,
-            right = 16.dp.toPx(),
-            bottom = 60.dp.toPx() + spacing - fontSizeVerticalLabel / 2
+            left = chartStartPadding,
+            top = verticalPadding + fontSizeVerticalLabel / 2,
+            right = horizontalPadding,
+            bottom = verticalPadding + verticalSpacing - fontSizeVerticalLabel / 2
         ) {
 
             //HELPING BOX
-            if (showBox) {
+            if (!showBox) {
                 drawRect(color = Black, alpha = 0.1f)
             }
         }
