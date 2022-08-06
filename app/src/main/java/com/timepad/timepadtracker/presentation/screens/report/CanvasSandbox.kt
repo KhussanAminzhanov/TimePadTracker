@@ -17,70 +17,6 @@ import androidx.compose.ui.unit.sp
 import com.timepad.timepadtracker.presentation.theme.*
 
 @Composable
-fun CanvasSandbox(
-    modifier: Modifier = Modifier
-) {
-    Canvas(modifier = modifier.fillMaxSize()) {
-
-        //Draw Start Axis Labels
-        val rightPadding = size.width - 16.dp.toPx() - 44.dp.toPx()
-        inset(
-            left = 16.dp.toPx(),
-            top = 24.dp.toPx(),
-            right = rightPadding,
-            bottom = 70.dp.toPx()
-        ) {
-            drawRect(color = Purple)
-        }
-
-        //Draw Bottom Axis Labels
-        val topPaddingLabel = size.height - 24.dp.toPx() - 20.dp.toPx()
-        inset(
-            left = 78.dp.toPx(),
-            top = topPaddingLabel,
-            right = 16.dp.toPx(),
-            bottom = 24.dp.toPx()
-        ) {
-            drawRect(color = Purple)
-        }
-
-        // Chart Paddings
-        val numberOfLines = 100
-        val startPadding = 78.dp.toPx()
-        val endPadding = 16.dp.toPx()
-        val topPadding = 24.dp.toPx()
-        val bottomPadding = 70.dp.toPx()
-
-        //Draw Horizontal Lines
-        inset(
-            left = startPadding,
-            top = topPadding,
-            bottom = bottomPadding,
-            right = endPadding
-        ) {
-            val spaceBetweenLinesY = size.height / numberOfLines
-            val spaceBetweenLinesX = size.width / numberOfLines
-            for (i in (0..numberOfLines)) {
-                drawLine(
-                    color = Purple,
-                    start = Offset(x = 0F, y = spaceBetweenLinesY * i),
-                    end = Offset(x = size.width, y = spaceBetweenLinesY * i),
-                    cap = StrokeCap.Round
-                )
-
-                drawLine(
-                    color = Purple,
-                    start = Offset(x = spaceBetweenLinesX * i, y = 0F),
-                    end = Offset(x = spaceBetweenLinesX * i, y = size.height),
-                    strokeWidth = 1.dp.toPx(),
-                    cap = StrokeCap.Round
-                )
-            }
-        }
-    }
-}
-
-@Composable
 fun Chart(
     modifier: Modifier = Modifier
 ) {
@@ -96,8 +32,9 @@ fun Chart(
         var verticalLineSpacing: Float
         var horizontalLineSpacing: Float
 
-        val showLines = true
-        val showBox = false
+        val showHelpLines = false
+        val showHelpBox = false
+        val showHelpChartBox = false
 
         //VERTICAL AXIS
         inset(
@@ -110,7 +47,7 @@ fun Chart(
                 position = verticalLineSpacing * i
 
                 //HELPING LINES
-                if (showLines) {
+                if (showHelpLines) {
                     drawLine(
                         color = Purple,
                         start = Offset(x = 0F, y = position),
@@ -147,7 +84,7 @@ fun Chart(
             }
 
             //HELPING BOX
-            if (showBox) {
+            if (showHelpBox) {
                 drawRect(color = Purple, alpha = 0.4f)
             }
         }
@@ -165,7 +102,7 @@ fun Chart(
                 position = horizontalLineSpacing * i
 
                 //HELP LINES
-                if (showLines) {
+                if (showHelpLines) {
                     drawLine(
                         color = Green,
                         start = Offset(x = position, y = 0F),
@@ -189,7 +126,7 @@ fun Chart(
             }
 
             //HELPING BOX
-            if (showBox) {
+            if (showHelpChartBox) {
                 drawRect(color = Green, alpha = 0.4f)
             }
         }
@@ -205,7 +142,7 @@ fun Chart(
         ) {
 
             //HELPING BOX
-            if (!showBox) {
+            if (showHelpBox) {
                 drawRect(color = Black, alpha = 0.1f)
             }
         }
