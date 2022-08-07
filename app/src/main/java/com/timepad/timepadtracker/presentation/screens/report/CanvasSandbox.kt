@@ -19,10 +19,12 @@ import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.timepad.timepadtracker.presentation.theme.*
+import com.timepad.timepadtracker.presentation.theme.Black
+import com.timepad.timepadtracker.presentation.theme.Green
+import com.timepad.timepadtracker.presentation.theme.Purple
+import com.timepad.timepadtracker.presentation.theme.White
 import com.timepad.timepadtracker.utils.formatTimeMillisHM
 
 
@@ -222,25 +224,5 @@ fun ChartTest() {
                 )
             }
         }
-    }
-}
-
-@Composable
-@Preview(widthDp = 343, heightDp = 312)
-fun CanvasSandboxPreview() {
-    TimePadTheme {
-        CanvasSandbox(
-            textColor = Black40,
-            lineColor = Color(0x1A000000),
-            data = data
-        )
-    }
-}
-
-@Composable
-@Preview(widthDp = 343, heightDp = 312)
-fun ChartTestPreview() {
-    TimePadTheme {
-        ChartTest()
     }
 }

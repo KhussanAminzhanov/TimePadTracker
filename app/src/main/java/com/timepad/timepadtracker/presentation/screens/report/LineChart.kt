@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.timepad.timepadtracker.presentation.theme.*
@@ -35,16 +34,22 @@ fun Chart(
 
     val textSizeVertical = 14.dp
     val textSizeHorizontal = 16.dp
-    val horizontalSpacing = 50.dp
+    val textPaint = remember { Paint().apply { color = textColor.toArgb() } }
+
     val horizontalLines = 24
     val horizontalPadding = 16.dp
+    val horizontalSpacing = 50.dp
+
+    val timeIntervals = listOf(180, 180, 60, 30, 30, 0)
+    val verticalLines = timeIntervals.size
     val verticalPadding = 24.dp
+    var verticalLineSpacing: Float
+
     val chartStartPadding = (textSizeVertical * 5) + 5.dp
-    val textPaint = remember {
-        Paint().apply {
-            color = textColor.toArgb()
-        }
-    }
+
+    val showHelpLines = false
+    val showHelpBox = false
+    val showHelpChartBox = false
 
     Canvas(
         modifier = modifier
@@ -52,28 +57,21 @@ fun Chart(
             .width(horizontalSpacing * 24 + chartStartPadding + horizontalPadding)
             .fillMaxHeight()
     ) {
-        val numberOfVerticalLines = 6
-        var verticalLineSpacing: Float
-
-        val showHelpLines = false
-        val showHelpBox = false
-        val showHelpChartBox = false
-
         //VERTICAL AXIS
         inset(
             horizontal = horizontalPadding.toPx(),
             vertical = verticalPadding.toPx()
         ) {
-            verticalLineSpacing = size.height / numberOfVerticalLines
+            verticalLineSpacing = size.height / verticalLines
 
             var position: Float
             var verticalLabelText: String
-            val maxHour = 4 * 60 * 60 * 1000L
-            val stepLong = 48 * 60 * 1000L
+            var labelTime = 0L
 
-            for (i in 0 until numberOfVerticalLines) {
+            for (i in verticalLines - 1 downTo 0) {
                 position = verticalLineSpacing * i
-                verticalLabelText = (maxHour - stepLong * i).formatTimeMillisHM()
+                labelTime += timeIntervals[i] * ONE_MINUTE
+                verticalLabelText = labelTime.formatTimeMillisHM()
 
                 //HELPING LINES
                 if (showHelpLines) {
@@ -105,7 +103,10 @@ fun Chart(
                         x = chartStartPadding.toPx() - horizontalPadding.toPx(),
                         y = position + textSizeVertical.toPx() / 2 + textSizeVertical.toPx() / 4
                     ),
-                    end = Offset(x = size.width, y = position + textSizeVertical.toPx() / 2),
+                    end = Offset(
+                        x = size.width,
+                        y = position + textSizeVertical.toPx() / 2 + textSizeVertical.toPx() / 4
+                    ),
                     strokeWidth = 1.dp.toPx(),
                     pathEffect = PathEffect.dashPathEffect(FloatArray(4) { 16F })
                 )
@@ -119,10 +120,10 @@ fun Chart(
 
         //HORIZONTAL AXIS
         inset(
-            left = 75.dp.toPx(),
-            top = 24.dp.toPx(),
-            right = 16.dp.toPx(),
-            bottom = 24.dp.toPx()
+            left = chartStartPadding.toPx(),
+            top = verticalPadding.toPx(),
+            right = horizontalPadding.toPx(),
+            bottom = verticalPadding.toPx()
         ) {
             var position: Float
             var labelHorizontal: String
@@ -162,7 +163,7 @@ fun Chart(
 
         //CHART
         val height = size.height - verticalPadding.toPx() * 2
-        val verticalSpacing = height / numberOfVerticalLines
+        val verticalSpacing = height / verticalLines
         inset(
             left = chartStartPadding.toPx(),
             top = verticalPadding.toPx() + textSizeVertical.toPx() / 2,
