@@ -2,29 +2,21 @@ package com.timepad.timepadtracker.presentation.screens.report
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.inset
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.timepad.timepadtracker.presentation.theme.Black
 import com.timepad.timepadtracker.presentation.theme.Green
 import com.timepad.timepadtracker.presentation.theme.Purple
-import com.timepad.timepadtracker.presentation.theme.White
+import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.utils.formatTimeMillisHM
 
 
@@ -183,46 +175,75 @@ fun CanvasSandbox(
 @Composable
 fun ChartTest() {
 
-    val density = LocalDensity.current
-    val textSize = density.run { 16.sp.toPx() }
-    val chartStartPadding = textSize.dp * 5 + 5.dp
-    val verticalLineSpace = 44.dp
-    val onBlack = White //Color(0x0DFFFFFF)
-    val onWhite = Black //Color(0x1A000000)
-    val color = if (isSystemInDarkTheme()) onBlack else onWhite
+    Canvas(modifier = Modifier.fillMaxSize()) {
 
-    val textPaint = remember {
-        Paint().apply {
-            this.color = color.toArgb()
-            this.textSize = textSize
-        }
-    }
+        val currentPoint = Offset(size.width * (1f / 3), size.height * (2f/3))
+        val nextPoint = Offset(size.width * (2f / 3), size.height * (1f/3))
+        val pointTwo = Offset((nextPoint.x + currentPoint.x) / 2, (currentPoint.y + nextPoint.y) / 2)
 
-    Canvas(
-        modifier = Modifier
-            .horizontalScroll(rememberScrollState())
-            .width(verticalLineSpace * 24 + chartStartPadding)
-            .fillMaxHeight()
-            .padding(start = chartStartPadding)
-    ) {
-        var position: Float
+        val conPointOne = Offset(
+            x = (nextPoint.x + currentPoint.x) / 2,
+            y = nextPoint.y
+        )
 
-        for (i in 0 until 24) {
-            position = i * verticalLineSpace.toPx()
-            drawLine(
-                color = color,
-                alpha = 0.4f,
-                start = Offset(x = position, y = 0f),
-                end = Offset(x = position, y = size.height),
+        val conPointTwo = Offset(
+            x = (nextPoint.x + currentPoint.x) / 2,
+            y = currentPoint.y
+        )
+
+        val path = Path().apply {
+            moveTo(nextPoint.x, nextPoint.y)
+            cubicTo(
+                x1 = conPointOne.x, y1 = conPointOne.y,
+                x2 = conPointTwo.x, y2 = conPointTwo.y, // control point
+                x3 = currentPoint.x, y3 = currentPoint.y
             )
-            drawContext.canvas.nativeCanvas.apply {
-                drawText(
-                    i.toString(),
-                    position,
-                    size.height,
-                    textPaint
-                )
-            }
         }
+
+        drawPath(
+            path = path,
+            color = Purple,
+            style = Stroke(
+                width = 5f,
+                cap = StrokeCap.Round
+            )
+        )
+
+        drawCircle(
+            color = Color.Blue,
+            center = currentPoint,
+            radius = 3.dp.toPx()
+        )
+        drawCircle(
+            color = Color.Red,
+            center = nextPoint,
+            radius = 3.dp.toPx()
+        )
+
+        drawCircle(
+            color = Color.Green,
+            center = pointTwo,
+            radius = 3.dp.toPx()
+        )
+
+        drawCircle(
+            color = Color.Cyan,
+            center = conPointOne,
+            radius = 3.dp.toPx()
+        )
+
+        drawCircle(
+            color = Color.Cyan,
+            center = conPointTwo,
+            radius = 3.dp.toPx()
+        )
+    }
+}
+
+@Composable
+@Preview
+fun CharTestPreview() {
+    TimePadTheme {
+        ChartTest()
     }
 }

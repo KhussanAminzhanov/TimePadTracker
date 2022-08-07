@@ -14,11 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.inset
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.timepad.timepadtracker.presentation.theme.*
@@ -39,20 +37,17 @@ fun Chart(
     val textSizeHorizontal = 16.dp
     val textPaint = remember { Paint().apply { color = textColor.toArgb() } }
 
-    val horizontalLines = 24
+    val horizontalLines = data.size
     val horizontalPadding = 16.dp
     val horizontalSpacing = 50.dp
 
-    val timeIntervals = listOf(180, 180, 60, 30, 30, 0)
+    val timeIntervals = listOf<Long>(30, 30, 30, 30, 30, 0)
     val verticalLines = timeIntervals.size
+    val maxInterval = 150 * ONE_MINUTE
     val verticalPadding = 24.dp
     var verticalLineSpacing: Float
 
     val chartStartPadding = (textSizeVertical * 5) + 5.dp
-
-    val showHelpLines = false
-    val showHelpBox = false
-    val showHelpChartBox = false
 
     Canvas(
         modifier = modifier
@@ -67,20 +62,8 @@ fun Chart(
         ) {
             verticalLineSpacing = size.height / verticalLines
             var position: Float
-
             for (i in verticalLines - 1 downTo 0) {
                 position = verticalLineSpacing * i
-
-                //HELPING LINES
-                if (showHelpLines) {
-                    drawLine(
-                        color = Purple,
-                        start = Offset(x = 0F, y = position),
-                        end = Offset(x = size.width, y = position),
-                        strokeWidth = 1.dp.toPx()
-                    )
-                }
-
                 //DOTTED LINE
                 drawLine(
                     color = lineColor,
@@ -96,11 +79,6 @@ fun Chart(
                     pathEffect = PathEffect.dashPathEffect(FloatArray(4) { 16F })
                 )
             }
-
-            //HELPING BOX
-            if (showHelpBox) {
-                drawRect(color = Purple, alpha = 0.4f)
-            }
         }
 
         //HORIZONTAL AXIS
@@ -112,12 +90,9 @@ fun Chart(
         ) {
             var position: Float
             var labelHorizontal: String
-
             for (i in 0 until horizontalLines) {
                 position = i * horizontalSpacing.toPx()
                 labelHorizontal = if (i > 12) "${i - 12}pm" else "${i}am"
-
-                //HORIZONTAL LABELS
                 drawContext.canvas.nativeCanvas.apply {
                     drawText(
                         labelHorizontal,
@@ -129,20 +104,6 @@ fun Chart(
                         }
                     )
                 }
-
-                //HELP LINES
-                if (showHelpLines) {
-                    drawLine(
-                        color = Green,
-                        start = Offset(x = position, y = 0F),
-                        end = Offset(x = position, y = size.height)
-                    )
-                }
-            }
-
-            //HELPING BOX
-            if (showHelpChartBox) {
-                drawRect(color = Green, alpha = 0.4f)
             }
         }
 
@@ -151,22 +112,53 @@ fun Chart(
         val verticalSpacing = height / verticalLines
         inset(
             left = chartStartPadding.toPx(),
-            top = verticalPadding.toPx() + textSizeVertical.toPx() / 2,
+            top = verticalPadding.toPx() + textSizeVertical.toPx() / 2 + textSizeVertical.toPx() / 4,
             right = horizontalPadding.toPx(),
-            bottom = verticalPadding.toPx() + verticalSpacing - textSizeVertical.toPx() / 2
+            bottom = verticalPadding.toPx() + verticalSpacing - textSizeVertical.toPx() / 2 - textSizeVertical.toPx() / 4
         ) {
-            //HELPING BOX
-            if (showHelpBox) {
-                drawRect(color = Black, alpha = 0.1f)
+            val points = mutableListOf<Offset>()
+            val controlPointsOne = mutableListOf<Offset>()
+            val controlPointsTwo = mutableListOf<Offset>()
+
+            var percentage: Float
+            var x: Float
+            var y: Float
+
+            for (i in 0 until horizontalLines) {
+                percentage = data[i].toFloat() * 100 / maxInterval / 100
+                x = horizontalSpacing.toPx() * i + horizontalSpacing.toPx() / 2
+                y = size.height * (1f - percentage)
+                points.add(Offset(x, y))
             }
+
+            for (i in 0 until points.size - 1) {
+                controlPointsOne.add(Offset((points[i].x + points[i + 1].x) / 2, points[i].y))
+                controlPointsTwo.add(Offset((points[i].x + points[i + 1].x) / 2, points[i + 1].y))
+            }
+
+            val path = Path().apply {
+                moveTo(points.first().x, points.first().y)
+                for (i in 0 until points.size - 1) {
+                    cubicTo(
+                        x1 = controlPointsOne[i].x, y1 = controlPointsOne[i].y,
+                        x2 = controlPointsTwo[i].x, y2 = controlPointsTwo[i].y,
+                        x3 = points[i + 1].x, y3 = points[i + 1].y
+                    )
+                }
+            }
+
+            drawPath(
+                brush = Brush.verticalGradient(colors = listOf(Purple, Color.Transparent)),
+                path = path,
+                style = Stroke(
+                    width = 4.dp.toPx(),
+                    cap = StrokeCap.Round
+                )
+            )
         }
     }
 
-    Canvas(
-        modifier = Modifier
-            .fillMaxHeight()
-            .width(100.dp)
-    ) {
+    Canvas(modifier = Modifier.fillMaxHeight()) {
         drawRect(
             color = backGroundColor,
             size = Size(
@@ -219,5 +211,6 @@ fun ChartPreview() {
     }
 }
 
-const val TEN_MINUTE = 10 * ONE_MINUTE
-val data = listOf(0, 10, 43, 60, 32, 5).map { it * TEN_MINUTE }
+fun getRandom() = (0..150).random()
+val data = List(24) { getRandom() * ONE_MINUTE }
+//val data = List(24) { 120 * ONE_MINUTE}
