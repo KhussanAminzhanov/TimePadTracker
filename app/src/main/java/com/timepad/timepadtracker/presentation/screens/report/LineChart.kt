@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.inset
@@ -31,6 +32,8 @@ fun Chart(
     data: List<Long>,
     modifier: Modifier = Modifier
 ) {
+
+    val backGroundColor = MaterialTheme.colors.surface
 
     val textSizeVertical = 14.dp
     val textSizeHorizontal = 16.dp
@@ -63,15 +66,10 @@ fun Chart(
             vertical = verticalPadding.toPx()
         ) {
             verticalLineSpacing = size.height / verticalLines
-
             var position: Float
-            var verticalLabelText: String
-            var labelTime = 0L
 
             for (i in verticalLines - 1 downTo 0) {
                 position = verticalLineSpacing * i
-                labelTime += timeIntervals[i] * ONE_MINUTE
-                verticalLabelText = labelTime.formatTimeMillisHM()
 
                 //HELPING LINES
                 if (showHelpLines) {
@@ -80,19 +78,6 @@ fun Chart(
                         start = Offset(x = 0F, y = position),
                         end = Offset(x = size.width, y = position),
                         strokeWidth = 1.dp.toPx()
-                    )
-                }
-
-                //VERTICAL LABELS
-                drawContext.canvas.nativeCanvas.apply {
-                    drawText(
-                        verticalLabelText,
-                        0f,
-                        position + textSizeVertical.toPx(),
-                        textPaint.apply {
-                            textSize = textSizeVertical.toPx()
-                            textAlign = Paint.Align.LEFT
-                        }
                     )
                 }
 
@@ -173,6 +158,45 @@ fun Chart(
             //HELPING BOX
             if (showHelpBox) {
                 drawRect(color = Black, alpha = 0.1f)
+            }
+        }
+    }
+
+    Canvas(
+        modifier = Modifier
+            .fillMaxHeight()
+            .width(100.dp)
+    ) {
+        drawRect(
+            color = backGroundColor,
+            size = Size(
+                width = chartStartPadding.toPx(),
+                height = size.height
+            )
+        )
+        inset(
+            horizontal = horizontalPadding.toPx(),
+            vertical = verticalPadding.toPx()
+        ) {
+            verticalLineSpacing = size.height / verticalLines
+            var position: Float
+            var verticalLabelText: String
+            var labelTime = 0L
+            for (i in verticalLines - 1 downTo 0) {
+                position = verticalLineSpacing * i
+                labelTime += timeIntervals[i] * ONE_MINUTE
+                verticalLabelText = labelTime.formatTimeMillisHM()
+                drawContext.canvas.nativeCanvas.apply {
+                    drawText(
+                        verticalLabelText,
+                        0f,
+                        position + textSizeVertical.toPx(),
+                        textPaint.apply {
+                            textSize = textSizeVertical.toPx()
+                            textAlign = Paint.Align.LEFT
+                        }
+                    )
+                }
             }
         }
     }
