@@ -2,25 +2,32 @@ package com.timepad.timepadtracker.presentation.screens.report
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.inset
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.timepad.timepadtracker.presentation.theme.*
-import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel.Companion.ONE_MINUTE
 import com.timepad.timepadtracker.utils.formatTimeMillisHM
 
+
 @Composable
-fun Chart(
+fun CanvasSandbox(
     textColor: Color,
     lineColor: Color,
     data: List<Long>,
@@ -34,12 +41,13 @@ fun Chart(
     }
 
     Canvas(modifier = modifier.fillMaxSize()) {
+
         val fontSizeVerticalLabel = 14.sp.toPx()
         val fontSizeHorizontalLabel = 16.sp.toPx()
         val chartStartPadding = fontSizeVerticalLabel * 5 + 5.dp.toPx()
         val horizontalPadding = 16.dp.toPx()
         val verticalPadding = 24.dp.toPx()
-        val numberOfHorizontalLines = data.size
+        val numberOfHorizontalLines = 24
         val numberOfVerticalLines = 6
         var verticalLineSpacing: Float
         var horizontalLineSpacing: Float
@@ -114,14 +122,15 @@ fun Chart(
             right = 16.dp.toPx(),
             bottom = 24.dp.toPx()
         ) {
-            horizontalLineSpacing = size.width / numberOfHorizontalLines
+//            horizontalLineSpacing = size.width / numberOfHorizontalLines
+            horizontalLineSpacing = size.width / 6
             var position: Float
             var horizontalLabelText: String
 
             for (i in 0 until numberOfHorizontalLines) {
-                val hour = 4 * (i + 1)
+//                val hour = 4 * (i + 1)
                 position = horizontalLineSpacing * i
-                horizontalLabelText = if (hour > 12) "${hour - 12}pm" else "${hour}am"
+                horizontalLabelText = if (i > 12) "${i - 12}pm" else "${i}am"
 
                 //HELP LINES
                 if (showHelpLines) {
@@ -170,21 +179,68 @@ fun Chart(
 }
 
 @Composable
-@Preview(widthDp = 343, heightDp = 312)
-fun CanvasSandboxPreview() {
-    TimePadTheme {
-        Surface(
-            shape = MaterialTheme.shapes.large,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Chart(
-                textColor = Black40,
-                lineColor = Color(0x1A000000),
-                data = data
+fun ChartTest() {
+
+    val density = LocalDensity.current
+    val textSize = density.run { 16.sp.toPx() }
+    val chartStartPadding = textSize.dp * 5 + 5.dp
+    val verticalLineSpace = 44.dp
+    val onBlack = White //Color(0x0DFFFFFF)
+    val onWhite = Black //Color(0x1A000000)
+    val color = if (isSystemInDarkTheme()) onBlack else onWhite
+
+    val textPaint = remember {
+        Paint().apply {
+            this.color = color.toArgb()
+            this.textSize = textSize
+        }
+    }
+
+    Canvas(
+        modifier = Modifier
+            .horizontalScroll(rememberScrollState())
+            .width(verticalLineSpace * 24 + chartStartPadding)
+            .fillMaxHeight()
+            .padding(start = chartStartPadding)
+    ) {
+        var position: Float
+
+        for (i in 0 until 24) {
+            position = i * verticalLineSpace.toPx()
+            drawLine(
+                color = color,
+                alpha = 0.4f,
+                start = Offset(x = position, y = 0f),
+                end = Offset(x = position, y = size.height),
             )
+            drawContext.canvas.nativeCanvas.apply {
+                drawText(
+                    i.toString(),
+                    position,
+                    size.height,
+                    textPaint
+                )
+            }
         }
     }
 }
 
-const val TEN_MINUTE = 10 * ONE_MINUTE
-val data = listOf(0, 10, 43, 60, 32, 5).map { it * TEN_MINUTE }
+@Composable
+@Preview(widthDp = 343, heightDp = 312)
+fun CanvasSandboxPreview() {
+    TimePadTheme {
+        CanvasSandbox(
+            textColor = Black40,
+            lineColor = Color(0x1A000000),
+            data = data
+        )
+    }
+}
+
+@Composable
+@Preview(widthDp = 343, heightDp = 312)
+fun ChartTestPreview() {
+    TimePadTheme {
+        ChartTest()
+    }
+}

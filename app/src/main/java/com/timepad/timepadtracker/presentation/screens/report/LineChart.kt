@@ -1,10 +1,12 @@
 package com.timepad.timepadtracker.presentation.screens.report
 
 import android.graphics.Paint
-import android.graphics.PointF
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -12,156 +14,185 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.timepad.timepadtracker.presentation.theme.Purple
-import com.timepad.timepadtracker.presentation.theme.TimePadTheme
+import com.timepad.timepadtracker.presentation.theme.*
+import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel.Companion.ONE_MINUTE
 import com.timepad.timepadtracker.utils.formatTimeMillisHM
 
 @Composable
-fun LineChart(
+fun Chart(
+    textColor: Color,
+    lineColor: Color,
     data: List<Long>,
-    graphColor: Color,
     modifier: Modifier = Modifier
 ) {
-    Surface(
-        shape = MaterialTheme.shapes.large,
-        modifier = modifier
-    ) {
-        val density = LocalDensity.current
-        val textPaint = remember(density) {
-            Paint().apply {
-                color = android.graphics.Color.BLACK
-                textAlign = Paint.Align.CENTER
-                textSize = density.run { 16.sp.toPx() }
-            }
+
+    val textSizeVertical = 14.dp
+    val textSizeHorizontal = 16.dp
+    val horizontalSpacing = 50.dp
+    val horizontalLines = 24
+    val horizontalPadding = 16.dp
+    val verticalPadding = 24.dp
+    val chartStartPadding = (textSizeVertical * 5) + 5.dp
+    val textPaint = remember {
+        Paint().apply {
+            color = textColor.toArgb()
         }
+    }
 
-        Canvas(modifier = Modifier.fillMaxSize()) {
+    Canvas(
+        modifier = modifier
+            .horizontalScroll(rememberScrollState())
+            .width(horizontalSpacing * 24 + chartStartPadding + horizontalPadding)
+            .fillMaxHeight()
+    ) {
+        val numberOfVerticalLines = 6
+        var verticalLineSpacing: Float
 
-            //BottomAxis
-            val startPaddingBottomAxis = 78.dp.toPx()
-            val endPaddingBottomAxis = 16.dp.toPx()
-            val bottomPaddingBottomAxis = 24.dp.toPx()
-            val hours = (4..24 step 4).map { if (it > 12) "${it - 12}am" else "${it}pm" }
-            val spacePerHour =
-                (size.width - startPaddingBottomAxis - endPaddingBottomAxis) / hours.size
-            (hours.indices).forEach { i ->
-                val hour = hours[i]
-                drawContext.canvas.nativeCanvas.apply {
-                    drawText(
-                        hour,
-                        startPaddingBottomAxis + i * spacePerHour,
-                        size.height - bottomPaddingBottomAxis,
-                        textPaint
-                    )
-                }
-            }
+        val showHelpLines = false
+        val showHelpBox = false
+        val showHelpChartBox = false
 
-            //StartAxis
-            val timeStepDuration = 1_800_000L
-            val startPaddingStartAxis = 16.dp.toPx()
-            val topPaddingAxis = 24.dp.toPx()
-            val bottomPaddingAxis = 60.dp.toPx()
-            val timeStep = (size.height - topPaddingAxis - bottomPaddingAxis) / 9
-            (0..8).forEach { i ->
-                drawContext.canvas.nativeCanvas.apply {
-                    val startY = (size.height - topPaddingAxis - bottomPaddingAxis) - i * timeStep
-                    drawText(
-                        (timeStepDuration * i).formatTimeMillisHM(),
-                        startPaddingStartAxis,
-                        startY,
-                        textPaint.apply { textAlign = Paint.Align.LEFT }
-                    )
+        //VERTICAL AXIS
+        inset(
+            horizontal = horizontalPadding.toPx(),
+            vertical = verticalPadding.toPx()
+        ) {
+            verticalLineSpacing = size.height / numberOfVerticalLines
+
+            var position: Float
+            var verticalLabelText: String
+            val maxHour = 4 * 60 * 60 * 1000L
+            val stepLong = 48 * 60 * 1000L
+
+            for (i in 0 until numberOfVerticalLines) {
+                position = verticalLineSpacing * i
+                verticalLabelText = (maxHour - stepLong * i).formatTimeMillisHM()
+
+                //HELPING LINES
+                if (showHelpLines) {
                     drawLine(
-                        start = Offset(
-                            startPaddingStartAxis + (timeStepDuration * i).formatTimeMillisHM().length,
-                            startY,
-                        ),
-                        end = Offset(
-                            size.width - endPaddingBottomAxis,
-                            startY
-                        ),
-                        color = Color.Black,
-                        strokeWidth = 4f
+                        color = Purple,
+                        start = Offset(x = 0F, y = position),
+                        end = Offset(x = size.width, y = position),
+                        strokeWidth = 1.dp.toPx()
                     )
                 }
-            }
 
-            val strokeWidth = 4.dp.toPx()
-            val startPaddingChart = 78.dp.toPx()
-            val bottomPaddingChart = 78.dp.toPx()
-            val topPaddingChart = 24.dp.toPx()
-
-            val distance = spacePerHour
-            var currentX = startPaddingChart
-            val maxValue = data.maxOrNull() ?: 0
-            val points = mutableListOf<PointF>()
-
-            data.forEachIndexed { index, currentData ->
-                if (data.size >= index + 1) {
-                    val x0 = currentX
-                    val y0 = topPaddingChart + (maxValue - currentData) * ((size.height - bottomPaddingChart - topPaddingChart) / maxValue)
-                    points.add(PointF(x0, y0))
-                    currentX += distance
+                //VERTICAL LABELS
+                drawContext.canvas.nativeCanvas.apply {
+                    drawText(
+                        verticalLabelText,
+                        0f,
+                        position + textSizeVertical.toPx(),
+                        textPaint.apply {
+                            textSize = textSizeVertical.toPx()
+                            textAlign = Paint.Align.LEFT
+                        }
+                    )
                 }
-            }
 
-            val cubicPoints1 = mutableListOf<PointF>()
-            val cubicPoints2 = mutableListOf<PointF>()
-
-            for (i in 1 until points.size) {
-                cubicPoints1.add(PointF((points[i].x + points[i - 1].x) / 2, points[i - 1].y))
-                cubicPoints2.add(PointF((points[i].x + points[i - 1].x) / 2, points[i].y))
-            }
-
-            val path = Path()
-            path.moveTo(points.first().x, points.first().y)
-
-            for (i in 1 until points.size) {
-                path.cubicTo(
-                    cubicPoints1[i - 1].x,
-                    cubicPoints1[i - 1].y,
-                    cubicPoints2[i - 1].x,
-                    cubicPoints2[i - 1].y,
-                    points[i].x,
-                    points[i].y
+                //DOTTED LINE
+                drawLine(
+                    color = lineColor,
+                    start = Offset(
+                        x = chartStartPadding.toPx() - horizontalPadding.toPx(),
+                        y = position + textSizeVertical.toPx() / 2 + textSizeVertical.toPx() / 4
+                    ),
+                    end = Offset(x = size.width, y = position + textSizeVertical.toPx() / 2),
+                    strokeWidth = 1.dp.toPx(),
+                    pathEffect = PathEffect.dashPathEffect(FloatArray(4) { 16F })
                 )
             }
 
-            drawPath(
-                path = path,
-                color = graphColor,
-                style = Stroke(width = strokeWidth)
+            //HELPING BOX
+            if (showHelpBox) {
+                drawRect(color = Purple, alpha = 0.4f)
+            }
+        }
+
+        //HORIZONTAL AXIS
+        inset(
+            left = 75.dp.toPx(),
+            top = 24.dp.toPx(),
+            right = 16.dp.toPx(),
+            bottom = 24.dp.toPx()
+        ) {
+            var position: Float
+            var labelHorizontal: String
+
+            for (i in 0 until horizontalLines) {
+                position = i * horizontalSpacing.toPx()
+                labelHorizontal = if (i > 12) "${i - 12}pm" else "${i}am"
+
+                //HORIZONTAL LABELS
+                drawContext.canvas.nativeCanvas.apply {
+                    drawText(
+                        labelHorizontal,
+                        position + horizontalSpacing.toPx() / 2,
+                        size.height,
+                        textPaint.apply {
+                            textSize = textSizeHorizontal.toPx()
+                            textAlign = Paint.Align.CENTER
+                        }
+                    )
+                }
+
+                //HELP LINES
+                if (showHelpLines) {
+                    drawLine(
+                        color = Green,
+                        start = Offset(x = position, y = 0F),
+                        end = Offset(x = position, y = size.height)
+                    )
+                }
+            }
+
+            //HELPING BOX
+            if (showHelpChartBox) {
+                drawRect(color = Green, alpha = 0.4f)
+            }
+        }
+
+        //CHART
+        val height = size.height - verticalPadding.toPx() * 2
+        val verticalSpacing = height / numberOfVerticalLines
+        inset(
+            left = chartStartPadding.toPx(),
+            top = verticalPadding.toPx() + textSizeVertical.toPx() / 2,
+            right = horizontalPadding.toPx(),
+            bottom = verticalPadding.toPx() + verticalSpacing - textSizeVertical.toPx() / 2
+        ) {
+            //HELPING BOX
+            if (showHelpBox) {
+                drawRect(color = Black, alpha = 0.1f)
+            }
+        }
+    }
+}
+
+@Composable
+@Preview(widthDp = 343, heightDp = 312)
+fun ChartPreview() {
+    TimePadTheme {
+        Surface(
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Chart(
+                textColor = Black40,
+                lineColor = Color(0x1A000000),
+                data = data
             )
         }
     }
 }
 
-@Composable
-@Preview(widthDp = 351, heightDp = 320)
-fun LineChartPreview() {
-    TimePadTheme {
-        LineChart(
-            data = points,
-            graphColor = Purple,
-            modifier = Modifier
-                .padding(8.dp)
-        )
-    }
-}
-
-const val tenMinutes = 10 * 1000L
-val points = listOf(
-    0 * tenMinutes,
-    95 * tenMinutes,
-    0 * tenMinutes,
-    95 * tenMinutes,
-    0 * tenMinutes,
-    95 * tenMinutes
-)
+const val TEN_MINUTE = 10 * ONE_MINUTE
+val data = listOf(0, 10, 43, 60, 32, 5).map { it * TEN_MINUTE }

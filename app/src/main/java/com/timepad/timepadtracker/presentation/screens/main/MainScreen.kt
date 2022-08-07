@@ -62,7 +62,7 @@ private fun BottomNavGraph(
     modifier: Modifier = Modifier
 ) {
     NavHost(
-        startDestination = Screens.route_home,
+        startDestination = Screens.route_report,
         navController = navController,
         modifier = modifier
     ) {

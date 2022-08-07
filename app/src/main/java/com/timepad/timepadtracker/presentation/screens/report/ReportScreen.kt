@@ -385,8 +385,8 @@ private fun ReportChart(
             lineColor = Color(0xDFFFFFFF)
         }
 
+//        ChartTest()
         Chart(
-            modifier = Modifier.fillMaxSize(),
             textColor = textColor,
             lineColor = lineColor,
             data = data
