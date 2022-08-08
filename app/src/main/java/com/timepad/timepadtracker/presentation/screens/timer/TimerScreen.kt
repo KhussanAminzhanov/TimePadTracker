@@ -28,7 +28,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.presentation.screens.report.Header
-import com.timepad.timepadtracker.presentation.theme.*
+import com.timepad.timepadtracker.presentation.theme.LavenderLight
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillisHMS
 

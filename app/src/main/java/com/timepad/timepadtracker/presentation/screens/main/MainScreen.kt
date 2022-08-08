@@ -66,7 +66,9 @@ private fun BottomNavGraph(
                 mainViewModel = mainViewModel,
                 onTaskItemClick = {
                     mainViewModel.setSelectedTask(it)
-                    mainNavController.navigate(Screen.Timer.route)
+                    mainNavController.navigate(Screen.Timer.route) {
+                        launchSingleTop = true
+                    }
                 },
                 onSeeAllClick = {
                     mainNavController.navigate(Screen.AllTasks.route) {

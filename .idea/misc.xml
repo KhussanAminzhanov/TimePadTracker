@@ -17,6 +17,10 @@
         <entry key="../../../../layout/compose-model-1659684482230.xml" value="0.344392523364486" />
         <entry key="../../../../layout/compose-model-1659684573979.xml" value="0.31165540540540543" />
         <entry key="../../../../layout/compose-model-1659688221904.xml" value="0.4287037037037037" />
+        <entry key="../../../../layout/compose-model-1659952320895.xml" value="0.8849557522123894" />
+        <entry key="../../../../layout/compose-model-1659952770842.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1659952837422.xml" value="0.8810572687224669" />
+        <entry key="../../../../layout/compose-model-1659952872064.xml" value="0.774074074074074" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/activity_main.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_history.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/Khussan Aminzhanov/AndroidStudioProjects/TimePadTracker/app/src/main/res/layout/fragment_home.xml" value="0.37447916666666664" />
@@ -29,6 +33,7 @@
         <entry key="app/src/main/res/drawable/add_circle_thin_48px.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/checkmark.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/donut_small_48px.xml" value="0.2665" />
+        <entry key="app/src/main/res/drawable/ic_play.xml" value="0.3895" />
         <entry key="app/src/main/res/drawable/item_clock_icon_selector.xml" value="0.142" />
         <entry key="app/src/main/res/drawable/pie_chart_48px.xml" value="0.2665" />
         <entry key="app/src/main/res/drawable/play_button.xml" value="0.2665" />
