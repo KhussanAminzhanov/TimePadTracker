@@ -1,7 +1,6 @@
 package com.timepad.timepadtracker.presentation.viewmodels
 
 import android.os.CountDownTimer
-import androidx.compose.animation.core.FloatTweenSpec
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,8 +15,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import kotlin.math.floor
-import kotlin.math.roundToInt
 
 
 class MainViewModel(
