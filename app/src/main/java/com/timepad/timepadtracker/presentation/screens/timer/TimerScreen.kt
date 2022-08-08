@@ -48,6 +48,7 @@ fun TimerScreen(
         val (header, timer, finishBtn, quitBtn) = createRefs()
         val backgroundColor = if (isSystemInDarkTheme()) Color(0xFF1B143F) else Color(0xFFE9E9FF)
         val primaryBarColor = Brush.verticalGradient(listOf(Color(0xFFc198e9), LavenderLight))
+
         Header(
             titleTextRes = R.string.timer,
             onBackArrowClick = { mainNavController.popBackStack() },

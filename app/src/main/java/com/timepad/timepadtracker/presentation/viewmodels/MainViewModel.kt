@@ -117,7 +117,7 @@ class MainViewModel(
         var timeLeft = timeLeftInMillis.value
         if (oneSessionTime == 0L) return 1f
         if (timeLeft == null) return 1f
-        if (timeLeft != oneSessionTime && timeLeft != 0L) timeLeft -= 1000
+        if (timeLeft != oneSessionTime && timeLeft != 0L) timeLeft -= oneSessionTime / 100
         return (timeLeft * 100 / oneSessionTime).toFloat() / 100
     }
 
