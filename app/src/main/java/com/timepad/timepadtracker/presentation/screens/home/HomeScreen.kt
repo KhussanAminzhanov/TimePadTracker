@@ -28,10 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
-import com.timepad.timepadtracker.presentation.screens.main.TaskItem
-import com.timepad.timepadtracker.presentation.theme.Black40
-import com.timepad.timepadtracker.presentation.theme.TimePadTheme
-import com.timepad.timepadtracker.presentation.theme.White40
+import com.timepad.timepadtracker.presentation.general.TaskItem
+import com.timepad.timepadtracker.presentation.theme.*
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillisHMS
 import java.lang.Integer.min
@@ -55,7 +53,7 @@ fun HomeScreen(
         HomeHeader(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .padding(top = 32.dp)
+                .padding(top = 24.dp)
         )
         TimerCard(
             timeLeft = timeLeft ?: 0,
@@ -119,7 +117,10 @@ fun TimerCard(
     onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val backgroundColor = if (isSystemInDarkTheme()) DarkBlue else Black
+
     Surface(
+        color = backgroundColor,
         shape = MaterialTheme.shapes.medium,
         elevation = 0.dp,
         modifier = modifier
@@ -134,7 +135,7 @@ fun TimerCard(
                 fontFamily = FontFamily(Font(R.font.rubik_medium)),
                 modifier = Modifier
                     .constrainAs(timerDuration) {
-                        top.linkTo(parent.top, 12.dp)
+                        top.linkTo(parent.top, 16.dp)
                         start.linkTo(parent.start, 16.dp)
                     }
             )
@@ -234,14 +235,6 @@ fun PlaceholderText(
 }
 
 @Composable
-@Preview
-fun EmptyTaskPreview() {
-    TimePadTheme {
-        PlaceholderText(R.string.home_hint)
-    }
-}
-
-@Composable
 private fun TodayTasksContent(
     tasks: List<Task>,
     onTaskItemClick: (Task) -> Unit,
@@ -300,6 +293,14 @@ fun TodayTaskContentPreview() {
             onTaskItemClick = {},
             modifier = Modifier.padding(8.dp)
         )
+    }
+}
+
+@Composable
+@Preview
+fun EmptyTaskPreview() {
+    TimePadTheme {
+        PlaceholderText(R.string.home_hint)
     }
 }
 

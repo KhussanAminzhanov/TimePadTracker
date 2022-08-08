@@ -30,7 +30,6 @@ fun Chart(
     data: List<Long>,
     modifier: Modifier = Modifier
 ) {
-
     val backGroundColor = MaterialTheme.colors.surface
 
     val textSizeVertical = 14.dp
@@ -213,4 +212,3 @@ fun ChartPreview() {
 
 fun getRandom() = (0..150).random()
 val data = List(24) { getRandom() * ONE_MINUTE }
-//val data = List(24) { 120 * ONE_MINUTE}

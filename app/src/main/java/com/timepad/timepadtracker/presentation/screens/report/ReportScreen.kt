@@ -12,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +41,7 @@ fun ReportScreen(
 ) {
     val reportViewModel: ReportViewModel = getViewModel()
     val taskRecords by reportViewModel.taskRecords.observeAsState()
+    val allTaskRecords by reportViewModel.taskRecords.observeAsState()
     val selectedTab by reportViewModel.selectedTab.observeAsState()
 
     Column {
@@ -66,6 +68,7 @@ fun ReportScreen(
                 .height(44.dp)
         )
         ReportChart(
+            report = reportViewModel.getTodayReport(taskRecords ?: emptyList()),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
@@ -87,6 +90,7 @@ fun Header(
         val (arrowBack, title) = createRefs()
         Icon(
             painter = painterResource(id = R.drawable.ic_arrow_back),
+            tint = MaterialTheme.colors.onBackground,
             contentDescription = null,
             modifier = Modifier
                 .size(24.dp)
@@ -99,6 +103,7 @@ fun Header(
         )
         Text(
             text = stringResource(id = titleTextRes),
+            color = MaterialTheme.colors.onBackground,
             fontSize = 24.sp,
             fontFamily = FontFamily(Font(R.font.rubik_medium)),
             modifier = Modifier
@@ -371,6 +376,7 @@ private fun Tab(
 
 @Composable
 private fun ReportChart(
+    report: List<Long>,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -382,14 +388,13 @@ private fun ReportChart(
 
         if (isSystemInDarkTheme()) {
             textColor = White40
-            lineColor = Color(0xDFFFFFFF)
+            lineColor = Color(0x0DFFFFFF)
         }
 
-//        ChartTest()
         Chart(
             textColor = textColor,
             lineColor = lineColor,
-            data = data
+            data = report
         )
     }
 }
@@ -490,6 +495,7 @@ private fun TabPreview() {
 private fun ReportChartPreview() {
     TimePadTheme {
         ReportChart(
+            report = data,
             modifier = Modifier
                 .padding(8.dp)
         )

@@ -10,18 +10,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.timepad.timepadtracker.R
-import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.navigation.Screen
 import com.timepad.timepadtracker.presentation.screens.home.PlaceholderText
 import com.timepad.timepadtracker.presentation.screens.home.TodayTasks
 import com.timepad.timepadtracker.presentation.screens.report.Header
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 
 @Composable
-fun AllTasksScreen(
+fun TasksScreen(
+    mainNavController: NavHostController,
     mainViewModel: MainViewModel,
-    onTaskItemClick: (Task) -> Unit,
-    onBackArrowClick: () -> Unit
 ) {
     val tasks by mainViewModel.tasks.observeAsState()
     Column(
@@ -30,8 +30,8 @@ fun AllTasksScreen(
             .background(MaterialTheme.colors.background)
     ) {
         Header(
-            titleTextRes = R.string.all_tasks,
-            onBackArrowClick = onBackArrowClick,
+            titleTextRes = R.string.tasks,
+            onBackArrowClick = { mainNavController.popBackStack() },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 24.dp)
@@ -42,11 +42,15 @@ fun AllTasksScreen(
         } else {
             tasks?.let {
                 TodayTasks(
-                    onTaskItemClick = onTaskItemClick,
+                    onTaskItemClick = {
+                        mainViewModel.setSelectedTask(it)
+                        mainNavController.popBackStack()
+                        mainNavController.navigate(Screen.Timer.route)
+                    },
                     tasks = it,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp)
+                        .padding(top = 24.dp)
                 )
             }
         }

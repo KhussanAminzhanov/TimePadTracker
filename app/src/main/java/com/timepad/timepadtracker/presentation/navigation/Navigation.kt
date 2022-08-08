@@ -1,14 +1,14 @@
 package com.timepad.timepadtracker.presentation.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.timepad.timepadtracker.presentation.screens.main.MainScreen
-import com.timepad.timepadtracker.presentation.screens.tasks.AllTasksScreen
+import com.timepad.timepadtracker.presentation.screens.newtask.NewTaskScreen
+import com.timepad.timepadtracker.presentation.screens.tasks.TasksScreen
 import com.timepad.timepadtracker.presentation.screens.timer.TimerScreen
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import org.koin.androidx.compose.getViewModel
@@ -25,29 +25,27 @@ fun Navigation() {
     ) {
         composable(route = Screen.Main.route) {
             MainScreen(
-                mainViewModel = mainViewModel,
-                onAddItemClick = {},
-                onTaskItemClick = { task ->
-                    mainViewModel.setSelectedTask(task)
-                    navController.navigate(Screen.Timer.route)
-                },
-                onSeeAllClick = {
-                    navController.navigate(Screen.AllTasks.route)
-                },
-                onRightArrowClick = {
-                    navController.navigate(Screen.Timer.route)
-                }
+                mainNavController = navController,
+                mainViewModel = mainViewModel
             )
         }
         composable(route = Screen.AllTasks.route) {
-            AllTasksScreen(
-                mainViewModel = mainViewModel,
-                onTaskItemClick = {},
-                onBackArrowClick = {}
+            TasksScreen(
+                mainNavController = navController,
+                mainViewModel = mainViewModel
             )
         }
         composable(route = Screen.Timer.route) {
-            TimerScreen()
+            TimerScreen(
+                mainNavController = navController,
+                mainViewModel = mainViewModel
+            )
+        }
+        composable(route = Screen.NewTask.route) {
+            NewTaskScreen(
+                mainNavController = navController,
+                mainViewModel = mainViewModel
+            )
         }
     }
 }

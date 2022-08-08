@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.screens.main
+package com.timepad.timepadtracker.presentation.general
 
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme
