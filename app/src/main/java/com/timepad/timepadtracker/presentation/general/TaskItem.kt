@@ -1,4 +1,4 @@
-package com.timepad.timepadtracker.presentation.screens.main
+package com.timepad.timepadtracker.presentation.general
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

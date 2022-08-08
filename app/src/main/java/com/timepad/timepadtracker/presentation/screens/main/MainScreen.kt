@@ -20,33 +20,30 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
+import com.timepad.timepadtracker.presentation.navigation.BottomNavScreen
+import com.timepad.timepadtracker.presentation.navigation.Screen
 import com.timepad.timepadtracker.presentation.screens.home.HomeScreen
 import com.timepad.timepadtracker.presentation.screens.report.ReportScreen
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 
 @Composable
 fun MainScreen(
+    mainNavController: NavHostController,
     mainViewModel: MainViewModel,
-    onAddItemClick: () -> Unit,
-    onTaskItemClick: (Task) -> Unit,
-    onSeeAllClick: () -> Unit,
-    onRightArrowClick: () -> Unit
 ) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
             BottomBar(
+                mainNavController = mainNavController,
                 navController = navController,
-                onAddItemClick = onAddItemClick
             )
         }
     ) { paddingValues ->
         BottomNavGraph(
-            mainViewModel = mainViewModel,
-            onTaskItemClick = onTaskItemClick,
-            onSeeAllClick = onSeeAllClick,
-            onRightArrowClick = onRightArrowClick,
+            mainNavController = mainNavController,
             navController = navController,
+            mainViewModel = mainViewModel,
             modifier = Modifier.padding(paddingValues)
         )
     }
@@ -54,27 +51,28 @@ fun MainScreen(
 
 @Composable
 private fun BottomNavGraph(
+    mainNavController: NavHostController,
     navController: NavHostController,
     mainViewModel: MainViewModel,
-    onTaskItemClick: (Task) -> Unit,
-    onSeeAllClick: () -> Unit,
-    onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
-        startDestination = Screens.route_home,
+        startDestination = BottomNavScreen.Home.route,
         navController = navController,
         modifier = modifier
     ) {
-        composable(route = Screens.Home.route) {
+        composable(route = BottomNavScreen.Home.route) {
             HomeScreen(
                 mainViewModel = mainViewModel,
-                onTaskItemClick = onTaskItemClick,
-                onSeeAllClick = onSeeAllClick,
-                onRightArrowClick = onRightArrowClick
+                onTaskItemClick = {
+                    mainViewModel.setSelectedTask(it)
+                    mainNavController.navigate(Screen.Timer.route)
+                },
+                onSeeAllClick = { mainNavController.navigate(Screen.AllTasks.route) },
+                onRightArrowClick = { mainNavController.navigate(Screen.Timer.route) }
             )
         }
-        composable(route = Screens.Report.route) {
+        composable(route = BottomNavScreen.Report.route) {
             ReportScreen(
                 onBackArrowClick = { navController.popBackStack() }
             )
@@ -84,7 +82,7 @@ private fun BottomNavGraph(
 
 @Composable
 fun BottomBar(
-    onAddItemClick: () -> Unit,
+    mainNavController: NavHostController,
     navController: NavHostController,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -96,13 +94,13 @@ fun BottomBar(
             .padding(vertical = 18.dp)
     ) {
         AddItem(
-            screen = Screens.Home,
+            screen = BottomNavScreen.Home,
             currentDestination = currentDestination,
             navController = navController
         )
         BottomNavigationItem(
             selected = false,
-            onClick = { onAddItemClick() },
+            onClick = { mainNavController.navigate(Screen.NewTask.route) },
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.add_circle_rounded_48px),
@@ -113,7 +111,7 @@ fun BottomBar(
             }
         )
         AddItem(
-            screen = Screens.Report,
+            screen = BottomNavScreen.Report,
             currentDestination = currentDestination,
             navController = navController
         )
@@ -122,7 +120,7 @@ fun BottomBar(
 
 @Composable
 fun RowScope.AddItem(
-    screen: Screens,
+    screen: BottomNavScreen,
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {
@@ -139,9 +137,11 @@ fun RowScope.AddItem(
             )
         },
         onClick = {
-            navController.navigate(screen.route) {
-                popUpTo(navController.graph.findStartDestination().id)
-                launchSingleTop = true
+            if (!selected) {
+                navController.navigate(screen.route) {
+                    popUpTo(navController.graph.findStartDestination().id)
+                    launchSingleTop = true
+                }
             }
         },
         selected = selected,

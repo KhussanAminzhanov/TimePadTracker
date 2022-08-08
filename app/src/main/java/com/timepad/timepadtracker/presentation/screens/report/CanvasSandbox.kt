@@ -3,24 +3,25 @@ package com.timepad.timepadtracker.presentation.screens.report
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.timepad.timepadtracker.presentation.theme.*
-import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel.Companion.ONE_MINUTE
+import com.timepad.timepadtracker.presentation.theme.Black
+import com.timepad.timepadtracker.presentation.theme.Green
+import com.timepad.timepadtracker.presentation.theme.Purple
+import com.timepad.timepadtracker.presentation.theme.TimePadTheme
 import com.timepad.timepadtracker.utils.formatTimeMillisHM
 
+
 @Composable
-fun Chart(
+fun CanvasSandbox(
     textColor: Color,
     lineColor: Color,
     data: List<Long>,
@@ -34,12 +35,13 @@ fun Chart(
     }
 
     Canvas(modifier = modifier.fillMaxSize()) {
+
         val fontSizeVerticalLabel = 14.sp.toPx()
         val fontSizeHorizontalLabel = 16.sp.toPx()
         val chartStartPadding = fontSizeVerticalLabel * 5 + 5.dp.toPx()
         val horizontalPadding = 16.dp.toPx()
         val verticalPadding = 24.dp.toPx()
-        val numberOfHorizontalLines = data.size
+        val numberOfHorizontalLines = 24
         val numberOfVerticalLines = 6
         var verticalLineSpacing: Float
         var horizontalLineSpacing: Float
@@ -114,14 +116,15 @@ fun Chart(
             right = 16.dp.toPx(),
             bottom = 24.dp.toPx()
         ) {
-            horizontalLineSpacing = size.width / numberOfHorizontalLines
+//            horizontalLineSpacing = size.width / numberOfHorizontalLines
+            horizontalLineSpacing = size.width / 6
             var position: Float
             var horizontalLabelText: String
 
             for (i in 0 until numberOfHorizontalLines) {
-                val hour = 4 * (i + 1)
+//                val hour = 4 * (i + 1)
                 position = horizontalLineSpacing * i
-                horizontalLabelText = if (hour > 12) "${hour - 12}pm" else "${hour}am"
+                horizontalLabelText = if (i > 12) "${i - 12}pm" else "${i}am"
 
                 //HELP LINES
                 if (showHelpLines) {
@@ -170,21 +173,77 @@ fun Chart(
 }
 
 @Composable
-@Preview(widthDp = 343, heightDp = 312)
-fun CanvasSandboxPreview() {
-    TimePadTheme {
-        Surface(
-            shape = MaterialTheme.shapes.large,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Chart(
-                textColor = Black40,
-                lineColor = Color(0x1A000000),
-                data = data
+fun ChartTest() {
+
+    Canvas(modifier = Modifier.fillMaxSize()) {
+
+        val currentPoint = Offset(size.width * (1f / 3), size.height * (2f/3))
+        val nextPoint = Offset(size.width * (2f / 3), size.height * (1f/3))
+        val pointTwo = Offset((nextPoint.x + currentPoint.x) / 2, (currentPoint.y + nextPoint.y) / 2)
+
+        val conPointOne = Offset(
+            x = (nextPoint.x + currentPoint.x) / 2,
+            y = nextPoint.y
+        )
+
+        val conPointTwo = Offset(
+            x = (nextPoint.x + currentPoint.x) / 2,
+            y = currentPoint.y
+        )
+
+        val path = Path().apply {
+            moveTo(nextPoint.x, nextPoint.y)
+            cubicTo(
+                x1 = conPointOne.x, y1 = conPointOne.y,
+                x2 = conPointTwo.x, y2 = conPointTwo.y, // control point
+                x3 = currentPoint.x, y3 = currentPoint.y
             )
         }
+
+        drawPath(
+            path = path,
+            color = Purple,
+            style = Stroke(
+                width = 5f,
+                cap = StrokeCap.Round
+            )
+        )
+
+        drawCircle(
+            color = Color.Blue,
+            center = currentPoint,
+            radius = 3.dp.toPx()
+        )
+        drawCircle(
+            color = Color.Red,
+            center = nextPoint,
+            radius = 3.dp.toPx()
+        )
+
+        drawCircle(
+            color = Color.Green,
+            center = pointTwo,
+            radius = 3.dp.toPx()
+        )
+
+        drawCircle(
+            color = Color.Cyan,
+            center = conPointOne,
+            radius = 3.dp.toPx()
+        )
+
+        drawCircle(
+            color = Color.Cyan,
+            center = conPointTwo,
+            radius = 3.dp.toPx()
+        )
     }
 }
 
-const val TEN_MINUTE = 10 * ONE_MINUTE
-val data = listOf(0, 10, 43, 60, 32, 5).map { it * TEN_MINUTE }
+@Composable
+@Preview
+fun CharTestPreview() {
+    TimePadTheme {
+        ChartTest()
+    }
+}
