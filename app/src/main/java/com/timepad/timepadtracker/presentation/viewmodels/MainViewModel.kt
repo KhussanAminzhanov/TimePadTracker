@@ -1,6 +1,7 @@
 package com.timepad.timepadtracker.presentation.viewmodels
 
 import android.os.CountDownTimer
+import androidx.compose.animation.core.FloatTweenSpec
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import kotlin.math.floor
 import kotlin.math.roundToInt
 
 
@@ -76,7 +78,7 @@ class MainViewModel(
 
             override fun onFinish() {
                 _timerIsRunning.value = TimerState.STOPPED
-                _timeLeftInMillis.value = oneSessionTime
+                _timeLeftInMillis.value = 0
                 onTimerFinish()
             }
         }
@@ -102,6 +104,7 @@ class MainViewModel(
     }
 
     fun setSelectedTask(task: Task) {
+        if (timerIsRunning.value == TimerState.RUNNING) return
         selectedTask.value = task
         oneSessionTime = task.duration
         _timeLeftInMillis.value = oneSessionTime
@@ -110,11 +113,11 @@ class MainViewModel(
     fun getSelectedTaskCategory(): String = selectedTask.value?.category ?: "None"
     fun getSelectedTaskTitle(): String = selectedTask.value?.name ?: "Undefined"
 
-    fun getTimeLeftPercentage(): Int {
+    fun getTimeLeftPercentage(): Float {
         val timeLeft = timeLeftInMillis.value
-        if (oneSessionTime == 0L) return 100
-        if (timeLeft == null) return 100
-        return (timeLeft.toDouble() * 100 / oneSessionTime).roundToInt()
+        if (oneSessionTime == 0L) return 1f
+        if (timeLeft == null) return 1f
+        return (timeLeft.toFloat() * 100 / oneSessionTime) / 100
     }
 
     fun addTask(task: Task) = viewModelScope.launch(ioDispatcher) {
