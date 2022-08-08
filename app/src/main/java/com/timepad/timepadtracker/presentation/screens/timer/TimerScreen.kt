@@ -83,7 +83,7 @@ fun TimerScreen(
 
         TimerButton(
             textRes = R.string.finish,
-            onClick = {},
+            onClick = { mainViewModel.onTimerFinish() },
             backgroundColor = backgroundColor,
             modifier = Modifier
                 .constrainAs(finishBtn) {

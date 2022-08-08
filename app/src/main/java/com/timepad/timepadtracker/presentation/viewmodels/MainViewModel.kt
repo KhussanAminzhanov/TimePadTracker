@@ -75,14 +75,14 @@ class MainViewModel(
 
             override fun onFinish() {
                 _timerIsRunning.value = TimerState.STOPPED
-                _timeLeftInMillis.value = 0
                 onTimerFinish()
             }
         }
         countDownTimer.start()
     }
 
-    private fun onTimerFinish() {
+    fun onTimerFinish() {
+        val timeLeft = _timeLeftInMillis.value ?: return
         val selectedTask = selectedTask.value ?: return
         selectedTask.totalTimeInMillis += oneSessionTime
         updateTask(selectedTask)
@@ -90,9 +90,12 @@ class MainViewModel(
         val taskRecord = TaskRecord(
             epochDay = getCurrentDaySinceEpoch(),
             hour = getCurrentHourOfDay(),
-            duration = selectedTask.duration
+            duration = selectedTask.duration - timeLeft
         )
         addTaskRecord(taskRecord)
+        _timeLeftInMillis.value = 0
+        _timerIsRunning.value = TimerState.STOPPED
+        countDownTimer.cancel()
     }
 
     private fun pauseTimer() {

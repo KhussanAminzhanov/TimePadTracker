@@ -147,7 +147,7 @@ fun Chart(
             }
 
             drawPath(
-                brush = Brush.verticalGradient(colors = listOf(Purple, Color.Transparent)),
+                brush = Brush.verticalGradient(colors = listOf(Lavender, PurpleLight)),
                 path = path,
                 style = Stroke(
                     width = 4.dp.toPx(),
