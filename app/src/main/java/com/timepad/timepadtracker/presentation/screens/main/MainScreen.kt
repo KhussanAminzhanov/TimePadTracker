@@ -68,8 +68,16 @@ private fun BottomNavGraph(
                     mainViewModel.setSelectedTask(it)
                     mainNavController.navigate(Screen.Timer.route)
                 },
-                onSeeAllClick = { mainNavController.navigate(Screen.AllTasks.route) },
-                onRightArrowClick = { mainNavController.navigate(Screen.Timer.route) }
+                onSeeAllClick = {
+                    mainNavController.navigate(Screen.AllTasks.route) {
+                        launchSingleTop = true
+                    }
+                },
+                onRightArrowClick = {
+                    mainNavController.navigate(Screen.Timer.route) {
+                        launchSingleTop = true
+                    }
+                }
             )
         }
         composable(route = BottomNavScreen.Report.route) {
@@ -100,7 +108,9 @@ fun BottomBar(
         )
         BottomNavigationItem(
             selected = false,
-            onClick = { mainNavController.navigate(Screen.NewTask.route) },
+            onClick = {
+                mainNavController.navigate(Screen.NewTask.route) { launchSingleTop = true }
+            },
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.add_circle_rounded_48px),

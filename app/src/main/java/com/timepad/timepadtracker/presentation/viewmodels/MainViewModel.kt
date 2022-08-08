@@ -107,17 +107,18 @@ class MainViewModel(
         if (timerIsRunning.value == TimerState.RUNNING) return
         selectedTask.value = task
         oneSessionTime = task.duration
-        _timeLeftInMillis.value = oneSessionTime
+        _timeLeftInMillis.value = task.duration
     }
 
     fun getSelectedTaskCategory(): String = selectedTask.value?.category ?: "None"
     fun getSelectedTaskTitle(): String = selectedTask.value?.name ?: "Undefined"
 
     fun getTimeLeftPercentage(): Float {
-        val timeLeft = timeLeftInMillis.value
+        var timeLeft = timeLeftInMillis.value
         if (oneSessionTime == 0L) return 1f
         if (timeLeft == null) return 1f
-        return (timeLeft.toFloat() * 100 / oneSessionTime) / 100
+        if (timeLeft != oneSessionTime && timeLeft != 0L) timeLeft -= 1000
+        return (timeLeft * 100 / oneSessionTime).toFloat() / 100
     }
 
     fun addTask(task: Task) = viewModelScope.launch(ioDispatcher) {
