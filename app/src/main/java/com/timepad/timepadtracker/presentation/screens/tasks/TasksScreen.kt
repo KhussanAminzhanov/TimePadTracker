@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.timepad.timepadtracker.R
-import com.timepad.timepadtracker.presentation.navigation.Screen
+import com.timepad.timepadtracker.presentation.navigation.MainScreens
 import com.timepad.timepadtracker.presentation.screens.home.PlaceholderText
 import com.timepad.timepadtracker.presentation.screens.home.TodayTasks
 import com.timepad.timepadtracker.presentation.screens.report.Header
@@ -45,7 +45,7 @@ fun TasksScreen(
                     onTaskItemClick = {
                         mainViewModel.setSelectedTask(it)
                         mainNavController.popBackStack()
-                        mainNavController.navigate(Screen.Timer.route)
+                        mainNavController.navigate(MainScreens.Timer.route)
                     },
                     tasks = it,
                     modifier = Modifier

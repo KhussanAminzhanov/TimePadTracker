@@ -20,7 +20,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
-import com.timepad.timepadtracker.presentation.navigation.Screen
+import com.timepad.timepadtracker.presentation.navigation.MainScreens
 import com.timepad.timepadtracker.presentation.screens.report.Header
 import com.timepad.timepadtracker.presentation.screens.timer.TimerButton
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
@@ -92,7 +92,7 @@ fun NewTaskScreen(
                     duration = duration
                 )
                 mainViewModel.addTask(task = newTask)
-                mainNavController.navigate(Screen.Main.route) {
+                mainNavController.navigate(MainScreens.Main.route) {
                     popUpTo(mainNavController.graph.findStartDestination().id)
                     launchSingleTop = true
                 }

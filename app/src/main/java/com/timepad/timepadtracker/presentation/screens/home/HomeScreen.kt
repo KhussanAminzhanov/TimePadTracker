@@ -26,9 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.general.TaskItem
+import com.timepad.timepadtracker.presentation.navigation.MainScreens
 import com.timepad.timepadtracker.presentation.theme.*
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillisHMS
@@ -37,10 +39,8 @@ import java.time.LocalDate
 
 @Composable
 fun HomeScreen(
+    mainNavController: NavHostController,
     mainViewModel: MainViewModel,
-    onTaskItemClick: (Task) -> Unit,
-    onSeeAllClick: () -> Unit,
-    onRightArrowClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val timeLeft by mainViewModel.timeLeftInMillis.observeAsState()
@@ -58,13 +58,21 @@ fun HomeScreen(
         TimerCard(
             timeLeft = timeLeft ?: 0,
             taskTitle = taskTitle,
-            onRightArrowClick = onRightArrowClick,
+            onRightArrowClick = {
+                mainNavController.navigate(MainScreens.Timer.route) {
+                    launchSingleTop = true
+                }
+            },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 24.dp)
         )
         TodayTasksHeader(
-            onSeeAllClick = onSeeAllClick,
+            onSeeAllClick = {
+                mainNavController.navigate(MainScreens.Lists.route) {
+                    launchSingleTop = true
+                }
+            },
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp)
@@ -74,10 +82,15 @@ fun HomeScreen(
         if (tasks.isNullOrEmpty()) {
             PlaceholderText(R.string.home_hint)
         } else {
-            tasks?.let {
+            tasks?.let { list ->
                 TodayTasks(
-                    onTaskItemClick = onTaskItemClick,
-                    tasks = it.subList(0, min(4, it.size)),
+                    onTaskItemClick = {
+                        mainViewModel.setSelectedTask(it)
+                        mainNavController.navigate(MainScreens.Timer.route) {
+                            launchSingleTop = true
+                        }
+                    },
+                    tasks = list.subList(0, min(4, list.size)),
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp)

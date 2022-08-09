@@ -19,9 +19,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.timepad.timepadtracker.R
-import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.navigation.BottomNavScreen
-import com.timepad.timepadtracker.presentation.navigation.Screen
+import com.timepad.timepadtracker.presentation.navigation.MainScreens
 import com.timepad.timepadtracker.presentation.screens.home.HomeScreen
 import com.timepad.timepadtracker.presentation.screens.report.ReportScreen
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
@@ -63,23 +62,8 @@ private fun BottomNavGraph(
     ) {
         composable(route = BottomNavScreen.Home.route) {
             HomeScreen(
-                mainViewModel = mainViewModel,
-                onTaskItemClick = {
-                    mainViewModel.setSelectedTask(it)
-                    mainNavController.navigate(Screen.Timer.route) {
-                        launchSingleTop = true
-                    }
-                },
-                onSeeAllClick = {
-                    mainNavController.navigate(Screen.AllTasks.route) {
-                        launchSingleTop = true
-                    }
-                },
-                onRightArrowClick = {
-                    mainNavController.navigate(Screen.Timer.route) {
-                        launchSingleTop = true
-                    }
-                }
+                mainNavController = mainNavController,
+                mainViewModel = mainViewModel
             )
         }
         composable(route = BottomNavScreen.Report.route) {
@@ -111,7 +95,7 @@ fun BottomBar(
         BottomNavigationItem(
             selected = false,
             onClick = {
-                mainNavController.navigate(Screen.NewTask.route) { launchSingleTop = true }
+                mainNavController.navigate(MainScreens.NewTask.route) { launchSingleTop = true }
             },
             icon = {
                 Icon(

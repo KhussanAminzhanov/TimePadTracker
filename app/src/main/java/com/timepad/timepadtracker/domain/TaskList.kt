@@ -4,4 +4,5 @@ data class TaskList(
     val id: Int,
     val name: String,
     val iconRes: Int,
+    val colorRes: Int
 )

@@ -9,17 +9,20 @@ import com.timepad.timepadtracker.domain.TaskList
 data class TaskListEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "list_name") var name: String,
-    @ColumnInfo(name = "list_icon_res") var iconRes: Int
+    @ColumnInfo(name = "list_icon_res") var iconRes: Int,
+    @ColumnInfo(name = "list_color_res") var colorRes: Int
 )
 
 fun TaskList.toRoomEntity() = TaskListEntity(
     id = this.id,
     name = this.name,
-    iconRes = this.iconRes
+    iconRes = this.iconRes,
+    colorRes = this.colorRes
 )
 
 fun TaskListEntity.toDomainModel() = TaskList(
     id = this.id,
     name = this.name,
-    iconRes = this.iconRes
+    iconRes = this.iconRes,
+    colorRes = this.colorRes
 )
