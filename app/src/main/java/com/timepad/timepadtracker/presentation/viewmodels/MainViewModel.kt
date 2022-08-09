@@ -67,7 +67,7 @@ class MainViewModel(
     private fun startTimer() {
         _timerIsRunning.value = TimerState.RUNNING
         countDownTimer = object : CountDownTimer(
-            _timeLeftInMillis.value ?: oneSessionTime, COUNTDOWN_INTERVAL
+            _timeLeftInMillis.value ?: oneSessionTime, 1000
         ) {
             override fun onTick(millisUntilFinish: Long) {
                 _timeLeftInMillis.value = millisUntilFinish
@@ -117,7 +117,7 @@ class MainViewModel(
         var timeLeft = timeLeftInMillis.value
         if (oneSessionTime == 0L) return 1f
         if (timeLeft == null) return 1f
-        if (timeLeft != oneSessionTime && timeLeft != 0L) timeLeft -= oneSessionTime / 100
+        if (timeLeft != oneSessionTime && timeLeft != 0L) timeLeft -= 1000
         return (timeLeft * 100 / oneSessionTime).toFloat() / 100
     }
 

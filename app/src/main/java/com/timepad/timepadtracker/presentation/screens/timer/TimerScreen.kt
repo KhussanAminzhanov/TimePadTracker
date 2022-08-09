@@ -156,7 +156,7 @@ fun CircularProgressBar(
         targetValue = if (animationPlayed) percentage else 0f,
         animationSpec = tween(
             durationMillis = animDuration,
-            delayMillis = animDelay
+            delayMillis = animDelay,
         )
     )
 
@@ -178,7 +178,7 @@ fun CircularProgressBar(
             drawArc(
                 brush = primaryBarColor,
                 startAngle = -90f,
-                sweepAngle = 360 * currentPercentage.value,
+                sweepAngle = 360f * currentPercentage.value,
                 useCenter = false,
                 style = Stroke(
                     width = strokeWidth.toPx(),
