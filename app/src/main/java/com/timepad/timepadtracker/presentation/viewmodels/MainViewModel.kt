@@ -36,7 +36,7 @@ class MainViewModel(
 
     val tasks: LiveData<List<Task>> = interactions.getByDate(LocalDate.now().toEpochDay())
 
-    private val selectedTask = MutableLiveData<Task>()
+    private val _selectedTask = MutableLiveData<Task?>()
 
     private lateinit var countDownTimer: CountDownTimer
     private var oneSessionTime: Long = 0 * ONE_MINUTE
@@ -48,7 +48,7 @@ class MainViewModel(
     val timerIsRunning: LiveData<TimerState> = _timerIsRunning
 
     fun startOrPauseTimer() {
-        if (selectedTask.value == null) return
+        if (_selectedTask.value == null) return
         if (_timerIsRunning.value != TimerState.RUNNING) {
             startTimer()
         } else {
@@ -83,16 +83,17 @@ class MainViewModel(
 
     fun onTimerFinish() {
         val timeLeft = _timeLeftInMillis.value ?: return
-        val selectedTask = selectedTask.value ?: return
-        selectedTask.totalTimeInMillis += oneSessionTime
-        updateTask(selectedTask)
+        val selectedTask = _selectedTask.value ?: return
+        deleteTask(selectedTask)
 
         val taskRecord = TaskRecord(
             epochDay = getCurrentDaySinceEpoch(),
             hour = getCurrentHourOfDay(),
             duration = selectedTask.duration - timeLeft
         )
+
         addTaskRecord(taskRecord)
+        _selectedTask.value = null
         _timeLeftInMillis.value = 0
         _timerIsRunning.value = TimerState.STOPPED
         countDownTimer.cancel()
@@ -105,13 +106,13 @@ class MainViewModel(
 
     fun setSelectedTask(task: Task) {
         if (timerIsRunning.value == TimerState.RUNNING) return
-        selectedTask.value = task
+        _selectedTask.value = task
         oneSessionTime = task.duration
         _timeLeftInMillis.value = task.duration
     }
 
-    fun getSelectedTaskCategory(): String = selectedTask.value?.category ?: "None"
-    fun getSelectedTaskTitle(): String = selectedTask.value?.name ?: "Undefined"
+    fun getSelectedTaskCategory(): String = _selectedTask.value?.category ?: "None"
+    fun getSelectedTaskTitle(): String = _selectedTask.value?.name ?: "Undefined"
 
     fun getTimeLeftPercentage(): Float {
         var timeLeft = timeLeftInMillis.value
