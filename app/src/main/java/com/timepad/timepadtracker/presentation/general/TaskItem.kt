@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.timepad.timepadtracker.R
+import com.timepad.timepadtracker.data.CategoryDataSource
+import com.timepad.timepadtracker.data.CategoryDataSource.categoryColors
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.theme.Gray
 import com.timepad.timepadtracker.presentation.theme.Purple
@@ -69,12 +71,12 @@ fun TaskItem(
 
             Text(
                 text = task.category,
-                color = Purple,
+                color = CategoryDataSource.getTextColor(task.category),
                 fontSize = 12.sp,
                 modifier = Modifier
                     .padding(start = 16.dp, top = 13.dp)
                     .clip(shape = MaterialTheme.shapes.small)
-                    .background(PurpleLight)
+                    .background(categoryColors[task.category] ?: PurpleLight)
                     .padding(horizontal = 8.dp, vertical = 5.dp)
                     .constrainAs(taskCategory) {
                         bottom.linkTo(parent.bottom)

@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.timepad.timepadtracker.R
+import com.timepad.timepadtracker.data.CategoryDataSource.categories
+import com.timepad.timepadtracker.data.CategoryDataSource.categoryIcons
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.presentation.navigation.Screen
 import com.timepad.timepadtracker.presentation.screens.report.Header
@@ -38,9 +40,6 @@ fun NewTaskScreen(
     val taskCategory = remember { mutableStateOf("") }
 
     val buttonBackgroundColor = if (isSystemInDarkTheme()) Color(0xFF1B143F) else Color(0xFFE9E9FF)
-//    Surface(modifier = Modifier) {
-//
-//    }
 
     Column(
         modifier = Modifier
@@ -69,7 +68,7 @@ fun NewTaskScreen(
         )
         TaskCategories(
             taskCategory = taskCategory,
-            categories = mainViewModel.categories,
+            categories = categories,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp)
@@ -80,7 +79,7 @@ fun NewTaskScreen(
             onClick = {
                 if (taskCategory.value.isBlank() && taskName.value.isBlank()) return@TimerButton
                 if (taskMinutes.value == 0L && taskSeconds.value == 0L) return@TimerButton
-                val iconId = mainViewModel.tasksWithIcon[taskCategory.value]
+                val iconId = categoryIcons[taskCategory.value]
                     ?: R.drawable.icon_book_circle
                 val date = LocalDate.now().toEpochDay()
                 val duration =

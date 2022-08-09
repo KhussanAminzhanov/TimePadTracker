@@ -9,6 +9,7 @@ import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.domain.Task
 import com.timepad.timepadtracker.domain.TaskRecord
 import com.timepad.timepadtracker.framework.Interactions
+import com.timepad.timepadtracker.presentation.theme.*
 import com.timepad.timepadtracker.utils.getCurrentDaySinceEpoch
 import com.timepad.timepadtracker.utils.getCurrentHourOfDay
 import kotlinx.coroutines.CoroutineDispatcher
@@ -25,14 +26,6 @@ class MainViewModel(
     enum class TimerState {
         RUNNING, PAUSED, STOPPED
     }
-
-    val categories = listOf("Work", "Study", "Workout", "Hobby")
-    val tasksWithIcon = mapOf(
-        categories[0] to R.drawable.icon_monitor_circle,
-        categories[1] to R.drawable.icon_book_circle,
-        categories[2] to R.drawable.icon_barbell_circle,
-        categories[3] to R.drawable.icon_code_circle
-    )
 
     val tasks: LiveData<List<Task>> = interactions.getByDate(LocalDate.now().toEpochDay())
 
