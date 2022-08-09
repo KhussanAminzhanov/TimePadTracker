@@ -26,7 +26,7 @@ abstract class TimePadDatabase : RoomDatabase() {
                         context.applicationContext,
                         TimePadDatabase::class.java,
                         "time_pad_database"
-                    ).build()
+                    ).createFromAsset("database/TaskRecords.db").build()
                 }
                 return INSTANCE
             }

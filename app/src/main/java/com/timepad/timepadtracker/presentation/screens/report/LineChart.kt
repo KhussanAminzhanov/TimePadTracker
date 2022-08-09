@@ -40,9 +40,9 @@ fun Chart(
     val horizontalPadding = 16.dp
     val horizontalSpacing = 50.dp
 
-    val timeIntervals = listOf<Long>(30, 30, 30, 30, 30, 0)
+    val timeIntervals = listOf<Long>(10, 10, 10, 10, 10, 10, 0)
     val verticalLines = timeIntervals.size
-    val maxInterval = 150 * ONE_MINUTE
+    val maxInterval = (timeIntervals.size - 1) * timeIntervals.first() * ONE_MINUTE
     val verticalPadding = 24.dp
     var verticalLineSpacing: Float
 
@@ -151,6 +151,7 @@ fun Chart(
                     colors = listOf(
                         Lavender,
                         Lavender,
+                        Lavender,
                         Purple,
                         Purple,
                         Purple,
@@ -170,7 +171,7 @@ fun Chart(
         drawRect(
             color = backGroundColor,
             size = Size(
-                width = chartStartPadding.toPx(),
+                width = chartStartPadding.toPx() - horizontalPadding.toPx(),
                 height = size.height
             )
         )
@@ -199,6 +200,29 @@ fun Chart(
                 }
             }
         }
+
+        val colors = listOf(
+            backGroundColor,
+            backGroundColor,
+            Color.Transparent
+        )
+        drawRect(
+            brush = Brush.horizontalGradient(
+                colors = colors,
+                startX = (chartStartPadding - horizontalPadding - 1.dp).toPx(),
+                endX = chartStartPadding.toPx()
+            ),
+            topLeft = Offset(x = (chartStartPadding - horizontalPadding - 1.dp).toPx(), y = 0f),
+            size = Size(width = 16.dp.toPx(), height = size.height)
+        )
+
+        drawRect(
+            brush = Brush.horizontalGradient(
+                colors = colors.reversed(),
+                startX = size.width - horizontalPadding.toPx(),
+                endX = size.width
+            )
+        )
     }
 }
 
@@ -219,5 +243,5 @@ fun ChartPreview() {
     }
 }
 
-fun getRandom() = (0..150).random()
+fun getRandom() = (0..60).random()
 val data = List(24) { getRandom() * ONE_MINUTE }

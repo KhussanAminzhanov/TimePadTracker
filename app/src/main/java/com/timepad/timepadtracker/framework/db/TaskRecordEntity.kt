@@ -7,7 +7,8 @@ import com.timepad.timepadtracker.domain.TaskRecord
 
 @Entity(tableName = "task_record_table")
 data class TaskRecordEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") val id: Int = 0,
     @ColumnInfo(name = "day_since_epoch") val daySinceEpoch: Long,
     @ColumnInfo(name = "created_at_hour") val hour: Int,
     @ColumnInfo(name = "duration") val duration: Long

@@ -83,7 +83,10 @@ fun TimerScreen(
 
         TimerButton(
             textRes = R.string.finish,
-            onClick = { mainViewModel.onTimerFinish() },
+            onClick = {
+                mainNavController.popBackStack()
+                mainViewModel.onTimerFinish()
+            },
             backgroundColor = backgroundColor,
             modifier = Modifier
                 .constrainAs(finishBtn) {
@@ -95,7 +98,10 @@ fun TimerScreen(
 
         TimerButton(
             textRes = R.string.quit,
-            onClick = { mainViewModel.stopTimer() },
+            onClick = {
+                mainNavController.popBackStack()
+                mainViewModel.stopTimer()
+            },
             backgroundColor = Color.Transparent,
             contentColor = MaterialTheme.colors.onSurface.copy(0.7f),
             modifier = Modifier

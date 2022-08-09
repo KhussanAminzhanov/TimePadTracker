@@ -31,12 +31,4 @@ object CategoryDataSource {
             else -> Purple
         }
     }
-
-    fun getBackgroundColor(category: String, isDarkTheme: Boolean) {
-        if (isDarkTheme) {
-            when (category) {
-
-            }
-        }
-    }
 }

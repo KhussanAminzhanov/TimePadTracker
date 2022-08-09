@@ -19,7 +19,7 @@ class ReportViewModel(
     private val _selectedTab = MutableLiveData<String>()
     val selectedTab: LiveData<String> = _selectedTab
 
-    val taskRecords = interactions.getTaskRecordsByDay(getCurrentDaySinceEpoch())
+    val taskRecords = interactions.getTaskRecordsByDay(19213)
     val allTaskRecords = interactions.getAllTaskRecords()
 
     fun setTab(tab: String) {
