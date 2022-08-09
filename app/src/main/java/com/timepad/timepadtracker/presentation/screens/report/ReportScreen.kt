@@ -286,7 +286,7 @@ private fun Tabs(
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val backgroundColor = if (isSystemInDarkTheme()) DarkBlue else Lavender
+    val backgroundColor = if (isSystemInDarkTheme()) DarkBlue else LavenderLight
 
     Surface(
         color = backgroundColor,

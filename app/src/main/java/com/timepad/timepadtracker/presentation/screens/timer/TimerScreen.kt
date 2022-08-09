@@ -28,7 +28,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import com.timepad.timepadtracker.R
 import com.timepad.timepadtracker.presentation.screens.report.Header
-import com.timepad.timepadtracker.presentation.theme.LavenderLight
+import com.timepad.timepadtracker.presentation.theme.Lavender
 import com.timepad.timepadtracker.presentation.viewmodels.MainViewModel
 import com.timepad.timepadtracker.utils.formatTimeMillisHMS
 
@@ -47,7 +47,7 @@ fun TimerScreen(
     ) {
         val (header, timer, finishBtn, quitBtn) = createRefs()
         val backgroundColor = if (isSystemInDarkTheme()) Color(0xFF1B143F) else Color(0xFFE9E9FF)
-        val primaryBarColor = Brush.verticalGradient(listOf(Color(0xFFc198e9), LavenderLight))
+        val primaryBarColor = Brush.verticalGradient(listOf(Color(0xFFc198e9), Lavender))
 
         Header(
             titleTextRes = R.string.timer,
