@@ -12,5 +12,10 @@ data class Interactions(
     val deleteTaskRecord: DeleteTaskRecord,
     val updateTaskRecord: UpdateTaskRecord,
     val getAllTaskRecords: GetAllTaskRecords,
-    val getTaskRecordsByDay: GetTaskRecordsByDay
+    val getTaskRecordsByDay: GetTaskRecordsByDay,
+    val addTaskList: AddTaskList,
+    val deleteTaskList: DeleteTaskList,
+    val updateTaskList: UpdateTaskList,
+    val getAllTaskLists: GetAllTaskLists,
+    val getList: GetList
 )

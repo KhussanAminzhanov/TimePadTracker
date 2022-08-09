@@ -7,13 +7,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(
-    entities = [TaskEntity::class, TaskRecordEntity::class],
+    entities = [TaskEntity::class, TaskRecordEntity::class, TaskListEntity::class],
     version = 1,
     exportSchema = false
 )
 abstract class TimePadDatabase : RoomDatabase() {
     abstract val taskDao: TaskDao
     abstract val taskRecordDao: TaskRecordDao
+    abstract val taskListDao: TaskListDao
 
     companion object {
         @Volatile
