@@ -51,6 +51,7 @@ fun TasksScreen(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(top = 24.dp)
+                        .padding(bottom = 16.dp)
                 )
             }
         }

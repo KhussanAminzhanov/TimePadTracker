@@ -80,7 +80,7 @@ class MainViewModel(
         deleteTask(selectedTask)
 
         val taskRecord = TaskRecord(
-            epochDay = getCurrentDaySinceEpoch(),
+            epochDay = 19213,
             hour = getCurrentHourOfDay(),
             duration = selectedTask.duration - timeLeft
         )
@@ -89,7 +89,7 @@ class MainViewModel(
         _selectedTask.value = null
         _timeLeftInMillis.value = 0
         _timerIsRunning.value = TimerState.STOPPED
-        countDownTimer.cancel()
+        if (::countDownTimer.isInitialized) countDownTimer.cancel()
     }
 
     private fun pauseTimer() {
